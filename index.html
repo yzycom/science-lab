@@ -1,13 +1,102 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3d-periodic-table</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Periodic Table</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 顶部标题 -->
+    <header class="app-header">
+      <h1 class="app-title">3D Periodic Table</h1>
+      <div class="mode-toggle">
+        <button class="mode-btn active" data-mode="table">元素</button>
+        <button class="mode-btn" data-mode="compounds">化合物</button>
+      </div>
+    </header>
+
+    <!-- Three.js 画布容器 -->
+    <div id="canvas-container"></div>
+
+    <!-- 元素详情面板 -->
+    <aside class="detail-panel" id="elementDetail">
+      <button class="detail-close">×</button>
+      <div class="detail-header">
+        <div class="detail-category"></div>
+        <div class="detail-main">
+          <span class="detail-symbol"></span>
+          <span class="detail-name"></span>
+        </div>
+      </div>
+      
+      <div class="atom-viewer-container">
+        <div id="atomCanvas"></div>
+        <div class="atom-legend">
+          <span>🔴 质子</span>
+          <span>⚪ 中子</span>
+          <span>🔵 电子</span>
+        </div>
+      </div>
+      
+      <div class="detail-shells"></div>
+      
+      <div class="detail-props"></div>
+    </aside>
+
+    <!-- 化合物列表面板 -->
+    <aside class="compound-panel" id="compoundPanel">
+      <h3 class="compound-title">常见化合物</h3>
+      <div class="compound-list" id="compoundList"></div>
+    </aside>
+
+    <!-- 化合物详情面板 -->
+    <aside class="detail-panel compound-detail-panel" id="compoundDetail">
+      <button class="detail-close compound-detail-close">×</button>
+      <div class="detail-header">
+        <div class="detail-category">COMPOUND</div>
+        <div class="detail-main">
+          <span class="detail-symbol compound-detail-formula"></span>
+          <span class="detail-name compound-detail-name"></span>
+        </div>
+        <div class="compound-detail-name-en"></div>
+      </div>
+
+      <div class="atom-viewer-container molecule-viewer-container">
+        <div id="moleculeCanvas"></div>
+      </div>
+
+      <div class="compound-bond-legend">
+        <div class="bond-legend-item">
+          <div class="bond-line bond-single"></div>
+          <span>单键 · 1对共用电子</span>
+        </div>
+        <div class="bond-legend-item">
+          <div class="bond-lines">
+            <div class="bond-line bond-double"></div>
+            <div class="bond-line bond-double"></div>
+          </div>
+          <span>双键 · 2对</span>
+        </div>
+        <div class="bond-legend-item">
+          <div class="bond-lines">
+            <div class="bond-line bond-triple"></div>
+            <div class="bond-line bond-triple"></div>
+            <div class="bond-line bond-triple"></div>
+          </div>
+          <span>三键 · 3对</span>
+        </div>
+      </div>
+
+      <div class="detail-shells compound-detail-desc"></div>
+      <div class="compound-stats-row compound-stats"></div>
+    </aside>
+
+    <!-- 分类图例 -->
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
 </html>
