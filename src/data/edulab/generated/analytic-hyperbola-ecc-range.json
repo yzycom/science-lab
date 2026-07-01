@@ -1,0 +1,171 @@
+{
+  "id": "analytic-hyperbola-ecc-range",
+  "kind": "edulab.analyticGeometry",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-analytic-geometry",
+  "title": "双曲线离心率的取值范围",
+  "tags": [
+    "math",
+    "analytic-geometry"
+  ],
+  "payload": {
+    "lesson": {
+      "language": "zh-CN",
+      "title": "双曲线离心率的取值范围",
+      "problem": "<p class='font-medium text-slate-800'>【题目】</p><p>双曲线 $C:\\dfrac{x^2}{a^2}-\\dfrac{y^2}{b^2}=1\\,(a,b>0)$，左右焦点 $F_1,F_2$。若 $C$ 的右支上<strong>存在</strong>点 $P$ 使得 $|PF_1|=3|PF_2|$，求离心率 $e$ 的取值范围。</p><p class='text-slate-500 text-sm'>（拖动滑块改变 $e$，双曲线随之变形；当 $e>2$ 时这样的 $P$ 不再存在。）</p>",
+      "answerLabel": "离心率取值范围",
+      "answer": "$e\\in(1,\\ 2]$"
+    },
+    "steps": [
+      {
+        "title": "右支焦半径关系",
+        "content": "<p>设右支上点 $P$，由双曲线定义 $|PF_1|-|PF_2|=2a$，且右支上 $|PF_2|\\ge c-a$（最小值在右顶点取到）。</p>"
+      },
+      {
+        "title": "代入条件求范围",
+        "content": "<p>由 $|PF_1|=3|PF_2|$ 与 $|PF_1|-|PF_2|=2a$ 得 $2|PF_2|=2a$，即 $|PF_2|=a$。</p><p>代入 $|PF_2|\\ge c-a$：$a\\ge c-a\\Rightarrow c\\le 2a\\Rightarrow e=\\dfrac{c}{a}\\le 2$。又双曲线 $e>1$。</p><div class='text-center py-3 bg-emerald-50 border border-emerald-100 rounded-xl text-emerald-900 font-bold'>$$ e\\in(1,\\ 2] $$</div><p class='text-slate-500 text-sm'>滑块拖过 $e=2$ 时，$P$ 越过右顶点而消失，状态变为“不满足”，指针离开绿色区间——与答案一致。</p>"
+      }
+    ],
+    "board": {
+      "view": {
+        "xRange": [
+          -4.2,
+          4.2
+        ],
+        "yRange": [
+          -3,
+          3
+        ]
+      },
+      "conics": [
+        {
+          "name": "C",
+          "kind": "hyperbola",
+          "a": 1,
+          "b": "sqrt(e*e-1)",
+          "center": [
+            0,
+            0
+          ],
+          "orient": "x",
+          "asymptotes": true,
+          "color": "curve",
+          "label": "C: x² − y²/(e²−1) = 1  (a=1)"
+        }
+      ],
+      "points": {
+        "F1": {
+          "xy": [
+            "-e",
+            "0"
+          ],
+          "color": "point",
+          "label": "F₁"
+        },
+        "F2": {
+          "xy": [
+            "e",
+            "0"
+          ],
+          "color": "given",
+          "label": "F₂"
+        },
+        "P": {
+          "xy": [
+            "2/e",
+            "sqrt((e*e-1)*(4/(e*e)-1))"
+          ],
+          "color": "ptA",
+          "label": "P",
+          "emphasis": true
+        }
+      },
+      "param": {
+        "name": "e",
+        "label": "离心率 $e$",
+        "min": 1.05,
+        "max": 3,
+        "step": 0.01,
+        "value": 1.5,
+        "unit": "",
+        "standard": 1.5,
+        "ticks": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "derived": [
+        {
+          "type": "segment",
+          "name": "PF1",
+          "a": "F1",
+          "b": "P",
+          "color": "vecA"
+        },
+        {
+          "type": "segment",
+          "name": "PF2",
+          "a": "F2",
+          "b": "P",
+          "color": "vecB"
+        }
+      ],
+      "readouts": [
+        {
+          "id": "c",
+          "label": "半焦距 $c=ae$",
+          "type": "expr",
+          "expr": "e",
+          "digits": 2
+        },
+        {
+          "id": "pf2",
+          "label": "$|PF_2|$",
+          "type": "distance",
+          "a": "F2",
+          "b": "P"
+        },
+        {
+          "id": "pf1",
+          "label": "$|PF_1|$",
+          "type": "distance",
+          "a": "F1",
+          "b": "P"
+        },
+        {
+          "id": "cond",
+          "label": "右支上 $P$ 存在",
+          "type": "status",
+          "expr": "e",
+          "op": "<=",
+          "rhs": 2,
+          "okText": "满足 ✓",
+          "badText": "不满足 ✗",
+          "highlight": true
+        }
+      ],
+      "answerBand": {
+        "min": 1,
+        "max": 3,
+        "lo": 1,
+        "hi": 2,
+        "label": "$e\\in(1,\\ 2]$"
+      },
+      "legend": [
+        {
+          "color": "curve",
+          "text": "双曲线 C（随 e 变形）"
+        },
+        {
+          "color": "vecA",
+          "text": "|PF₁| = 3|PF₂|"
+        },
+        {
+          "color": "vecB",
+          "text": "|PF₂|"
+        }
+      ]
+    }
+  }
+}

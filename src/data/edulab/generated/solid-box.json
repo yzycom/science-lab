@@ -1,0 +1,203 @@
+{
+  "id": "solid-box",
+  "kind": "edulab.solidGeometry",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-solid-geometry",
+  "title": "长方体ABCD-A₁B₁C₁D₁的长、宽、高分别为 3、4、5，求其体积",
+  "tags": [
+    "math",
+    "solid-geometry"
+  ],
+  "payload": {
+    "lesson": {
+      "language": "zh-CN",
+      "meta": "交互解题 · 体积",
+      "title": "长方体ABCD-A₁B₁C₁D₁的长、宽、高分别为 3、4、5，求其体积",
+      "answerLabel": "长方体的体积",
+      "answerValue": "$60$"
+    },
+    "steps": [
+      {
+        "title": "明确长、宽、高",
+        "content": "<p>以顶点 $A$ 为原点建立坐标系，三条从 $A$ 出发的棱即长、宽、高：</p><ul><li>长 $AB = 3$</li><li>宽 $AD = 4$</li><li>高 $AA_1 = 5$</li></ul>",
+        "highlight": [
+          "Edge_L",
+          "Edge_W",
+          "Edge_H",
+          "Axis"
+        ],
+        "cameraPos": {
+          "x": 5.9,
+          "y": 5.5,
+          "z": 7.2
+        }
+      },
+      {
+        "title": "应用长方体体积公式",
+        "content": "<p>长方体体积等于长 × 宽 × 高：</p>$$V = AB \\times AD \\times AA_1$$",
+        "highlight": [
+          "Edge_L",
+          "Edge_W",
+          "Edge_H"
+        ],
+        "cameraPos": {
+          "x": 4.9,
+          "y": 6.5,
+          "z": 6.2
+        }
+      },
+      {
+        "title": "代入求值",
+        "content": "$$V = 3 \\times 4 \\times 5 = 60$$<p>所以该长方体的体积为 $60$。</p>",
+        "highlight": [
+          "Edge_L",
+          "Edge_W",
+          "Edge_H"
+        ],
+        "cameraPos": {
+          "x": 5.9,
+          "y": 5.5,
+          "z": 6.2
+        }
+      }
+    ],
+    "model": {
+      "target": [
+        0.8999999999999999,
+        1.5,
+        1.2
+      ],
+      "initialCamera": [
+        5.9,
+        5.5,
+        7.2
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          1.7999999999999998,
+          0,
+          0
+        ],
+        "C": [
+          1.7999999999999998,
+          0,
+          2.4
+        ],
+        "D": [
+          0,
+          0,
+          2.4
+        ],
+        "A1": [
+          0,
+          3,
+          0
+        ],
+        "B1": [
+          1.7999999999999998,
+          3,
+          0
+        ],
+        "C1": [
+          1.7999999999999998,
+          3,
+          2.4
+        ],
+        "D1": [
+          0,
+          3,
+          2.4
+        ]
+      },
+      "spheres": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A1",
+        "B1",
+        "C1",
+        "D1"
+      ],
+      "edges": [
+        {
+          "a": "A",
+          "b": "B"
+        },
+        {
+          "a": "B",
+          "b": "C"
+        },
+        {
+          "a": "C",
+          "b": "D"
+        },
+        {
+          "a": "D",
+          "b": "A"
+        },
+        {
+          "a": "A1",
+          "b": "B1"
+        },
+        {
+          "a": "B1",
+          "b": "C1"
+        },
+        {
+          "a": "C1",
+          "b": "D1"
+        },
+        {
+          "a": "D1",
+          "b": "A1"
+        },
+        {
+          "a": "A",
+          "b": "A1"
+        },
+        {
+          "a": "B",
+          "b": "B1"
+        },
+        {
+          "a": "C",
+          "b": "C1"
+        },
+        {
+          "a": "D",
+          "b": "D1"
+        }
+      ],
+      "elements": {
+        "Edge_L": {
+          "type": "line",
+          "a": "A",
+          "b": "B",
+          "color": "emphasis"
+        },
+        "Edge_W": {
+          "type": "line",
+          "a": "A",
+          "b": "D",
+          "color": "emphasis"
+        },
+        "Edge_H": {
+          "type": "line",
+          "a": "A",
+          "b": "A1",
+          "color": "emphasis"
+        },
+        "Axis": {
+          "type": "axes",
+          "size": 3.5
+        }
+      }
+    }
+  }
+}

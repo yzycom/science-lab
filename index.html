@@ -3,17 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3D Periodic Table</title>
+  <title>Science Lab</title>
   <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
   <div id="app">
     <!-- 顶部标题 -->
     <header class="app-header">
-      <h1 class="app-title">3D Periodic Table</h1>
+      <h1 class="app-title">Science Lab</h1>
       <div class="mode-toggle">
         <button class="mode-btn active" data-mode="table">元素</button>
         <button class="mode-btn" data-mode="compounds">化合物</button>
+        <button class="mode-btn" data-mode="reactions">化学反应</button>
+        <button class="mode-btn" data-mode="math">数学课程</button>
       </div>
     </header>
 
@@ -95,6 +97,18 @@
 
     <!-- 分类图例 -->
     <div class="legend" id="legend"></div>
+
+    <!-- Edulab 课程工作台 -->
+    <main class="lesson-workbench" id="lessonWorkbench" aria-hidden="true">
+      <aside class="lesson-library">
+        <div class="lesson-library-header">
+          <div class="detail-category">EDULAB</div>
+          <h2 id="lessonLibraryTitle">课程库</h2>
+        </div>
+        <div class="lesson-list" id="lessonList"></div>
+      </aside>
+      <section class="lesson-detail" id="lessonDetail"></section>
+    </main>
   </div>
 
   <script type="module" src="/src/main.js"></script>

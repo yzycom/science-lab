@@ -1,0 +1,162 @@
+{
+  "id": "analytic-ellipse-chord-range",
+  "kind": "edulab.analyticGeometry",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-analytic-geometry",
+  "title": "椭圆过焦点的弦长范围",
+  "tags": [
+    "math",
+    "analytic-geometry"
+  ],
+  "payload": {
+    "lesson": {
+      "language": "zh-CN",
+      "title": "椭圆过焦点的弦长范围",
+      "problem": "<p class='font-medium text-slate-800'>【题目】</p><p>椭圆 $C:\\dfrac{x^2}{4}+\\dfrac{y^2}{3}=1$，过右焦点 $F(1,0)$ 的直线 $l$ 交 $C$ 于 $A,B$。求弦长 $|AB|$ 的取值范围。</p>",
+      "answerLabel": "焦点弦长取值范围",
+      "answer": "$|AB|\\in[3,\\ 4]$"
+    },
+    "steps": [
+      {
+        "title": "联立 + 韦达定理",
+        "content": "<p>设 $l:\\,x=my+1$，代入椭圆得 $ 3 m^{2} + 4y^2+6 my-9=0 $，</p><p>$y_1+y_2=- \\frac{6 m}{3 m^{2} + 4},\\ y_1y_2=- \\frac{9}{3 m^{2} + 4}$。</p>"
+      },
+      {
+        "title": "弦长公式",
+        "content": "<p>$|AB|^2=(1+m^2)\\left[(y_1+y_2)^2-4y_1y_2\\right]=\\frac{144 \\left(m^{2} + 1\\right)^{2}}{\\left(3 m^{2} + 4\\right)^{2}}$。</p><p>令 $u=m^2\\ge0$：$|AB|^2=\\dfrac{144(u+1)}{(3u+4)^2}$，关于 $u$ 单调，$u=0$（竖直·通径）得最小 $9$，$u\\to\\infty$（水平·长轴）得最大 $16$。</p><div class='text-center py-3 bg-emerald-50 border border-emerald-100 rounded-xl text-emerald-900 font-bold'>$$ |AB|\\in [3,\\ 4] $$</div>"
+      }
+    ],
+    "board": {
+      "view": {
+        "xRange": [
+          -3.6,
+          3.6
+        ],
+        "yRange": [
+          -2.6,
+          2.6
+        ]
+      },
+      "conics": [
+        {
+          "kind": "ellipse",
+          "a": 2,
+          "b": 1.7320508075688772,
+          "center": [
+            0,
+            0
+          ],
+          "name": "C",
+          "color": "curve",
+          "label": "C: x²/4 + y²/3 = 1"
+        }
+      ],
+      "points": {
+        "F1": {
+          "xy": [
+            -1,
+            0
+          ],
+          "color": "point",
+          "label": "F₁(-1,0)",
+          "emphasis": false
+        },
+        "F": {
+          "xy": [
+            1,
+            0
+          ],
+          "color": "given",
+          "label": "F(1,0)",
+          "emphasis": false
+        }
+      },
+      "param": {
+        "name": "θ",
+        "label": "弦 AB 倾斜角 $\\theta$",
+        "min": 0,
+        "max": 180,
+        "step": 0.5,
+        "value": 90,
+        "unit": "°",
+        "standard": 90,
+        "ticks": [
+          "0° (长轴)",
+          "90° (通径)",
+          "180°"
+        ]
+      },
+      "derived": [
+        {
+          "type": "line_through_angle",
+          "name": "l",
+          "point": "F",
+          "angle": "@param",
+          "color": "line"
+        },
+        {
+          "type": "intersect_line_conic",
+          "name": [
+            "A",
+            "B"
+          ],
+          "line": "l",
+          "conic": "C",
+          "colors": [
+            "ptA",
+            "ptB"
+          ]
+        },
+        {
+          "type": "segment",
+          "name": "AB",
+          "a": "A",
+          "b": "B",
+          "color": "line2"
+        }
+      ],
+      "readouts": [
+        {
+          "id": "k",
+          "label": "直线斜率 k",
+          "type": "slope",
+          "of": "l"
+        },
+        {
+          "id": "A",
+          "label": "交点 A",
+          "type": "coord",
+          "of": "A",
+          "color": "ptA"
+        },
+        {
+          "id": "B",
+          "label": "交点 B",
+          "type": "coord",
+          "of": "B",
+          "color": "ptB"
+        },
+        {
+          "id": "len",
+          "label": "焦点弦长 $|AB|$",
+          "type": "length",
+          "a": "A",
+          "b": "B",
+          "highlight": true
+        }
+      ],
+      "rangeBar": {
+        "of": "len",
+        "min": 3,
+        "max": 4,
+        "label": "$[3,\\ 4]$"
+      },
+      "legend": [
+        {
+          "color": "line",
+          "text": "过焦点动弦 l"
+        }
+      ]
+    }
+  }
+}

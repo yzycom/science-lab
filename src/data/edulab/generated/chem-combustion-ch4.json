@@ -1,0 +1,453 @@
+{
+  "id": "chem-combustion-ch4",
+  "kind": "edulab.chemReaction",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-chem-reaction",
+  "title": "甲烷的燃烧",
+  "tags": [
+    "chemistry",
+    "reaction"
+  ],
+  "payload": {
+    "meta": {
+      "title": "甲烷的燃烧",
+      "subtitle": "CH₄ + O₂ 的氧化放热燃烧反应机理",
+      "language": "zh-CN",
+      "category": "junior",
+      "accent": "amber",
+      "engine": "morph",
+      "equation": "\\text{CH}_4 + 2\\,\\text{O}_2 \\;\\xrightarrow{\\text{点燃}}\\; \\text{CO}_2 + 2\\,\\text{H}_2\\text{O}"
+    },
+    "conditions": {
+      "text": "点燃",
+      "exothermic": true,
+      "flame": true
+    },
+    "atoms": [
+      {
+        "id": "C1",
+        "el": "C",
+        "color": "#334155",
+        "radius": 0.5,
+        "start": [
+          -4,
+          0.2,
+          0
+        ],
+        "end": [
+          -2.7,
+          1.1,
+          0
+        ],
+        "rmol": "CH4#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "O1",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          -0.55,
+          0.6,
+          0
+        ],
+        "end": [
+          -3.86,
+          1.1,
+          0
+        ],
+        "rmol": "O2#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "O2",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          0.55,
+          0.6,
+          0
+        ],
+        "end": [
+          -1.54,
+          1.1,
+          0
+        ],
+        "rmol": "O2#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "O3",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          2.85,
+          -0.6,
+          0
+        ],
+        "end": [
+          0,
+          0.6,
+          0
+        ],
+        "rmol": "O2#2",
+        "pmol": "H2O#1"
+      },
+      {
+        "id": "O4",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          3.95,
+          -0.6,
+          0
+        ],
+        "end": [
+          3.4,
+          -0.6,
+          0
+        ],
+        "rmol": "O2#2",
+        "pmol": "H2O#2"
+      },
+      {
+        "id": "H1",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -3.3649,
+          0.8351,
+          0.6351
+        ],
+        "end": [
+          0.7591,
+          1.1877,
+          0
+        ],
+        "rmol": "CH4#1",
+        "pmol": "H2O#1"
+      },
+      {
+        "id": "H2",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -3.3649,
+          -0.4351,
+          -0.6351
+        ],
+        "end": [
+          -0.7591,
+          1.1877,
+          0
+        ],
+        "rmol": "CH4#1",
+        "pmol": "H2O#1"
+      },
+      {
+        "id": "H3",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -4.6351,
+          0.8351,
+          -0.6351
+        ],
+        "end": [
+          4.1591,
+          -0.0123,
+          0
+        ],
+        "rmol": "CH4#1",
+        "pmol": "H2O#2"
+      },
+      {
+        "id": "H4",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -4.6351,
+          -0.4351,
+          0.6351
+        ],
+        "end": [
+          2.6409,
+          -0.0123,
+          0
+        ],
+        "rmol": "CH4#1",
+        "pmol": "H2O#2"
+      }
+    ],
+    "bonds": {
+      "before": [
+        {
+          "a": "C1",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "H3",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "H4",
+          "order": 1
+        },
+        {
+          "a": "O1",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "O3",
+          "b": "O4",
+          "order": 2
+        }
+      ],
+      "after": [
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "O3",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "O3",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "O4",
+          "b": "H3",
+          "order": 1
+        },
+        {
+          "a": "O4",
+          "b": "H4",
+          "order": 1
+        }
+      ],
+      "broken": [
+        {
+          "a": "C1",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "H3",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "H4",
+          "order": 1
+        },
+        {
+          "a": "O1",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "O3",
+          "b": "O4",
+          "order": 2
+        }
+      ],
+      "formed": [
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "O3",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "O3",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "O4",
+          "b": "H3",
+          "order": 1
+        },
+        {
+          "a": "O4",
+          "b": "H4",
+          "order": 1
+        }
+      ],
+      "kept": []
+    },
+    "labels": [
+      {
+        "id": "reactant-CH4#1",
+        "text": "甲烷 (CH₄)",
+        "color": "slate",
+        "phase": "reactant",
+        "atoms": [
+          "C1",
+          "H1",
+          "H2",
+          "H3",
+          "H4"
+        ]
+      },
+      {
+        "id": "reactant-O2#1",
+        "text": "氧气 (O₂)",
+        "color": "red",
+        "phase": "reactant",
+        "atoms": [
+          "O1",
+          "O2"
+        ]
+      },
+      {
+        "id": "reactant-O2#2",
+        "text": "氧气 (O₂)",
+        "color": "red",
+        "phase": "reactant",
+        "atoms": [
+          "O3",
+          "O4"
+        ]
+      },
+      {
+        "id": "product-CO2#1",
+        "text": "二氧化碳 (CO₂)",
+        "color": "slate",
+        "phase": "product",
+        "atoms": [
+          "C1",
+          "O1",
+          "O2"
+        ]
+      },
+      {
+        "id": "product-H2O#1",
+        "text": "水 (H₂O)",
+        "color": "cyan",
+        "phase": "product",
+        "atoms": [
+          "O3",
+          "H1",
+          "H2"
+        ]
+      },
+      {
+        "id": "product-H2O#2",
+        "text": "水 (H₂O)",
+        "color": "cyan",
+        "phase": "product",
+        "atoms": [
+          "O4",
+          "H3",
+          "H4"
+        ]
+      }
+    ],
+    "elementCounts": {
+      "C": 1,
+      "O": 4,
+      "H": 4
+    },
+    "legend": [
+      {
+        "el": "C",
+        "color": "#334155",
+        "name": "碳"
+      },
+      {
+        "el": "O",
+        "color": "#ef4444",
+        "name": "氧"
+      },
+      {
+        "el": "H",
+        "color": "#f1f5f9",
+        "name": "氢"
+      }
+    ],
+    "steps": [
+      {
+        "title": "反应物混合",
+        "html": "<span class='text-slate-200 font-semibold'>甲烷 (CH₄)</span> 与 <span class='text-red-400 font-semibold'>氧气 (O₂)</span> 分子混合靠近。此时 C–H 键与 O=O 键都很稳定，常温下不自发反应，需<span class='text-amber-400 font-semibold'>点燃提供活化能</span>。"
+      },
+      {
+        "title": "点燃燃烧",
+        "html": "达到着火点后，<span class='border-b border-dashed border-amber-500'>C–H 键与 O=O 键剧烈断裂</span>，原子被打散并重新组合。这是剧烈的<span class='text-amber-400 font-semibold'>氧化放热反应</span>，瞬间释放大量热与光，即火焰。"
+      },
+      {
+        "title": "生成产物",
+        "html": "原子重组生成 <span class='text-slate-200 font-semibold'>二氧化碳 (CO₂)</span> 与 <span class='text-blue-300 font-semibold'>水 (H₂O)</span>。注意反应前后原子种类与数目守恒（1C、4H、4O），质量守恒。"
+      }
+    ],
+    "fragments": [],
+    "energy": {
+      "activation": 0.5,
+      "deltaH": -0.75,
+      "reactantLabel": "CH₄+O₂",
+      "productLabel": "CO₂+H₂O"
+    },
+    "electrons": [],
+    "ui": {
+      "reactants": "反应物",
+      "products": "产物",
+      "progress": "反应进度",
+      "play": "自动演示",
+      "pause": "暂停演示",
+      "reset": "复位",
+      "prev": "上一步",
+      "next": "下一步",
+      "hint": "拖动滑块观察化学键的断裂、原子重组与守恒，或点击上方步骤跳转。",
+      "drag": "拖拽旋转 · 滚轮缩放 · 右键平移",
+      "legend": "原子图例",
+      "conservation": "原子守恒",
+      "energy": "能量·反应进程",
+      "broken": "断裂的键",
+      "formed": "新生成的键",
+      "labels": "标签",
+      "labelsHint": "显示 / 隐藏分子标签"
+    }
+  }
+}

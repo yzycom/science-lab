@@ -1,0 +1,173 @@
+{
+  "id": "analytic-ellipse-slopeprod-const",
+  "kind": "edulab.analyticGeometry",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-analytic-geometry",
+  "title": "椭圆中斜率之积的定值",
+  "tags": [
+    "math",
+    "analytic-geometry"
+  ],
+  "payload": {
+    "lesson": {
+      "language": "zh-CN",
+      "title": "椭圆中斜率之积的定值",
+      "problem": "<p class='font-medium text-slate-800'>【题目】</p><p>椭圆 $C:\\dfrac{x^2}{4}+\\dfrac{y^2}{3}=1$，$P(2,0)$ 为右顶点。$A,B$ 是 $C$ 上关于原点对称的两点（$B=-A$）。求证 $k_{PA}\\cdot k_{PB}$ 为定值。</p>",
+      "answerLabel": "斜率之积定值",
+      "answer": "$k_{PA}\\cdot k_{PB}=-\\dfrac{3}{4}$"
+    },
+    "steps": [
+      {
+        "title": "设点",
+        "content": "<p>设 $A(x_0,y_0)$，则 $B(-x_0,-y_0)$，且 $\\dfrac{x_0^2}{4}+\\dfrac{y_0^2}{3}=1$，即 $y_0^2=3\\left(1-\\dfrac{x_0^2}{4}\\right)=\\dfrac{3(4-x_0^2)}{4}$。</p>"
+      },
+      {
+        "title": "计算斜率之积",
+        "content": "<p>$k_{PA}\\cdot k_{PB}=\\dfrac{y_0-0}{x_0-2}\\cdot\\dfrac{-y_0-0}{-x_0-2}=\\dfrac{-y_0^2}{(x_0-2)(-x_0-2)}=\\dfrac{-y_0^2}{4-x_0^2}$。</p><p>代入 $y_0^2=\\dfrac{3(4-x_0^2)}{4}$：</p><div class='text-center py-3 bg-emerald-50 border border-emerald-100 rounded-xl text-emerald-900 font-bold'>$$ k_{PA}\\cdot k_{PB}=\\dfrac{-\\frac{3}{4}(4-x_0^2)}{4-x_0^2}=-\\dfrac{3}{4} $$</div><p class='text-slate-500 text-sm'>与 $A$ 的位置无关，恒为定值。拖动滑块即可观察。</p>"
+      }
+    ],
+    "board": {
+      "view": {
+        "xRange": [
+          -3.2,
+          3.2
+        ],
+        "yRange": [
+          -2.4,
+          2.4
+        ]
+      },
+      "conics": [
+        {
+          "kind": "ellipse",
+          "a": 2,
+          "b": 1.7320508075688772,
+          "center": [
+            0,
+            0
+          ],
+          "name": "C",
+          "color": "curve",
+          "label": "C: x²/4 + y²/3 = 1"
+        }
+      ],
+      "points": {
+        "P": {
+          "xy": [
+            2,
+            0
+          ],
+          "color": "fixed",
+          "label": "P(2,0)",
+          "emphasis": true
+        }
+      },
+      "param": {
+        "name": "t",
+        "label": "动点 A 的参数角 $t$",
+        "min": 12,
+        "max": 168,
+        "step": 1,
+        "value": 60,
+        "unit": "°",
+        "standard": 60,
+        "ticks": [
+          "12°",
+          "90°",
+          "168°"
+        ]
+      },
+      "derived": [
+        {
+          "type": "point_on_conic",
+          "name": "A",
+          "conic": "C",
+          "t": "@param",
+          "color": "ptA",
+          "emphasis": true
+        },
+        {
+          "type": "point_reflect",
+          "name": "B",
+          "of": "A",
+          "center": [
+            0,
+            0
+          ],
+          "color": "ptB",
+          "emphasis": true
+        },
+        {
+          "type": "line_through_points",
+          "name": "PA",
+          "a": "P",
+          "b": "A",
+          "color": "vecA"
+        },
+        {
+          "type": "line_through_points",
+          "name": "PB",
+          "a": "P",
+          "b": "B",
+          "color": "vecB"
+        },
+        {
+          "type": "segment",
+          "name": "AB",
+          "a": "A",
+          "b": "B",
+          "color": "aux",
+          "dashed": true
+        }
+      ],
+      "readouts": [
+        {
+          "id": "A",
+          "label": "动点 A",
+          "type": "coord",
+          "of": "A",
+          "color": "ptA"
+        },
+        {
+          "id": "B",
+          "label": "对称点 B",
+          "type": "coord",
+          "of": "B",
+          "color": "ptB"
+        },
+        {
+          "id": "kPA",
+          "label": "斜率 $k_{PA}$",
+          "type": "slope",
+          "of": "PA"
+        },
+        {
+          "id": "kprod",
+          "label": "斜率之积 $k_{PA}\\cdot k_{PB}$",
+          "type": "slope_product",
+          "a": "PA",
+          "b": "PB",
+          "highlight": true
+        }
+      ],
+      "constant": {
+        "of": "kprod",
+        "label": "$-\\dfrac{3}{4}$"
+      },
+      "legend": [
+        {
+          "color": "vecA",
+          "text": "直线 PA"
+        },
+        {
+          "color": "vecB",
+          "text": "直线 PB"
+        },
+        {
+          "color": "aux",
+          "text": "AB 过中心 O"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "id": "analytic-ellipse-dot-range",
+  "kind": "edulab.analyticGeometry",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-analytic-geometry",
+  "title": "椭圆与动态向量积范围",
+  "tags": [
+    "math",
+    "analytic-geometry"
+  ],
+  "payload": {
+    "lesson": {
+      "language": "zh-CN",
+      "title": "椭圆与动态向量积范围",
+      "problem": "<p class='font-medium text-slate-800'>【题目】</p><p>椭圆 $C:\\dfrac{x^2}{a^2}+\\dfrac{y^2}{b^2}=1\\,(a>b>0)$ 离心率 $e=\\dfrac12$，过点 $P\\left(1,\\dfrac32\\right)$。$M(-1,0)$，过右焦点 $F$ 的直线 $l$ 交 $C$ 于 $A,B$。</p><ol class='list-decimal pl-5 space-y-1'><li>求 $C$ 的标准方程；</li><li>求 $\\vec{MA}\\cdot\\vec{MB}$ 的取值范围。</li></ol>",
+      "answerLabel": "向量数量积取值范围",
+      "answer": "$[-3,\\ \\frac{7}{4}]$"
+    },
+    "steps": [
+      {
+        "title": "求椭圆 C 的标准方程",
+        "content": "<p>$e=\\dfrac{c}{a}=\\dfrac12,\\ c^2=a^2-b^2\\Rightarrow a^2=\\dfrac43b^2$；代入 $P\\left(1,\\dfrac32\\right)$ 得 $b^2=3,\\ a^2=4$。</p><div class='text-center py-3 bg-indigo-50 border border-indigo-100 rounded-xl text-indigo-900 font-bold'>$$ \\frac{x^2}{4}+\\frac{y^2}{3}=1 $$</div>"
+      },
+      {
+        "title": "联立 + 韦达定理",
+        "content": "<p>$F(1,0)$。设 $l:\\,x=my+1$（含竖直线，避免讨论斜率），代入椭圆：</p><p class='text-center'>$$ 3 m^{2} + 4\\,y^2 + 6 m\\,y -9 = 0 $$</p><p>韦达：$y_1+y_2=- \\frac{6 m}{3 m^{2} + 4},\\ y_1y_2=- \\frac{9}{3 m^{2} + 4}$。</p>"
+      },
+      {
+        "title": "数量积化简并求范围",
+        "content": "<p>$\\vec{MA}\\cdot\\vec{MB}=(m^2+1)y_1y_2+2m(y_1+y_2)+4=\\frac{7 - 9 m^{2}}{3 m^{2} + 4}$。</p><p>由 $3m^2+4\\ge4$ 知 $\\dfrac{19}{3m^2+4}\\in\\left(0,\\dfrac{19}{4}\\right]$，竖直线取到 $\\dfrac74$；$l$ 为 $x$ 轴时 $A(2,0),B(-2,0)$ 取到 $-3$。</p><div class='text-center py-3 bg-emerald-50 border border-emerald-100 rounded-xl text-emerald-900 font-bold'>$$ \\vec{MA}\\cdot\\vec{MB}\\in [-3,\\ \\frac{7}{4}] $$</div>"
+      }
+    ],
+    "board": {
+      "view": {
+        "xRange": [
+          -3.6,
+          3.6
+        ],
+        "yRange": [
+          -2.6,
+          2.6
+        ]
+      },
+      "conics": [
+        {
+          "kind": "ellipse",
+          "a": 2,
+          "b": 1.7320508075688772,
+          "center": [
+            0,
+            0
+          ],
+          "name": "C",
+          "color": "curve",
+          "label": "C: x²/4 + y²/3 = 1"
+        }
+      ],
+      "points": {
+        "M": {
+          "xy": [
+            -1,
+            0
+          ],
+          "color": "vecA",
+          "label": "M(-1,0)",
+          "emphasis": false
+        },
+        "F": {
+          "xy": [
+            1,
+            0
+          ],
+          "color": "point",
+          "label": "F(1,0)",
+          "emphasis": false
+        },
+        "P": {
+          "xy": [
+            1,
+            1.5
+          ],
+          "color": "given",
+          "label": "P",
+          "emphasis": false
+        }
+      },
+      "param": {
+        "name": "θ",
+        "label": "旋转倾斜角 $\\theta$",
+        "min": 0,
+        "max": 180,
+        "step": 0.5,
+        "value": 45,
+        "unit": "°",
+        "standard": 45,
+        "ticks": [
+          "0° (x 轴)",
+          "90°",
+          "180°"
+        ]
+      },
+      "derived": [
+        {
+          "type": "line_through_angle",
+          "name": "l",
+          "point": "F",
+          "angle": "@param",
+          "color": "line"
+        },
+        {
+          "type": "intersect_line_conic",
+          "name": [
+            "A",
+            "B"
+          ],
+          "line": "l",
+          "conic": "C",
+          "colors": [
+            "ptA",
+            "ptB"
+          ]
+        },
+        {
+          "type": "vector",
+          "name": "vMA",
+          "from": "M",
+          "to": "A",
+          "color": "vecA"
+        },
+        {
+          "type": "vector",
+          "name": "vMB",
+          "from": "M",
+          "to": "B",
+          "color": "vecB"
+        }
+      ],
+      "readouts": [
+        {
+          "id": "F",
+          "label": "右焦点 F 坐标",
+          "type": "coord",
+          "of": "F"
+        },
+        {
+          "id": "k",
+          "label": "直线斜率 k",
+          "type": "slope",
+          "of": "l"
+        },
+        {
+          "id": "A",
+          "label": "交点 A",
+          "type": "coord",
+          "of": "A",
+          "color": "ptA"
+        },
+        {
+          "id": "B",
+          "label": "交点 B",
+          "type": "coord",
+          "of": "B",
+          "color": "ptB"
+        },
+        {
+          "id": "dot",
+          "label": "数量积 $\\vec{MA}\\cdot\\vec{MB}$",
+          "type": "dot",
+          "a": "vMA",
+          "b": "vMB",
+          "highlight": true
+        }
+      ],
+      "rangeBar": {
+        "of": "dot",
+        "min": -3,
+        "max": 1.75,
+        "label": "$[-3,\\ \\frac{7}{4}]$"
+      },
+      "legend": [
+        {
+          "color": "line",
+          "text": "动直线 l"
+        },
+        {
+          "color": "vecA",
+          "text": "向量 MA (红)"
+        },
+        {
+          "color": "vecB",
+          "text": "向量 MB (蓝)"
+        }
+      ]
+    }
+  }
+}

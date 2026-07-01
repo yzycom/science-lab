@@ -1,0 +1,175 @@
+{
+  "id": "analytic-parabola-dot-const",
+  "kind": "edulab.analyticGeometry",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-analytic-geometry",
+  "title": "抛物线焦点弦的数量积定值",
+  "tags": [
+    "math",
+    "analytic-geometry"
+  ],
+  "payload": {
+    "lesson": {
+      "language": "zh-CN",
+      "title": "抛物线焦点弦的数量积定值",
+      "problem": "<p class='font-medium text-slate-800'>【题目】</p><p>抛物线 $C:y^2=4x$，$O$ 为原点，过焦点 $F(1,0)$ 的直线 $l$ 交 $C$ 于 $A,B$。求证 $\\vec{OA}\\cdot\\vec{OB}$ 为定值。</p>",
+      "answerLabel": "数量积定值",
+      "answer": "$\\vec{OA}\\cdot\\vec{OB}=-3$"
+    },
+    "steps": [
+      {
+        "title": "联立 + 韦达定理",
+        "content": "<p>设 $l:\\,x=my+1$，代入 $y^2=4x$ 得 $ y^2-4my-4=0 $，故 $y_1+y_2=4 m,\\ y_1y_2=-4$。</p><p>又 $x_i=\\dfrac{y_i^2}{4}$，故 $x_1x_2=\\dfrac{(y_1y_2)^2}{16}=1$。</p>"
+      },
+      {
+        "title": "计算数量积",
+        "content": "<p>$\\vec{OA}\\cdot\\vec{OB}=x_1x_2+y_1y_2=1+(-4)$。</p><div class='text-center py-3 bg-emerald-50 border border-emerald-100 rounded-xl text-emerald-900 font-bold'>$$ \\vec{OA}\\cdot\\vec{OB}=-3 $$</div><p class='text-slate-500 text-sm'>与直线倾斜角无关，恒为定值。</p>"
+      }
+    ],
+    "board": {
+      "view": {
+        "xRange": [
+          -2,
+          7
+        ],
+        "yRange": [
+          -4,
+          4
+        ]
+      },
+      "conics": [
+        {
+          "kind": "parabola",
+          "p": 2,
+          "center": [
+            0,
+            0
+          ],
+          "axis": "x",
+          "name": "C",
+          "color": "curve",
+          "label": "C: y² = 4x"
+        }
+      ],
+      "points": {
+        "O": {
+          "xy": [
+            0,
+            0
+          ],
+          "color": "point",
+          "label": "O",
+          "emphasis": false
+        },
+        "F": {
+          "xy": [
+            1,
+            0
+          ],
+          "color": "fixed",
+          "label": "F(1,0)",
+          "emphasis": true
+        }
+      },
+      "param": {
+        "name": "θ",
+        "label": "焦点弦倾斜角 $\\theta$",
+        "min": 18,
+        "max": 162,
+        "step": 0.5,
+        "value": 60,
+        "unit": "°",
+        "standard": 60,
+        "ticks": [
+          "18°",
+          "90°",
+          "162°"
+        ]
+      },
+      "derived": [
+        {
+          "type": "line_through_angle",
+          "name": "l",
+          "point": "F",
+          "angle": "@param",
+          "color": "line"
+        },
+        {
+          "type": "intersect_line_conic",
+          "name": [
+            "A",
+            "B"
+          ],
+          "line": "l",
+          "conic": "C",
+          "colors": [
+            "ptA",
+            "ptB"
+          ]
+        },
+        {
+          "type": "vector",
+          "name": "vOA",
+          "from": "O",
+          "to": "A",
+          "color": "vecA"
+        },
+        {
+          "type": "vector",
+          "name": "vOB",
+          "from": "O",
+          "to": "B",
+          "color": "vecB"
+        }
+      ],
+      "readouts": [
+        {
+          "id": "A",
+          "label": "交点 A",
+          "type": "coord",
+          "of": "A",
+          "color": "ptA"
+        },
+        {
+          "id": "B",
+          "label": "交点 B",
+          "type": "coord",
+          "of": "B",
+          "color": "ptB"
+        },
+        {
+          "id": "k",
+          "label": "直线斜率 k",
+          "type": "slope",
+          "of": "l"
+        },
+        {
+          "id": "dot",
+          "label": "$\\vec{OA}\\cdot\\vec{OB}$",
+          "type": "dot",
+          "a": "vOA",
+          "b": "vOB",
+          "highlight": true
+        }
+      ],
+      "constant": {
+        "of": "dot",
+        "label": "$-3$"
+      },
+      "legend": [
+        {
+          "color": "line",
+          "text": "过焦点弦 l"
+        },
+        {
+          "color": "vecA",
+          "text": "向量 OA"
+        },
+        {
+          "color": "vecB",
+          "text": "向量 OB"
+        }
+      ]
+    }
+  }
+}

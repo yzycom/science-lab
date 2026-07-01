@@ -1,0 +1,1040 @@
+{
+  "id": "chem-esterification",
+  "kind": "edulab.chemReaction",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-chem-reaction",
+  "title": "酯化反应",
+  "tags": [
+    "chemistry",
+    "reaction"
+  ],
+  "payload": {
+    "meta": {
+      "title": "酯化反应",
+      "subtitle": "乙酸 + 乙醇 的费歇尔酯化反应机理",
+      "language": "zh-CN",
+      "category": "organic",
+      "accent": "indigo",
+      "engine": "mechanism",
+      "equation": "\\text{CH}_3\\text{COOH} + \\text{C}_2\\text{H}_5\\text{OH} \\underset{\\Delta}{\\overset{\\text{浓硫酸}}{\\rightleftharpoons}} \\text{CH}_3\\text{COOC}_2\\text{H}_5 + \\text{H}_2\\text{O}"
+    },
+    "conditions": {
+      "text": "催化、加热",
+      "reversible": true,
+      "transitionGlow": true,
+      "catalyst": {
+        "label": "浓硫酸催化剂 (H⁺)",
+        "formula": "H^+"
+      }
+    },
+    "atoms": [
+      {
+        "id": "C1",
+        "el": "C",
+        "color": "#334155",
+        "radius": 0.5,
+        "start": [
+          -4.5,
+          0.7,
+          0
+        ],
+        "end": [
+          -2.48,
+          1.399,
+          0
+        ],
+        "rmol": "乙酸#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "acetyl",
+        "flocal": [
+          0,
+          0.2,
+          0
+        ]
+      },
+      {
+        "id": "O1",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          -4.5,
+          1.75,
+          0
+        ],
+        "end": [
+          -2.3752,
+          2.4438,
+          0
+        ],
+        "rmol": "乙酸#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "acetyl",
+        "flocal": [
+          0,
+          1.25,
+          0
+        ]
+      },
+      {
+        "id": "C2",
+        "el": "C",
+        "color": "#334155",
+        "radius": 0.5,
+        "start": [
+          -5.7,
+          0,
+          0
+        ],
+        "end": [
+          -3.7439,
+          0.8223,
+          0
+        ],
+        "rmol": "乙酸#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "acetyl",
+        "flocal": [
+          -1.2,
+          -0.5,
+          0
+        ]
+      },
+      {
+        "id": "H1",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -5.7,
+          -0.7,
+          0.8
+        ],
+        "end": [
+          -3.8138,
+          0.1258,
+          0.8
+        ],
+        "rmol": "乙酸#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "acetyl",
+        "flocal": [
+          -1.2,
+          -1.2,
+          0.8
+        ]
+      },
+      {
+        "id": "H2",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -5.7,
+          -0.7,
+          -0.8
+        ],
+        "end": [
+          -3.8138,
+          0.1258,
+          -0.8
+        ],
+        "rmol": "乙酸#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "acetyl",
+        "flocal": [
+          -1.2,
+          -1.2,
+          -0.8
+        ]
+      },
+      {
+        "id": "H3",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -6.5,
+          0.4,
+          0
+        ],
+        "end": [
+          -4.5,
+          1.3002,
+          0
+        ],
+        "rmol": "乙酸#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "acetyl",
+        "flocal": [
+          -2,
+          -0.1,
+          0
+        ]
+      },
+      {
+        "id": "O2",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          -3.5,
+          -0.1,
+          0.2
+        ],
+        "end": [
+          3.2,
+          -1.5,
+          -0.5
+        ],
+        "rmol": "乙酸#1",
+        "pmol": "水#1",
+        "frag": "leavingOH",
+        "flocal": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "H4",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -2.8,
+          -0.6,
+          0.3
+        ],
+        "end": [
+          4.031,
+          -1.6271,
+          -0.7081
+        ],
+        "rmol": "乙酸#1",
+        "pmol": "水#1",
+        "frag": "leavingOH",
+        "flocal": [
+          0.7,
+          -0.5,
+          0.1
+        ]
+      },
+      {
+        "id": "O3",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          4.5,
+          -0.5,
+          0
+        ],
+        "end": [
+          -1.38,
+          1.05,
+          0
+        ],
+        "rmol": "乙醇#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "ethoxy",
+        "flocal": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "C3",
+        "el": "C",
+        "color": "#334155",
+        "radius": 0.5,
+        "start": [
+          5.6,
+          -0.1,
+          0
+        ],
+        "end": [
+          -0.28,
+          1.45,
+          0
+        ],
+        "rmol": "乙醇#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "ethoxy",
+        "flocal": [
+          1.1,
+          0.4,
+          0
+        ]
+      },
+      {
+        "id": "H5",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          5.6,
+          0.5,
+          0.8
+        ],
+        "end": [
+          -0.28,
+          2.05,
+          0.8
+        ],
+        "rmol": "乙醇#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "ethoxy",
+        "flocal": [
+          1.1,
+          1,
+          0.8
+        ]
+      },
+      {
+        "id": "H6",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          5.6,
+          0.5,
+          -0.8
+        ],
+        "end": [
+          -0.28,
+          2.05,
+          -0.8
+        ],
+        "rmol": "乙醇#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "ethoxy",
+        "flocal": [
+          1.1,
+          1,
+          -0.8
+        ]
+      },
+      {
+        "id": "C4",
+        "el": "C",
+        "color": "#334155",
+        "radius": 0.5,
+        "start": [
+          6.8,
+          -0.8,
+          0
+        ],
+        "end": [
+          0.92,
+          0.75,
+          0
+        ],
+        "rmol": "乙醇#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "ethoxy",
+        "flocal": [
+          2.3,
+          -0.3,
+          0
+        ]
+      },
+      {
+        "id": "H7",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          6.8,
+          -1.4,
+          0.8
+        ],
+        "end": [
+          0.92,
+          0.15,
+          0.8
+        ],
+        "rmol": "乙醇#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "ethoxy",
+        "flocal": [
+          2.3,
+          -0.9,
+          0.8
+        ]
+      },
+      {
+        "id": "H8",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          6.8,
+          -1.4,
+          -0.8
+        ],
+        "end": [
+          0.92,
+          0.15,
+          -0.8
+        ],
+        "rmol": "乙醇#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "ethoxy",
+        "flocal": [
+          2.3,
+          -0.9,
+          -0.8
+        ]
+      },
+      {
+        "id": "H9",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          7.5,
+          -0.2,
+          0
+        ],
+        "end": [
+          1.62,
+          1.35,
+          0
+        ],
+        "rmol": "乙醇#1",
+        "pmol": "乙酸乙酯#1",
+        "frag": "ethoxy",
+        "flocal": [
+          3,
+          0.3,
+          0
+        ]
+      },
+      {
+        "id": "H10",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          3.9,
+          -1.1,
+          0
+        ],
+        "end": [
+          3.9,
+          -2,
+          -0.5
+        ],
+        "rmol": "乙醇#1",
+        "pmol": "水#1",
+        "frag": "leavingH",
+        "flocal": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "Hp",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -4.5,
+          2.5,
+          0.5
+        ],
+        "end": [
+          5,
+          1,
+          1
+        ],
+        "rmol": "H+",
+        "pmol": "H+",
+        "frag": "catalyst",
+        "flocal": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "bonds": {
+      "before": [
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "C2",
+          "order": 1
+        },
+        {
+          "a": "C2",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "C2",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "C2",
+          "b": "H3",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 1
+        },
+        {
+          "a": "O2",
+          "b": "H4",
+          "order": 1
+        },
+        {
+          "a": "O3",
+          "b": "C3",
+          "order": 1
+        },
+        {
+          "a": "C3",
+          "b": "H5",
+          "order": 1
+        },
+        {
+          "a": "C3",
+          "b": "H6",
+          "order": 1
+        },
+        {
+          "a": "C3",
+          "b": "C4",
+          "order": 1
+        },
+        {
+          "a": "C4",
+          "b": "H7",
+          "order": 1
+        },
+        {
+          "a": "C4",
+          "b": "H8",
+          "order": 1
+        },
+        {
+          "a": "C4",
+          "b": "H9",
+          "order": 1
+        },
+        {
+          "a": "O3",
+          "b": "H10",
+          "order": 1
+        }
+      ],
+      "after": [
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "C2",
+          "order": 1
+        },
+        {
+          "a": "C2",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "C2",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "C2",
+          "b": "H3",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O3",
+          "order": 1
+        },
+        {
+          "a": "O3",
+          "b": "C3",
+          "order": 1
+        },
+        {
+          "a": "C3",
+          "b": "H5",
+          "order": 1
+        },
+        {
+          "a": "C3",
+          "b": "H6",
+          "order": 1
+        },
+        {
+          "a": "C3",
+          "b": "C4",
+          "order": 1
+        },
+        {
+          "a": "C4",
+          "b": "H7",
+          "order": 1
+        },
+        {
+          "a": "C4",
+          "b": "H8",
+          "order": 1
+        },
+        {
+          "a": "C4",
+          "b": "H9",
+          "order": 1
+        },
+        {
+          "a": "O2",
+          "b": "H4",
+          "order": 1
+        },
+        {
+          "a": "O2",
+          "b": "H10",
+          "order": 1
+        }
+      ],
+      "broken": [
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 1
+        },
+        {
+          "a": "O3",
+          "b": "H10",
+          "order": 1
+        }
+      ],
+      "formed": [
+        {
+          "a": "C1",
+          "b": "O3",
+          "order": 1
+        },
+        {
+          "a": "O2",
+          "b": "H10",
+          "order": 1
+        }
+      ],
+      "kept": [
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "C2",
+          "order": 1
+        },
+        {
+          "a": "C2",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "C2",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "C2",
+          "b": "H3",
+          "order": 1
+        },
+        {
+          "a": "O3",
+          "b": "C3",
+          "order": 1
+        },
+        {
+          "a": "C3",
+          "b": "H5",
+          "order": 1
+        },
+        {
+          "a": "C3",
+          "b": "H6",
+          "order": 1
+        },
+        {
+          "a": "C3",
+          "b": "C4",
+          "order": 1
+        },
+        {
+          "a": "C4",
+          "b": "H7",
+          "order": 1
+        },
+        {
+          "a": "C4",
+          "b": "H8",
+          "order": 1
+        },
+        {
+          "a": "C4",
+          "b": "H9",
+          "order": 1
+        },
+        {
+          "a": "O2",
+          "b": "H4",
+          "order": 1
+        }
+      ]
+    },
+    "labels": [
+      {
+        "id": "r-acid",
+        "text": "乙酸 (CH₃COOH)",
+        "color": "red",
+        "phase": "reactant",
+        "atoms": [
+          "C1",
+          "O1",
+          "C2",
+          "H1",
+          "H2",
+          "H3",
+          "O2",
+          "H4"
+        ]
+      },
+      {
+        "id": "r-ethanol",
+        "text": "乙醇 (C₂H₅OH)",
+        "color": "blue",
+        "phase": "reactant",
+        "atoms": [
+          "O3",
+          "C3",
+          "H5",
+          "H6",
+          "C4",
+          "H7",
+          "H8",
+          "H9",
+          "H10"
+        ]
+      },
+      {
+        "id": "p-ester",
+        "text": "乙酸乙酯 (CH₃COOC₂H₅)",
+        "color": "emerald",
+        "phase": "product",
+        "atoms": [
+          "C1",
+          "O1",
+          "C2",
+          "H1",
+          "H2",
+          "H3",
+          "O3",
+          "C3",
+          "H5",
+          "H6",
+          "C4",
+          "H7",
+          "H8",
+          "H9"
+        ]
+      },
+      {
+        "id": "p-water",
+        "text": "水 (H₂O)",
+        "color": "cyan",
+        "phase": "product",
+        "atoms": [
+          "O2",
+          "H4",
+          "H10"
+        ]
+      }
+    ],
+    "elementCounts": {
+      "C": 4,
+      "O": 3,
+      "H": 10
+    },
+    "legend": [
+      {
+        "el": "C",
+        "color": "#334155",
+        "name": "碳"
+      },
+      {
+        "el": "O",
+        "color": "#ef4444",
+        "name": "氧"
+      },
+      {
+        "el": "H",
+        "color": "#f1f5f9",
+        "name": "氢"
+      }
+    ],
+    "steps": [
+      {
+        "title": "反应物准备",
+        "html": "<span class='text-red-400 font-semibold'>乙酸 (CH₃COOH)</span> 与 <span class='text-blue-400 font-semibold'>乙醇 (C₂H₅OH)</span> 在浓硫酸催化下靠近。游离 <span class='text-cyan-400 font-semibold'>质子 (H⁺)</span> 先质子化羰基氧，使羰基碳更易被进攻。"
+      },
+      {
+        "title": "碰撞与过渡态",
+        "html": "乙醇羟基氧进攻羰基碳，临界瞬间虚线键同时断生：<span class='border-b border-dashed border-amber-500'>酸 C–OH 键、醇 O–H 键断裂</span>，<span class='border-b border-dashed border-emerald-500'>新 C–O 酯键与 H₂O 形成</span>。能量最高的过渡态。"
+      },
+      {
+        "title": "产物生成与分离",
+        "html": "脱去一分子 <span class='text-cyan-400 font-semibold'>水 (H₂O)</span>，生成有香味的 <span class='text-emerald-400 font-semibold'>乙酸乙酯 (CH₃COOC₂H₅)</span>。<span class='text-indigo-300 font-semibold'>催化剂 H⁺</span> 再生，实现“酸脱羟基醇脱氢”。"
+      }
+    ],
+    "fragments": [
+      {
+        "K0": {
+          "pos": [
+            -4.5,
+            0.5,
+            0
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "K1": {
+          "pos": [
+            -0.7,
+            0.1,
+            0
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "K2": {
+          "pos": [
+            -2.5,
+            1.2,
+            0
+          ],
+          "rot": [
+            0,
+            0,
+            -0.1
+          ]
+        },
+        "id": "acetyl"
+      },
+      {
+        "K0": {
+          "pos": [
+            -3.5,
+            -0.1,
+            0.2
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "K1": {
+          "pos": [
+            0.5,
+            -0.5,
+            -0.3
+          ],
+          "rot": [
+            0,
+            0,
+            -0.2
+          ]
+        },
+        "K2": {
+          "pos": [
+            3.2,
+            -1.5,
+            -0.5
+          ],
+          "rot": [
+            0.2,
+            0.3,
+            0.5
+          ]
+        },
+        "id": "leavingOH"
+      },
+      {
+        "K0": {
+          "pos": [
+            4.5,
+            -0.5,
+            0
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "K1": {
+          "pos": [
+            0.6,
+            0.2,
+            0.15
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "K2": {
+          "pos": [
+            -1.38,
+            1.05,
+            0
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "id": "ethoxy"
+      },
+      {
+        "K0": {
+          "pos": [
+            3.9,
+            -1.1,
+            0
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "K1": {
+          "pos": [
+            1.1,
+            -1.3,
+            -0.3
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "K2": {
+          "pos": [
+            3.9,
+            -2,
+            -0.5
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "id": "leavingH"
+      },
+      {
+        "catalyst": true,
+        "K0": {
+          "pos": [
+            -4.5,
+            2.5,
+            0.5
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "K1": {
+          "pos": [
+            -0.5,
+            -1,
+            -0.3
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "K2": {
+          "pos": [
+            5,
+            1,
+            1
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        "id": "catalyst"
+      }
+    ],
+    "energy": {
+      "activation": 0.62,
+      "deltaH": -0.12,
+      "reactantLabel": "酸+醇",
+      "productLabel": "酯+水"
+    },
+    "electrons": [],
+    "ui": {
+      "reactants": "反应物",
+      "products": "产物",
+      "progress": "反应进度",
+      "play": "自动演示",
+      "pause": "暂停演示",
+      "reset": "复位",
+      "prev": "上一步",
+      "next": "下一步",
+      "hint": "拖动滑块观察化学键的断裂、原子重组与守恒，或点击上方步骤跳转。",
+      "drag": "拖拽旋转 · 滚轮缩放 · 右键平移",
+      "legend": "原子图例",
+      "conservation": "原子守恒",
+      "energy": "能量·反应进程",
+      "broken": "断裂的键",
+      "formed": "新生成的键",
+      "labels": "标签",
+      "labelsHint": "显示 / 隐藏分子标签"
+    }
+  }
+}

@@ -1,0 +1,262 @@
+{
+  "id": "chem-redox-na-cl2",
+  "kind": "edulab.chemReaction",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-chem-reaction",
+  "title": "钠与氯气",
+  "tags": [
+    "chemistry",
+    "reaction"
+  ],
+  "payload": {
+    "meta": {
+      "title": "钠与氯气",
+      "subtitle": "2Na + Cl₂ —— 电子转移的氧化还原反应",
+      "language": "zh-CN",
+      "category": "inorganic",
+      "accent": "violet",
+      "engine": "morph",
+      "equation": "2\\,\\text{Na} + \\text{Cl}_2 \\;\\xrightarrow{\\text{点燃}}\\; 2\\,\\text{NaCl}"
+    },
+    "conditions": {
+      "text": "点燃",
+      "exothermic": true,
+      "transitionGlow": true
+    },
+    "atoms": [
+      {
+        "id": "Na1",
+        "el": "Na",
+        "color": "#a855f7",
+        "radius": 0.58,
+        "start": [
+          -3.4,
+          -0.6,
+          0
+        ],
+        "end": [
+          -2.45,
+          -0.6,
+          0
+        ],
+        "rmol": "Na#1",
+        "pmol": "NaCl#1"
+      },
+      {
+        "id": "Na2",
+        "el": "Na",
+        "color": "#a855f7",
+        "radius": 0.58,
+        "start": [
+          0,
+          0.6,
+          0
+        ],
+        "end": [
+          0.95,
+          0.6,
+          0
+        ],
+        "rmol": "Na#2",
+        "pmol": "NaCl#2"
+      },
+      {
+        "id": "Cl1",
+        "el": "Cl",
+        "color": "#22c55e",
+        "radius": 0.52,
+        "start": [
+          2.675,
+          -0.6,
+          0
+        ],
+        "end": [
+          -0.95,
+          -0.6,
+          0
+        ],
+        "rmol": "Cl2#1",
+        "pmol": "NaCl#1"
+      },
+      {
+        "id": "Cl2",
+        "el": "Cl",
+        "color": "#22c55e",
+        "radius": 0.52,
+        "start": [
+          4.125,
+          -0.6,
+          0
+        ],
+        "end": [
+          2.45,
+          0.6,
+          0
+        ],
+        "rmol": "Cl2#1",
+        "pmol": "NaCl#2"
+      }
+    ],
+    "bonds": {
+      "before": [
+        {
+          "a": "Cl1",
+          "b": "Cl2",
+          "order": 1
+        }
+      ],
+      "after": [
+        {
+          "a": "Na1",
+          "b": "Cl1",
+          "order": "ionic"
+        },
+        {
+          "a": "Na2",
+          "b": "Cl2",
+          "order": "ionic"
+        }
+      ],
+      "broken": [
+        {
+          "a": "Cl1",
+          "b": "Cl2",
+          "order": 1
+        }
+      ],
+      "formed": [
+        {
+          "a": "Na1",
+          "b": "Cl1",
+          "order": "ionic"
+        },
+        {
+          "a": "Na2",
+          "b": "Cl2",
+          "order": "ionic"
+        }
+      ],
+      "kept": []
+    },
+    "labels": [
+      {
+        "id": "reactant-Na#1",
+        "text": "钠 (Na)",
+        "color": "violet",
+        "phase": "reactant",
+        "atoms": [
+          "Na1"
+        ]
+      },
+      {
+        "id": "reactant-Na#2",
+        "text": "钠 (Na)",
+        "color": "violet",
+        "phase": "reactant",
+        "atoms": [
+          "Na2"
+        ]
+      },
+      {
+        "id": "reactant-Cl2#1",
+        "text": "氯气 (Cl₂)",
+        "color": "green",
+        "phase": "reactant",
+        "atoms": [
+          "Cl1",
+          "Cl2"
+        ]
+      },
+      {
+        "id": "product-NaCl#1",
+        "text": "氯化钠 (NaCl)",
+        "color": "violet",
+        "phase": "product",
+        "atoms": [
+          "Na1",
+          "Cl1"
+        ]
+      },
+      {
+        "id": "product-NaCl#2",
+        "text": "氯化钠 (NaCl)",
+        "color": "violet",
+        "phase": "product",
+        "atoms": [
+          "Na2",
+          "Cl2"
+        ]
+      }
+    ],
+    "elementCounts": {
+      "Na": 2,
+      "Cl": 2
+    },
+    "legend": [
+      {
+        "el": "Na",
+        "color": "#a855f7",
+        "name": "钠"
+      },
+      {
+        "el": "Cl",
+        "color": "#22c55e",
+        "name": "氯"
+      }
+    ],
+    "steps": [
+      {
+        "title": "反应物",
+        "html": "<span class='text-violet-300 font-semibold'>钠原子 (Na)</span> 最外层有 1 个电子，<span class='text-green-400 font-semibold'>氯分子 (Cl₂)</span> 每个氯原子最外层有 7 个电子，都趋向 8 电子稳定结构。"
+      },
+      {
+        "title": "电子转移",
+        "html": "点燃后 <span class='border-b border-dashed border-green-400'>Cl–Cl 键断裂</span>，每个钠原子把 1 个 <span class='text-cyan-300 font-semibold'>电子 (e⁻)</span> 转移给氯原子：钠被<span class='text-amber-400 font-semibold'>氧化</span>为 Na⁺，氯被<span class='text-sky-400 font-semibold'>还原</span>为 Cl⁻。"
+      },
+      {
+        "title": "生成离子化合物",
+        "html": "Na⁺ 与 Cl⁻ 靠静电作用（离子键）形成 <span class='text-violet-300 font-semibold'>氯化钠 (NaCl)</span>。化合价：Na 0→+1、Cl 0→−1，得失电子守恒，原子守恒：2Na、2Cl。"
+      }
+    ],
+    "fragments": [],
+    "energy": {
+      "activation": 0.4,
+      "deltaH": -0.8,
+      "reactantLabel": "Na+Cl₂",
+      "productLabel": "NaCl"
+    },
+    "electrons": [
+      {
+        "from": "Na1",
+        "to": "Cl1",
+        "count": 1,
+        "label": "e⁻"
+      },
+      {
+        "from": "Na2",
+        "to": "Cl2",
+        "count": 1,
+        "label": "e⁻"
+      }
+    ],
+    "ui": {
+      "reactants": "反应物",
+      "products": "产物",
+      "progress": "反应进度",
+      "play": "自动演示",
+      "pause": "暂停演示",
+      "reset": "复位",
+      "prev": "上一步",
+      "next": "下一步",
+      "hint": "拖动滑块观察化学键的断裂、原子重组与守恒，或点击上方步骤跳转。",
+      "drag": "拖拽旋转 · 滚轮缩放 · 右键平移",
+      "legend": "原子图例",
+      "conservation": "原子守恒",
+      "energy": "能量·反应进程",
+      "broken": "断裂的键",
+      "formed": "新生成的键",
+      "labels": "标签",
+      "labelsHint": "显示 / 隐藏分子标签"
+    }
+  }
+}

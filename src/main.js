@@ -10,6 +10,9 @@ import { renderElementDetail } from './ui/ElementDetail.js';
 import { renderLegend } from './ui/Legend.js';
 import { renderCompoundList, showCompoundPanel, hideCompoundPanel } from './ui/CompoundList.js';
 import { renderCompoundDetail } from './ui/CompoundDetail.js';
+import { createModeController } from './app/modeController.js';
+import { edulabLessonGroups } from './data/edulab/index.js';
+import { clearLessonDetail, renderLessonDetail, renderLessonLibrary } from './ui/EdulabLessonPanel.js';
 
 // —— 场景初始化 ——
 const container = document.getElementById('canvas-container');
@@ -114,34 +117,71 @@ function clearSelection() {
 }
 
 // —— 模式切换 ——
-let currentMode = 'table';
+const lessonWorkbench = document.getElementById('lessonWorkbench');
+const lessonLibraryTitle = document.getElementById('lessonLibraryTitle');
+const legend = document.getElementById('legend');
 
-document.querySelectorAll('.mode-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const mode = btn.dataset.mode;
-    if (mode === currentMode) return;
-
-    currentMode = mode;
-
-    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    clearSelection();
-
-    if (mode === 'compounds') {
+createModeController([...document.querySelectorAll('.mode-btn')], {
+  table: {
+    enter() {
+      clearSelection();
+      hideCompoundPanel();
+      renderCompoundDetail(null, null);
+      hideLessons();
+      container.classList.remove('hidden');
+      legend.classList.remove('hidden');
+    },
+  },
+  compounds: {
+    enter() {
+      clearSelection();
+      hideLessons();
+      container.classList.remove('hidden');
+      legend.classList.add('hidden');
       showCompoundPanel();
       renderCompoundList(compounds, (compound) => {
         renderCompoundDetail(compound, () => {
-          // 取消化合物列表中的 active 状态
           document.querySelectorAll('.compound-item').forEach(i => i.classList.remove('active'));
         });
       });
-    } else {
+    },
+    leave() {
       hideCompoundPanel();
       renderCompoundDetail(null, null);
-    }
-  });
-});
+    },
+  },
+  reactions: {
+    enter() {
+      showLessons('化学反应', edulabLessonGroups.chemReaction);
+    },
+  },
+  math: {
+    enter() {
+      showLessons('数学课程', [
+        ...edulabLessonGroups.solidGeometry,
+        ...edulabLessonGroups.analyticGeometry,
+      ]);
+    },
+  },
+}, 'table');
+
+function showLessons(title, lessons) {
+  clearSelection();
+  hideCompoundPanel();
+  renderCompoundDetail(null, null);
+  container.classList.add('hidden');
+  legend.classList.add('hidden');
+  lessonWorkbench.classList.add('visible');
+  lessonWorkbench.setAttribute('aria-hidden', 'false');
+  lessonLibraryTitle.textContent = title;
+  renderLessonLibrary(lessons, renderLessonDetail);
+}
+
+function hideLessons() {
+  clearLessonDetail();
+  lessonWorkbench.classList.remove('visible');
+  lessonWorkbench.setAttribute('aria-hidden', 'true');
+}
 
 // —— 图例 ——
 renderLegend();

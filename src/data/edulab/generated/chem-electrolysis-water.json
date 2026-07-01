@@ -1,0 +1,328 @@
+{
+  "id": "chem-electrolysis-water",
+  "kind": "edulab.chemReaction",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-chem-reaction",
+  "title": "电解水",
+  "tags": [
+    "chemistry",
+    "reaction"
+  ],
+  "payload": {
+    "meta": {
+      "title": "电解水",
+      "subtitle": "通电使水分解为氢气和氧气",
+      "language": "zh-CN",
+      "category": "junior",
+      "accent": "cyan",
+      "engine": "morph",
+      "equation": "2\\,\\text{H}_2\\text{O} \\;\\underset{\\text{电解}}{\\overset{\\text{通电}}{\\longrightarrow}}\\; 2\\,\\text{H}_2 + \\text{O}_2"
+    },
+    "conditions": {
+      "text": "通电",
+      "under": "电解"
+    },
+    "atoms": [
+      {
+        "id": "O1",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          -1.7,
+          -0.6,
+          0
+        ],
+        "end": [
+          2.85,
+          -0.6,
+          0
+        ],
+        "rmol": "H2O#1",
+        "pmol": "O2#1"
+      },
+      {
+        "id": "O2",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          1.7,
+          0.6,
+          0
+        ],
+        "end": [
+          3.95,
+          -0.6,
+          0
+        ],
+        "rmol": "H2O#2",
+        "pmol": "O2#1"
+      },
+      {
+        "id": "H1",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -0.9409,
+          -0.0123,
+          0
+        ],
+        "end": [
+          -3.85,
+          -0.6,
+          0
+        ],
+        "rmol": "H2O#1",
+        "pmol": "H2#1"
+      },
+      {
+        "id": "H2",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -2.4591,
+          -0.0123,
+          0
+        ],
+        "end": [
+          -2.95,
+          -0.6,
+          0
+        ],
+        "rmol": "H2O#1",
+        "pmol": "H2#1"
+      },
+      {
+        "id": "H3",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          2.4591,
+          1.1877,
+          0
+        ],
+        "end": [
+          -0.45,
+          0.6,
+          0
+        ],
+        "rmol": "H2O#2",
+        "pmol": "H2#2"
+      },
+      {
+        "id": "H4",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          0.9409,
+          1.1877,
+          0
+        ],
+        "end": [
+          0.45,
+          0.6,
+          0
+        ],
+        "rmol": "H2O#2",
+        "pmol": "H2#2"
+      }
+    ],
+    "bonds": {
+      "before": [
+        {
+          "a": "O1",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "O1",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "O2",
+          "b": "H3",
+          "order": 1
+        },
+        {
+          "a": "O2",
+          "b": "H4",
+          "order": 1
+        }
+      ],
+      "after": [
+        {
+          "a": "H1",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "H3",
+          "b": "H4",
+          "order": 1
+        },
+        {
+          "a": "O1",
+          "b": "O2",
+          "order": 2
+        }
+      ],
+      "broken": [
+        {
+          "a": "O1",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "O1",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "O2",
+          "b": "H3",
+          "order": 1
+        },
+        {
+          "a": "O2",
+          "b": "H4",
+          "order": 1
+        }
+      ],
+      "formed": [
+        {
+          "a": "H1",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "H3",
+          "b": "H4",
+          "order": 1
+        },
+        {
+          "a": "O1",
+          "b": "O2",
+          "order": 2
+        }
+      ],
+      "kept": []
+    },
+    "labels": [
+      {
+        "id": "reactant-H2O#1",
+        "text": "水 (H₂O)",
+        "color": "cyan",
+        "phase": "reactant",
+        "atoms": [
+          "O1",
+          "H1",
+          "H2"
+        ]
+      },
+      {
+        "id": "reactant-H2O#2",
+        "text": "水 (H₂O)",
+        "color": "cyan",
+        "phase": "reactant",
+        "atoms": [
+          "O2",
+          "H3",
+          "H4"
+        ]
+      },
+      {
+        "id": "product-H2#1",
+        "text": "氢气 (H₂)",
+        "color": "sky",
+        "phase": "product",
+        "atoms": [
+          "H1",
+          "H2"
+        ]
+      },
+      {
+        "id": "product-H2#2",
+        "text": "氢气 (H₂)",
+        "color": "sky",
+        "phase": "product",
+        "atoms": [
+          "H3",
+          "H4"
+        ]
+      },
+      {
+        "id": "product-O2#1",
+        "text": "氧气 (O₂)",
+        "color": "red",
+        "phase": "product",
+        "atoms": [
+          "O1",
+          "O2"
+        ]
+      }
+    ],
+    "elementCounts": {
+      "O": 2,
+      "H": 4
+    },
+    "legend": [
+      {
+        "el": "O",
+        "color": "#ef4444",
+        "name": "氧"
+      },
+      {
+        "el": "H",
+        "color": "#f1f5f9",
+        "name": "氢"
+      }
+    ],
+    "steps": [
+      {
+        "title": "通电前",
+        "html": "两个 <span class='text-cyan-300 font-semibold'>水分子 (H₂O)</span> 静置，O–H 键稳定，需要<span class='text-cyan-400 font-semibold'>持续通入电能</span>才能分解。"
+      },
+      {
+        "title": "通电分解",
+        "html": "接通直流电，<span class='border-b border-dashed border-cyan-400'>O–H 键断裂</span>，氢、氧原子分别向两极迁移并重新组合。这是<span class='text-cyan-400 font-semibold'>吸热</span>的分解反应。"
+      },
+      {
+        "title": "生成气体",
+        "html": "氢原子两两结合成 <span class='text-sky-300 font-semibold'>氢气 (H₂)</span>（负极），氧原子结合成 <span class='text-red-400 font-semibold'>氧气 (O₂)</span>（正极），体积比约 2:1。原子守恒：4H、2O。"
+      }
+    ],
+    "fragments": [],
+    "energy": {
+      "activation": 0.35,
+      "deltaH": 0.55,
+      "reactantLabel": "H₂O",
+      "productLabel": "H₂+O₂"
+    },
+    "electrons": [],
+    "ui": {
+      "reactants": "反应物",
+      "products": "产物",
+      "progress": "反应进度",
+      "play": "自动演示",
+      "pause": "暂停演示",
+      "reset": "复位",
+      "prev": "上一步",
+      "next": "下一步",
+      "hint": "拖动滑块观察化学键的断裂、原子重组与守恒，或点击上方步骤跳转。",
+      "drag": "拖拽旋转 · 滚轮缩放 · 右键平移",
+      "legend": "原子图例",
+      "conservation": "原子守恒",
+      "energy": "能量·反应进程",
+      "broken": "断裂的键",
+      "formed": "新生成的键",
+      "labels": "标签",
+      "labelsHint": "显示 / 隐藏分子标签"
+    }
+  }
+}
