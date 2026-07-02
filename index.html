@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science Lab</title>
+  <script type="module" crossorigin src="/science-lab/assets/index-Da_0MkIs.js"></script>
+  <link rel="stylesheet" crossorigin href="/science-lab/assets/index-CB1kdDO7.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 顶部标题 -->
+    <header class="app-header">
+      <h1 class="app-title">Science Lab</h1>
+      <div class="mode-toggle">
+        <button class="mode-btn active" data-mode="table">元素</button>
+        <button class="mode-btn" data-mode="compounds">化合物</button>
+        <button class="mode-btn" data-mode="reactions">化学反应</button>
+        <button class="mode-btn" data-mode="math">数学课程</button>
+      </div>
+    </header>
+
+    <!-- Three.js 画布容器 -->
+    <div id="canvas-container"></div>
+
+    <!-- 元素详情面板 -->
+    <aside class="detail-panel" id="elementDetail">
+      <button class="detail-close">×</button>
+      <div class="detail-header">
+        <div class="detail-category"></div>
+        <div class="detail-main">
+          <span class="detail-symbol"></span>
+          <span class="detail-name"></span>
+        </div>
+      </div>
+      
+      <div class="atom-viewer-container">
+        <div id="atomCanvas"></div>
+        <div class="atom-legend">
+          <span>🔴 质子</span>
+          <span>⚪ 中子</span>
+          <span>🔵 电子</span>
+        </div>
+      </div>
+      
+      <div class="detail-shells"></div>
+      
+      <div class="detail-props"></div>
+    </aside>
+
+    <!-- 化合物工作台 -->
+    <main class="lesson-workbench" id="compoundWorkbench" aria-hidden="true">
+      <aside class="lesson-library">
+        <div class="lesson-library-header">
+          <div class="detail-category">COMPOUND</div>
+          <h2>常见化合物</h2>
+        </div>
+        <div class="lesson-list" id="compoundList"></div>
+      </aside>
+      <section class="lesson-detail" id="compoundDetail"></section>
+    </main>
+
+    <!-- 分类图例 -->
+    <div class="legend" id="legend"></div>
+
+    <!-- Edulab 课程工作台 -->
+    <main class="lesson-workbench" id="lessonWorkbench" aria-hidden="true">
+      <aside class="lesson-library">
+        <div class="lesson-library-header">
+          <div class="detail-category">EDULAB</div>
+          <h2 id="lessonLibraryTitle">课程库</h2>
+        </div>
+        <div class="lesson-list" id="lessonList"></div>
+      </aside>
+      <section class="lesson-detail" id="lessonDetail"></section>
+    </main>
+
+    <div class="viewport-unsupported" id="unsupportedViewport" role="alert" aria-live="polite">
+      <div class="viewport-unsupported-panel">
+        <div class="detail-category">VIEWPORT</div>
+        <h2>请使用电脑、平板横屏或展开后的折叠屏横屏浏览</h2>
+        <p>Science Lab 需要至少 820px × 560px 的显示区域。请旋转设备，展开折叠屏，或调宽分屏窗口后继续。</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
