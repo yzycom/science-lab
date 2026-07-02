@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { cylinderBetween, makeSceneShell, vectorFromArray } from './threeUtils.js';
 import { renderLatex } from './katexUtils.js';
 
@@ -30,6 +31,10 @@ export function renderChemReactionLesson(root, payload) {
   `;
 
   const shell = makeSceneShell(sceneHost, { camera: [0, 4.5, 11] });
+  
+  // 升级光照与材质，对齐 MoleculeScene 渲染质量
+  enhanceSceneLighting(shell.scene, shell.renderer);
+  
   const atomState = buildAtoms(shell.scene, payload.atoms || []);
   const bondGroup = new THREE.Group();
   shell.scene.add(bondGroup);
@@ -59,12 +64,51 @@ export function renderChemReactionLesson(root, payload) {
   };
 }
 
+function enhanceSceneLighting(scene, renderer) {
+  // 清除原有光照（makeSceneShell 已添加环境光和两盏方向光）
+  const lights = scene.children.filter(c => c.isLight);
+  lights.forEach(l => scene.remove(l));
+  
+  // 对齐 MoleculeScene 的三点布光方案
+  scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+  
+  // 主光（key light）：右上偏暖
+  const keyLight = new THREE.DirectionalLight(0xfff4e0, 0.9);
+  keyLight.position.set(5, 6, 4);
+  scene.add(keyLight);
+  
+  // 补光（fill light）：左下偏冷
+  const fillLight = new THREE.DirectionalLight(0xc8d8ff, 0.45);
+  fillLight.position.set(-4, -2, 3);
+  scene.add(fillLight);
+  
+  // 边缘光（rim light）：后方偏暖
+  const rimLight = new THREE.DirectionalLight(0xffd9b0, 0.55);
+  rimLight.position.set(0, 2, -6);
+  scene.add(rimLight);
+  
+  // 环境贴图（PBR 反射）
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const envScene = new RoomEnvironment();
+  const envTexture = pmrem.fromScene(envScene, 0.04).texture;
+  scene.environment = envTexture;
+  
+  // 色调映射（对齐化合物模块）
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+}
+
 function buildAtoms(scene, atoms) {
   return atoms.map((atom) => {
-    const material = new THREE.MeshStandardMaterial({
+    // 升级为 MeshPhysicalMaterial（对齐 MoleculeScene）
+    const material = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color(atom.color || DEFAULT_COLOR),
-      roughness: 0.35,
-      metalness: 0.08,
+      roughness: 0.28,
+      metalness: 0.25,
+      clearcoat: 0.55,
+      clearcoatRoughness: 0.18,
+      envMapIntensity: 1.15,
     });
     const mesh = new THREE.Mesh(new THREE.SphereGeometry(atom.radius || 0.4, 32, 32), material);
     const start = vectorFromArray(atom.start);
@@ -88,15 +132,20 @@ function drawBonds(group, atomState, bonds = {}, progress) {
     const a = byId.get(bond.a);
     const b = byId.get(bond.b);
     if (!a || !b) return;
-    const material = new THREE.MeshStandardMaterial({
+    // 升级为 MeshPhysicalMaterial + 提升圆柱分段数（12→16）
+    const material = new THREE.MeshPhysicalMaterial({
       color,
       transparent: true,
       opacity,
-      roughness: 0.45,
+      roughness: 0.35,
+      metalness: 0.4,
+      clearcoat: 0.4,
+      clearcoatRoughness: 0.2,
+      envMapIntensity: 1.0,
     });
     const order = Number(bond.order || 1);
     for (let i = 0; i < order; i += 1) {
-      const mesh = cylinderBetween(a.current.toArray(), b.current.toArray(), 0.045, material);
+      const mesh = cylinderBetween(a.current.toArray(), b.current.toArray(), 0.04, material, 16);
       mesh.position.x += (i - (order - 1) / 2) * 0.09;
       group.add(mesh);
     }

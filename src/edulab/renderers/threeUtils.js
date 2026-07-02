@@ -126,12 +126,12 @@ export function vectorFromArray(arr, fallback = [0, 0, 0]) {
   return new THREE.Vector3(src[0] || 0, src[1] || 0, src[2] || 0);
 }
 
-export function cylinderBetween(a, b, radius, material) {
+export function cylinderBetween(a, b, radius, material, segments = 12) {
   const start = vectorFromArray(a);
   const end = vectorFromArray(b);
   const dir = new THREE.Vector3().subVectors(end, start);
   const len = dir.length() || 0.001;
-  const geometry = new THREE.CylinderGeometry(radius, radius, len, 12);
+  const geometry = new THREE.CylinderGeometry(radius, radius, len, segments);
   const mesh = new THREE.Mesh(geometry, material);
   mesh.position.copy(new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5));
   mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
