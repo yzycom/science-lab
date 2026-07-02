@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import anime from 'animejs';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { getShells, SHELL_NAMES } from '../data/shells.js';
+import { SCENE_BG } from '../data/theme.js';
 
 const SHELL_COLORS = ['#e07760', '#e0954a', '#5ea05e', '#4e8ec2', '#8264b8', '#c9a83c', '#b060aa'];
 
@@ -13,7 +15,7 @@ export function createAtomScene(container, element) {
   const h = container.clientHeight || 280;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf0efe8);
+  scene.background = new THREE.Color(SCENE_BG);
 
   const shells = getShells(element.z);
   const maxR = 1.0 + (shells.length - 1) * 0.85 + 0.5;
@@ -31,6 +33,18 @@ export function createAtomScene(container, element) {
   renderer.setSize(w, h);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
+
+  // 与分子视图（MoleculeScene）保持一致的交互能力：
+  // 之前原子结构图完全没有交互控制，画面固定死板，与化合物模式的可拖拽体验不统一。
+  // 这里正交相机不适合自由旋转轨道（会导致视角穿模），只开启缩放和受限的旋转。
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.enablePan = false;
+  controls.enableZoom = true;
+  controls.enableRotate = true;
+  controls.minZoom = 0.6;
+  controls.maxZoom = 2.5;
 
   // 光照
   scene.add(new THREE.AmbientLight(0xffffff, 0.8));
@@ -87,6 +101,7 @@ export function createAtomScene(container, element) {
   let rafId;
   const loop = () => {
     rafId = requestAnimationFrame(loop);
+    controls.update();
     renderer.render(scene, camera);
   };
   loop();
@@ -96,6 +111,7 @@ export function createAtomScene(container, element) {
     destroy() {
       cancelAnimationFrame(rafId);
       orbitAnims.forEach(a => a.pause());
+      controls.dispose();
       renderer.dispose();
       if (renderer.domElement.parentNode) {
         renderer.domElement.parentNode.removeChild(renderer.domElement);

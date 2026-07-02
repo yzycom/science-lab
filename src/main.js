@@ -8,8 +8,8 @@ import { animateHover } from './animation/hoverEffect.js';
 import { animateSelect, animateDeselect } from './animation/selectEffect.js';
 import { renderElementDetail } from './ui/ElementDetail.js';
 import { renderLegend } from './ui/Legend.js';
-import { renderCompoundList, showCompoundPanel, hideCompoundPanel } from './ui/CompoundList.js';
-import { renderCompoundDetail } from './ui/CompoundDetail.js';
+import { renderCompoundList, showCompoundWorkbench, hideCompoundWorkbench } from './ui/CompoundList.js';
+import { renderCompoundDetail, clearCompoundDetail } from './ui/CompoundDetail.js';
 import { createModeController } from './app/modeController.js';
 import { edulabLessonGroups } from './data/edulab/index.js';
 import { clearLessonDetail, renderLessonDetail, renderLessonLibrary } from './ui/EdulabLessonPanel.js';
@@ -125,8 +125,8 @@ createModeController([...document.querySelectorAll('.mode-btn')], {
   table: {
     enter() {
       clearSelection();
-      hideCompoundPanel();
-      renderCompoundDetail(null, null);
+      hideCompoundWorkbench();
+      clearCompoundDetail();
       hideLessons();
       container.classList.remove('hidden');
       legend.classList.remove('hidden');
@@ -136,18 +136,14 @@ createModeController([...document.querySelectorAll('.mode-btn')], {
     enter() {
       clearSelection();
       hideLessons();
-      container.classList.remove('hidden');
+      container.classList.add('hidden');
       legend.classList.add('hidden');
-      showCompoundPanel();
-      renderCompoundList(compounds, (compound) => {
-        renderCompoundDetail(compound, () => {
-          document.querySelectorAll('.compound-item').forEach(i => i.classList.remove('active'));
-        });
-      });
+      showCompoundWorkbench();
+      renderCompoundList(compounds, renderCompoundDetail);
     },
     leave() {
-      hideCompoundPanel();
-      renderCompoundDetail(null, null);
+      hideCompoundWorkbench();
+      clearCompoundDetail();
     },
   },
   reactions: {
@@ -167,8 +163,8 @@ createModeController([...document.querySelectorAll('.mode-btn')], {
 
 function showLessons(title, lessons) {
   clearSelection();
-  hideCompoundPanel();
-  renderCompoundDetail(null, null);
+  hideCompoundWorkbench();
+  clearCompoundDetail();
   container.classList.add('hidden');
   legend.classList.add('hidden');
   lessonWorkbench.classList.add('visible');

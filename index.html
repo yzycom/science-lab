@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Science Lab</title>
   <link rel="stylesheet" href="/src/style.css">
+  <link rel="stylesheet" href="/node_modules/katex/dist/katex.min.css">
 </head>
 <body>
   <div id="app">
@@ -47,53 +48,17 @@
       <div class="detail-props"></div>
     </aside>
 
-    <!-- 化合物列表面板 -->
-    <aside class="compound-panel" id="compoundPanel">
-      <h3 class="compound-title">常见化合物</h3>
-      <div class="compound-list" id="compoundList"></div>
-    </aside>
-
-    <!-- 化合物详情面板 -->
-    <aside class="detail-panel compound-detail-panel" id="compoundDetail">
-      <button class="detail-close compound-detail-close">×</button>
-      <div class="detail-header">
-        <div class="detail-category">COMPOUND</div>
-        <div class="detail-main">
-          <span class="detail-symbol compound-detail-formula"></span>
-          <span class="detail-name compound-detail-name"></span>
+    <!-- 化合物工作台 -->
+    <main class="lesson-workbench" id="compoundWorkbench" aria-hidden="true">
+      <aside class="lesson-library">
+        <div class="lesson-library-header">
+          <div class="detail-category">COMPOUND</div>
+          <h2>常见化合物</h2>
         </div>
-        <div class="compound-detail-name-en"></div>
-      </div>
-
-      <div class="atom-viewer-container molecule-viewer-container">
-        <div id="moleculeCanvas"></div>
-      </div>
-
-      <div class="compound-bond-legend">
-        <div class="bond-legend-item">
-          <div class="bond-line bond-single"></div>
-          <span>单键 · 1对共用电子</span>
-        </div>
-        <div class="bond-legend-item">
-          <div class="bond-lines">
-            <div class="bond-line bond-double"></div>
-            <div class="bond-line bond-double"></div>
-          </div>
-          <span>双键 · 2对</span>
-        </div>
-        <div class="bond-legend-item">
-          <div class="bond-lines">
-            <div class="bond-line bond-triple"></div>
-            <div class="bond-line bond-triple"></div>
-            <div class="bond-line bond-triple"></div>
-          </div>
-          <span>三键 · 3对</span>
-        </div>
-      </div>
-
-      <div class="detail-shells compound-detail-desc"></div>
-      <div class="compound-stats-row compound-stats"></div>
-    </aside>
+        <div class="lesson-list" id="compoundList"></div>
+      </aside>
+      <section class="lesson-detail" id="compoundDetail"></section>
+    </main>
 
     <!-- 分类图例 -->
     <div class="legend" id="legend"></div>
@@ -109,6 +74,14 @@
       </aside>
       <section class="lesson-detail" id="lessonDetail"></section>
     </main>
+
+    <div class="viewport-unsupported" id="unsupportedViewport" role="alert" aria-live="polite">
+      <div class="viewport-unsupported-panel">
+        <div class="detail-category">VIEWPORT</div>
+        <h2>请使用电脑、平板横屏或展开后的折叠屏横屏浏览</h2>
+        <p>Science Lab 需要至少 820px × 560px 的显示区域。请旋转设备，展开折叠屏，或调宽分屏窗口后继续。</p>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="/src/main.js"></script>

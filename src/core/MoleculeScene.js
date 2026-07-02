@@ -3,6 +3,7 @@ import anime from 'animejs';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { createTextSprite } from '../objects/TextSprite.js';
+import { SCENE_BG } from '../data/theme.js';
 
 // CPK 配色，适配浅色背景
 const ATOM_COLORS = {
@@ -39,7 +40,7 @@ const ELECTRON_COLOR_HEX = 0xd97757;
  */
 export function createMoleculeScene(container, compound) {
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf0efe8);
+  scene.background = new THREE.Color(SCENE_BG);
 
   // —— 透视相机（初始用 1:1，等容器有真实尺寸再修正） ——
   const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);

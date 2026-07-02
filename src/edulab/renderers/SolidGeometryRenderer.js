@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { cylinderBetween, makeSceneShell, vectorFromArray } from './threeUtils.js';
+import { ACCENT } from '../../data/theme.js';
+import { renderLatex } from './katexUtils.js';
 
 export function renderSolidGeometryLesson(root, payload) {
   root.innerHTML = '';
@@ -20,7 +22,7 @@ export function renderSolidGeometryLesson(root, payload) {
 
   const shell = makeSceneShell(sceneHost, {
     camera: payload.model?.initialCamera || [5, 4, 6],
-    background: 0xf7f7fb,
+    target: payload.model?.target || [0, 0, 0],
   });
   const points = payload.model?.points || {};
   const pointMeshes = buildPoints(shell.scene, points, payload.model?.spheres || Object.keys(points));
@@ -37,14 +39,22 @@ export function renderSolidGeometryLesson(root, payload) {
     pointMeshes.forEach((mesh) => { mesh.visible = true; });
     buttons.forEach((btn) => btn.classList.toggle('active', Number(btn.dataset.edulabStep) === index));
     if (step.cameraPos) {
+      // 之前这里直接 set 相机位置 + lookAt，绕过了 OrbitControls 的内部状态，
+      // 下一帧 controls.update() 会把相机"弹回"旧轨道。
+      // 现在改为同时更新 controls.target 并让相机沿着球坐标过渡，
+      // 保证步骤切换后用户仍能继续拖拽旋转，而不是被 OrbitControls 覆盖回去。
       shell.camera.position.set(step.cameraPos.x, step.cameraPos.y, step.cameraPos.z);
-      shell.camera.lookAt(vectorFromArray(payload.model?.target));
+      shell.setTarget(payload.model?.target || [0, 0, 0]);
     }
     shell.render();
   }
 
   buttons.forEach((btn) => btn.addEventListener('click', () => activate(Number(btn.dataset.edulabStep))));
   activate(0);
+
+  // answerValue / step.content 里含 $...$ LaTeX 语法，之前从未渲染过，
+  // 页面上直接显示公式源码（如 "$\frac{\sqrt{3}}{3}$"）。
+  renderLatex(side);
 
   return {
     destroy() {
@@ -81,7 +91,7 @@ function buildElements(scene, points, elements) {
     if (el.type === 'axes') {
       obj = new THREE.AxesHelper(el.size || 2);
     } else if (el.type === 'line' && points[el.a] && points[el.b]) {
-      obj = cylinderBetween(points[el.a], points[el.b], 0.035, new THREE.MeshBasicMaterial({ color: 0xd97757 }));
+      obj = cylinderBetween(points[el.a], points[el.b], 0.035, new THREE.MeshBasicMaterial({ color: ACCENT }));
     } else if (el.type === 'plane') {
       obj = buildPlane(points, el.pts || []);
     } else if (el.type === 'arrow') {

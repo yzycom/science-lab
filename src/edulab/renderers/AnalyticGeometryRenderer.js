@@ -1,3 +1,7 @@
+import { ANALYTIC_PALETTE } from '../../data/theme.js';
+import { renderLatex } from './katexUtils.js';
+import { solveDerived, computeReadout } from './geometryEngine.js';
+
 export function renderAnalyticGeometryLesson(root, payload) {
   root.innerHTML = '';
   root.className = 'edulab-view edulab-analytic-view';
@@ -8,7 +12,13 @@ export function renderAnalyticGeometryLesson(root, payload) {
   boardHost.className = 'edulab-canvas-host';
   const canvas = document.createElement('canvas');
   boardHost.appendChild(canvas);
+  // rangeBar/answerBand 的 label 可能含 $...$ LaTeX 语法，KaTeX 只能渲染 DOM 文本，
+  // 无法处理 canvas.fillText() 画上去的像素文字，所以用独立的 DOM 层叠加在画布上。
+  const rangeLabel = document.createElement('div');
+  rangeLabel.className = 'edulab-canvas-range-label';
+  boardHost.appendChild(rangeLabel);
   root.append(side, boardHost);
+
 
   side.innerHTML = `
     <div class="edulab-kicker">ANALYTIC GEOMETRY</div>
@@ -28,8 +38,12 @@ export function renderAnalyticGeometryLesson(root, payload) {
     canvas.width = Math.max(640, rect.width || 640);
     canvas.height = Math.max(420, rect.height || 420);
     const ctx = canvas.getContext('2d') || makeNullContext();
-    drawBoard(ctx, canvas, payload.board || {}, state.value);
-    readouts.innerHTML = renderReadouts(payload.board || {}, state.value);
+    const solved = solveDerived(payload.board || {}, state.value);
+    drawBoardWithSolved(ctx, canvas, payload.board || {}, state.value, solved);
+    readouts.innerHTML = renderReadouts(payload.board || {}, state.value, solved);
+    renderLatex(readouts);
+    updateRangeLabel(rangeLabel, canvas, payload.board || {}, state.value, solved);
+    renderLatex(rangeLabel);
   }
 
   param?.addEventListener('input', () => {
@@ -39,6 +53,11 @@ export function renderAnalyticGeometryLesson(root, payload) {
   window.addEventListener('resize', draw);
   draw();
 
+  // lesson.problem / param.label / step.content / readout.label / rangeBar.label 等字符串
+  // 均可能包含 $...$ / $$...$$ LaTeX 语法，之前只做了 innerHTML 插入未做渲染，
+  // 导致页面直接显示公式源码。现在补上 KaTeX 后处理。
+  renderLatex(side);
+
   return {
     destroy() {
       window.removeEventListener('resize', draw);
@@ -47,16 +66,37 @@ export function renderAnalyticGeometryLesson(root, payload) {
   };
 }
 
-function drawBoard(ctx, canvas, board, paramValue) {
+function drawBoardWithSolved(ctx, canvas, board, paramValue, solved) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#fbfbf7';
+  ctx.fillStyle = '#f5f4ed';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   const view = board.view || { xRange: [-5, 5], yRange: [-3, 3] };
   const map = createMapper(canvas, view);
+  
   drawGrid(ctx, canvas, map, view);
   (board.conics || []).forEach((conic) => drawConic(ctx, map, conic, paramValue));
-  Object.entries(board.points || {}).forEach(([name, point]) => drawPoint(ctx, map, name, point, paramValue));
-  drawRange(ctx, canvas, board, paramValue);
+  
+  // 绘制所有点（固定点 + derived 生成的点）
+  Object.entries(solved).forEach(([name, obj]) => {
+    if (obj.type === 'point') {
+      drawPointObj(ctx, map, obj);
+    }
+  });
+  
+  // 绘制 derived 元素（直线/线段/向量/多边形）
+  Object.values(solved).forEach((obj) => {
+    if (obj.type === 'line') {
+      drawLine(ctx, map, obj, view);
+    } else if (obj.type === 'segment') {
+      drawSegment(ctx, map, obj);
+    } else if (obj.type === 'vector') {
+      drawVector(ctx, map, obj);
+    } else if (obj.type === 'polygon') {
+      drawPolygon(ctx, map, obj);
+    }
+  });
+  
+  drawRange(ctx, canvas, board, paramValue, solved);
 }
 
 function makeNullContext() {
@@ -108,7 +148,7 @@ function drawGrid(ctx, canvas, map, view) {
 }
 
 function drawConic(ctx, map, conic, paramValue) {
-  ctx.strokeStyle = color(conic.color, '#d97757');
+  ctx.strokeStyle = color(conic.color, ANALYTIC_PALETTE.curve);
   ctx.lineWidth = 2.5;
   ctx.beginPath();
   const a = evalNumber(conic.a, paramValue, 2);
@@ -137,36 +177,153 @@ function drawConic(ctx, map, conic, paramValue) {
   ctx.stroke();
 }
 
-function drawPoint(ctx, map, name, point, paramValue) {
-  const xy = Array.isArray(point) ? point : point.xy;
-  if (!xy) return;
-  const x = evalNumber(xy[0], paramValue, 0);
-  const y = evalNumber(xy[1], paramValue, 0);
-  if (!Number.isFinite(x) || !Number.isFinite(y)) return;
-  const [sx, sy] = map.xy(x, y);
-  ctx.fillStyle = color(point.color, '#334155');
-  ctx.beginPath(); ctx.arc(sx, sy, point.emphasis ? 6 : 4, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = '#3d3929';
-  ctx.font = '12px sans-serif';
-  ctx.fillText(point.label || name, sx + 7, sy - 7);
+function drawPointObj(ctx, map, obj) {
+  if (!Number.isFinite(obj.x) || !Number.isFinite(obj.y)) return;
+  const [sx, sy] = map.xy(obj.x, obj.y);
+  ctx.fillStyle = color(obj.color, ANALYTIC_PALETTE.point);
+  ctx.beginPath();
+  ctx.arc(sx, sy, obj.emphasis ? 6 : 4, 0, Math.PI * 2);
+  ctx.fill();
+  if (obj.label) {
+    ctx.fillStyle = '#3d3929';
+    ctx.font = '12px sans-serif';
+    ctx.fillText(obj.label, sx + 7, sy - 7);
+  }
 }
 
-function drawRange(ctx, canvas, board, paramValue) {
+function drawLine(ctx, map, obj, view) {
+  const { x0, y0, slope } = obj;
+  const [xMin, xMax] = view.xRange;
+  const [yMin, yMax] = view.yRange;
+  
+  ctx.strokeStyle = color(obj.color, ANALYTIC_PALETTE.line);
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  
+  if (!Number.isFinite(slope)) {
+    // 竖直线
+    const [sx] = map.xy(x0, 0);
+    const [, sy1] = map.xy(0, yMin);
+    const [, sy2] = map.xy(0, yMax);
+    ctx.moveTo(sx, sy1);
+    ctx.lineTo(sx, sy2);
+  } else {
+    // y = kx + c
+    const c = y0 - slope * x0;
+    const y1 = slope * xMin + c;
+    const y2 = slope * xMax + c;
+    const [sx1, sy1] = map.xy(xMin, y1);
+    const [sx2, sy2] = map.xy(xMax, y2);
+    ctx.moveTo(sx1, sy1);
+    ctx.lineTo(sx2, sy2);
+  }
+  ctx.stroke();
+}
+
+function drawSegment(ctx, map, obj) {
+  const { a, b } = obj;
+  const [sx1, sy1] = map.xy(a.x, a.y);
+  const [sx2, sy2] = map.xy(b.x, b.y);
+  
+  ctx.strokeStyle = color(obj.color, ANALYTIC_PALETTE.line2);
+  ctx.lineWidth = obj.dashed ? 1.5 : 2;
+  if (obj.dashed) ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.moveTo(sx1, sy1);
+  ctx.lineTo(sx2, sy2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function drawVector(ctx, map, obj) {
+  const { from, to } = obj;
+  const [sx1, sy1] = map.xy(from.x, from.y);
+  const [sx2, sy2] = map.xy(to.x, to.y);
+  
+  ctx.strokeStyle = color(obj.color, ANALYTIC_PALETTE.vecA);
+  ctx.fillStyle = color(obj.color, ANALYTIC_PALETTE.vecA);
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(sx1, sy1);
+  ctx.lineTo(sx2, sy2);
+  ctx.stroke();
+  
+  // 箭头
+  const angle = Math.atan2(sy2 - sy1, sx2 - sx1);
+  const headLen = 10;
+  ctx.beginPath();
+  ctx.moveTo(sx2, sy2);
+  ctx.lineTo(sx2 - headLen * Math.cos(angle - Math.PI / 6), sy2 - headLen * Math.sin(angle - Math.PI / 6));
+  ctx.lineTo(sx2 - headLen * Math.cos(angle + Math.PI / 6), sy2 - headLen * Math.sin(angle + Math.PI / 6));
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawPolygon(ctx, map, obj) {
+  const { pts } = obj;
+  if (pts.length < 3) return;
+  
+  ctx.fillStyle = color(obj.color, ANALYTIC_PALETTE.area);
+  ctx.strokeStyle = color(obj.stroke, ANALYTIC_PALETTE.line2);
+  ctx.lineWidth = 1.5;
+  
+  ctx.beginPath();
+  pts.forEach((pt, i) => {
+    const [sx, sy] = map.xy(pt.x, pt.y);
+    if (i === 0) ctx.moveTo(sx, sy);
+    else ctx.lineTo(sx, sy);
+  });
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+}
+
+function drawRange(ctx, canvas, board, paramValue, solved) {
   const range = board.rangeBar || board.answerBand;
   if (!range) return;
+  
   const x = 36;
   const y = canvas.height - 34;
   const w = canvas.width - 72;
   const min = Number(range.min);
   const max = Number(range.max);
-  const ratio = Math.max(0, Math.min(1, (paramValue - min) / (max - min || 1)));
+  
+  // 修正：从 readout 计算值获取进度，而非用滑块原始值
+  let currentValue = paramValue;
+  if (range.of) {
+    const readout = (board.readouts || []).find((r) => r.id === range.of);
+    if (readout) {
+      const computed = computeReadout(readout, solved, board, paramValue);
+      if (typeof computed === 'number') {
+        currentValue = computed;
+      }
+    }
+  }
+  
+  const ratio = Math.max(0, Math.min(1, (currentValue - min) / (max - min || 1)));
   ctx.fillStyle = '#e8e6dc';
   ctx.fillRect(x, y, w, 8);
-  ctx.fillStyle = '#d97757';
+  ctx.fillStyle = ANALYTIC_PALETTE.curve;
   ctx.fillRect(x, y, w * ratio, 8);
-  ctx.fillStyle = '#3d3929';
-  ctx.font = '12px sans-serif';
-  ctx.fillText(range.label || '', x, y - 8);
+  // range.label 可能含 LaTeX 语法，改由 updateRangeLabel() 用 DOM 元素叠加显示，
+  // 这里不再用 ctx.fillText() 把源码画成像素文字。
+}
+
+function updateRangeLabel(labelEl, canvas, board, paramValue, solved) {
+  const range = board.rangeBar || board.answerBand;
+  if (!range) {
+    labelEl.style.display = 'none';
+    labelEl.textContent = '';
+    return;
+  }
+  labelEl.style.display = 'block';
+  labelEl.textContent = range.label || '';
+  const x = 36;
+  const y = canvas.height - 34;
+  const scaleX = canvas.clientWidth ? canvas.clientWidth / canvas.width : 1;
+  const scaleY = canvas.clientHeight ? canvas.clientHeight / canvas.height : 1;
+  labelEl.style.left = `${x * scaleX}px`;
+  labelEl.style.top = `${(y - 22) * scaleY}px`;
 }
 
 function renderParam(param) {
@@ -178,11 +335,35 @@ function renderParam(param) {
   `;
 }
 
-function renderReadouts(board, paramValue) {
+function renderReadouts(board, paramValue, solved) {
   return (board.readouts || []).map((readout) => {
-    const value = readout.type === 'expr' ? evalNumber(readout.expr, paramValue, paramValue).toFixed(readout.digits ?? 2) : '动态量';
-    return `<span class="edulab-chip">${readout.label}: ${value}</span>`;
-  }).join('');
+    const raw = computeReadout(readout, solved, board, paramValue);
+    const text = formatReadoutValue(readout, raw);
+    const cls = readout.highlight ? 'edulab-chip edulab-chip-highlight' : 'edulab-chip';
+    return `<span class="${cls}">${readout.label}: ${text}</span>`;
+  }).join('') + renderConstant(board.constant, solved, board, paramValue);
+}
+
+function formatReadoutValue(readout, raw) {
+  if (raw === null || raw === undefined) return '—';
+  if (readout.type === 'status') return raw;
+  if (readout.type === 'coord' && raw && typeof raw === 'object') {
+    return `(${raw.x.toFixed(readout.digits ?? 2)}, ${raw.y.toFixed(readout.digits ?? 2)})`;
+  }
+  if (typeof raw === 'number') {
+    if (!Number.isFinite(raw)) return '∞';
+    return raw.toFixed(readout.digits ?? 2);
+  }
+  return String(raw);
+}
+
+function renderConstant(constant, solved, board, paramValue) {
+  if (!constant) return '';
+  const readout = (board.readouts || []).find((r) => r.id === constant.of);
+  if (!readout) return '';
+  const raw = computeReadout(readout, solved, board, paramValue);
+  const text = formatReadoutValue(readout, raw);
+  return `<div class="edulab-constant-note">当前计算值：${text}　理论定值：${constant.label || ''}</div>`;
 }
 
 function renderSteps(steps = []) {
@@ -207,13 +388,5 @@ function evalNumber(value, paramValue, fallback) {
 }
 
 function color(name, fallback) {
-  const colors = {
-    curve: '#d97757',
-    curve2: '#8264b8',
-    line: '#2f8f9d',
-    point: '#334155',
-    fixed: '#2f8f64',
-    locus: '#c96377',
-  };
-  return colors[name] || name || fallback;
+  return ANALYTIC_PALETTE[name] || name || fallback;
 }

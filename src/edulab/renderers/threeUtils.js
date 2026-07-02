@@ -1,14 +1,17 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { SCENE_BG } from '../../data/theme.js';
 
 export function makeSceneShell(container, options = {}) {
   const width = container.clientWidth || 640;
   const height = container.clientHeight || 420;
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(options.background || 0xf7f7f2);
+  scene.background = new THREE.Color(options.background ?? SCENE_BG);
 
   const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
   camera.position.fromArray(options.camera || [0, 4, 9]);
-  camera.lookAt(0, 0, 0);
+  const target = new THREE.Vector3().fromArray(options.target || [0, 0, 0]);
+  camera.lookAt(target);
 
   const renderer = makeRenderer(container, width, height);
   scene.add(new THREE.AmbientLight(0xffffff, 0.75));
@@ -21,32 +24,61 @@ export function makeSceneShell(container, options = {}) {
   fill.position.set(-5, 2, 3);
   scene.add(fill);
 
+  // 与 MoleculeScene 保持一致的交互模式：允许拖拽旋转/滚轮缩放查看，
+  // 而不是像此前那样相机位置写死、画面无法转换视角。
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.target.copy(target);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.enablePan = options.enablePan ?? false;
+  controls.enableZoom = true;
+  controls.enableRotate = true;
+  controls.minDistance = options.minDistance ?? 1.5;
+  controls.maxDistance = options.maxDistance ?? 30;
+  controls.update();
+
   let rafId = null;
   const render = () => renderer.render(scene, camera);
   const loop = () => {
     rafId = requestAnimationFrame(loop);
+    controls.update();
     render();
   };
   loop();
 
-  const onResize = () => {
-    const w = container.clientWidth || width;
-    const h = container.clientHeight || height;
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(w, h, false);
-    render();
-  };
-  window.addEventListener('resize', onResize);
+  // 用 ResizeObserver 替代一次性读取容器尺寸 + window resize：
+  // 容器尺寸由 CSS 网格/flex 决定，不一定跟随 window resize 变化
+  // （例如切换课程列表项时容器宽度不变但左右栏比例变化）。
+  // jsdom 测试环境不提供 ResizeObserver，做兼容降级避免单测报错。
+  const hasResizeObserver = typeof ResizeObserver !== 'undefined';
+  const resizeObserver = hasResizeObserver
+    ? new ResizeObserver((entries) => {
+      const entry = entries[0];
+      const w = entry.contentRect.width || width;
+      const h = entry.contentRect.height || height;
+      if (w <= 0 || h <= 0) return;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h, false);
+      render();
+    })
+    : null;
+  resizeObserver?.observe(container);
 
   return {
     scene,
     camera,
+    controls,
     renderer,
     render,
+    setTarget(next) {
+      controls.target.copy(vectorFromArray(next));
+      controls.update();
+    },
     destroy() {
       if (rafId) cancelAnimationFrame(rafId);
-      window.removeEventListener('resize', onResize);
+      resizeObserver?.disconnect();
+      controls.dispose();
       renderer.dispose?.();
       renderer.domElement?.remove();
     },
@@ -78,7 +110,7 @@ function makeRenderer(container, width, height) {
       render() {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
-        ctx.fillStyle = '#f7f7f2';
+        ctx.fillStyle = '#f5f4ed';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#3d3929';
         ctx.font = '14px sans-serif';

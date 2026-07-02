@@ -1,62 +1,85 @@
 import { createMoleculeScene } from '../core/MoleculeScene.js';
-import { showPanel, hidePanel } from '../animation/panelTransition.js';
 
 let currentMoleculeScene = null;
 
 /**
- * 渲染化合物详情面板
- * @param {object|null} compound - 化合物数据，null 表示关闭
- * @param {Function} onClose
+ * 渲染化合物详情（独立工作台，画布尺寸与结构对齐化学反应渲染器）
+ * @param {object|null} compound - 化合物数据，null 表示清空
  */
-export function renderCompoundDetail(compound, onClose) {
-  const panel = document.getElementById('compoundDetail');
-  const molContainer = document.getElementById('moleculeCanvas');
+export function renderCompoundDetail(compound) {
+  const detail = document.getElementById('compoundDetail');
 
   // 销毁旧分子场景
   if (currentMoleculeScene) {
     currentMoleculeScene.destroy();
     currentMoleculeScene = null;
-    molContainer.innerHTML = '';
   }
 
   if (!compound) {
-    if (panel.classList.contains('visible')) {
-      hidePanel(panel);
-    }
+    detail.innerHTML = '';
     return;
   }
 
-  // 填充面板内容
-  panel.querySelector('.compound-detail-formula').textContent = compound.formula;
-  panel.querySelector('.compound-detail-name').textContent = compound.name;
-  panel.querySelector('.compound-detail-name-en').textContent = compound.nameEn;
-  panel.querySelector('.compound-detail-desc').textContent = compound.desc;
+  detail.innerHTML = '';
+  detail.className = 'edulab-view edulab-compound-view';
 
-  const statsEl = panel.querySelector('.compound-stats');
-  statsEl.innerHTML = `
-    <span>原子数 <strong>${compound.atoms.length}</strong></span>
-    <span>化学键 <strong>${compound.bonds.length}</strong></span>
-    <span>🟠 小球 = 共用电子对</span>
+  const side = document.createElement('section');
+  side.className = 'edulab-side-panel';
+  const canvasHost = document.createElement('div');
+  canvasHost.className = 'edulab-canvas-host';
+  // 面板在左、画布在右，与化学反应/立体几何/解析几何保持同一顺序。
+  detail.append(side, canvasHost);
+
+  side.innerHTML = `
+    <div class="edulab-kicker">COMPOUND</div>
+    <h2>${compound.formula}　${compound.name}</h2>
+    <p class="edulab-subtitle">${compound.nameEn || ''}</p>
+    <div class="edulab-chip-row">
+      <span class="edulab-chip">原子数 ${compound.atoms.length}</span>
+      <span class="edulab-chip">化学键 ${compound.bonds.length}</span>
+    </div>
+    <div class="edulab-steps">
+      <article class="edulab-step">
+        <strong>分子结构</strong>
+        <div>${compound.desc || ''}</div>
+      </article>
+    </div>
+    <div class="compound-bond-legend">
+      <div class="bond-legend-item">
+        <div class="bond-line bond-single"></div>
+        <span>单键 · 1对共用电子</span>
+      </div>
+      <div class="bond-legend-item">
+        <div class="bond-lines">
+          <div class="bond-line bond-double"></div>
+          <div class="bond-line bond-double"></div>
+        </div>
+        <span>双键 · 2对</span>
+      </div>
+      <div class="bond-legend-item">
+        <div class="bond-lines">
+          <div class="bond-line bond-triple"></div>
+          <div class="bond-line bond-triple"></div>
+          <div class="bond-line bond-triple"></div>
+        </div>
+        <span>三键 · 3对</span>
+      </div>
+    </div>
   `;
-
-  // 显示面板
-  showPanel(panel);
 
   // 延迟两帧确保容器有尺寸
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      currentMoleculeScene = createMoleculeScene(molContainer, compound);
+      currentMoleculeScene = createMoleculeScene(canvasHost, compound);
     });
   });
+}
 
-  // 关闭按钮
-  panel.querySelector('.compound-detail-close').onclick = () => {
-    if (currentMoleculeScene) {
-      currentMoleculeScene.destroy();
-      currentMoleculeScene = null;
-      molContainer.innerHTML = '';
-    }
-    hidePanel(panel);
-    if (onClose) onClose();
-  };
+export function clearCompoundDetail() {
+  if (currentMoleculeScene) {
+    currentMoleculeScene.destroy();
+    currentMoleculeScene = null;
+  }
+  const detail = document.getElementById('compoundDetail');
+  if (detail) detail.innerHTML = '';
 }

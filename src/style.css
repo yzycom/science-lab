@@ -102,6 +102,40 @@ body {
   display: none !important;
 }
 
+/* === 视口支持边界 === */
+.viewport-unsupported {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(250, 249, 245, 0.96);
+  pointer-events: auto;
+}
+
+.viewport-unsupported-panel {
+  width: min(520px, 100%);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  padding: 24px;
+}
+
+.viewport-unsupported-panel h2 {
+  font-size: 22px;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.viewport-unsupported-panel p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
 /* === Canvas 容器 === */
 #canvas-container {
   position: fixed;
@@ -249,74 +283,6 @@ body {
   color: var(--text-primary);
 }
 
-/* === 化合物面板 === */
-.compound-panel {
-  position: fixed;
-  top: 84px;
-  left: 20px;
-  bottom: 100px;
-  width: 300px;
-  background: var(--bg-panel);
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-lg);
-  padding: 20px;
-  display: none;
-  flex-direction: column;
-  z-index: 150;
-}
-
-.compound-panel.visible {
-  display: flex;
-}
-
-.compound-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-}
-
-.compound-list {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.compound-item {
-  padding: 12px 16px;
-  background: var(--bg-canvas);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.compound-item:hover {
-  background: var(--bg-hover);
-  border-color: var(--border-strong);
-}
-
-.compound-item.active {
-  background: var(--accent-light);
-  border-color: var(--accent);
-}
-
-.compound-formula {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.compound-name {
-  font-size: 13px;
-  color: var(--text-secondary);
-}
 
 /* === 图例 === */
 .legend {
@@ -441,6 +407,9 @@ body {
 }
 
 /* === Edulab 课程工作台 === */
+/* 此前工作台用了独立的绿色系配色（#f7f8f4/#2f8f64/#3f6f5a 等），
+   与元素/化合物模式的橙色 Claude 主题完全脱节，切换模式像换了个产品。
+   这里统一改用根变量，与 detail-panel/compound-panel 同一套色板。 */
 .lesson-workbench {
   position: fixed;
   top: 64px;
@@ -449,7 +418,7 @@ body {
   bottom: 0;
   display: none;
   grid-template-columns: 320px minmax(0, 1fr);
-  background: #f7f8f4;
+  background: var(--bg-canvas);
   z-index: 80;
 }
 
@@ -459,7 +428,7 @@ body {
 
 .lesson-library {
   border-right: 1px solid var(--border);
-  background: #ffffff;
+  background: var(--bg-panel);
   padding: 22px 18px;
   overflow: hidden;
   display: flex;
@@ -484,7 +453,7 @@ body {
 .lesson-item {
   text-align: left;
   border: 1px solid var(--border);
-  background: #f8f8f1;
+  background: var(--bg-canvas);
   color: var(--text-primary);
   border-radius: 8px;
   padding: 12px 14px;
@@ -497,12 +466,12 @@ body {
 
 .lesson-item:hover {
   border-color: var(--border-strong);
-  background: #f0f4ee;
+  background: var(--bg-hover);
 }
 
 .lesson-item.active {
   border-color: var(--accent);
-  background: #f7ebe5;
+  background: var(--accent-light);
   transform: translateX(2px);
 }
 
@@ -520,34 +489,33 @@ body {
   width: fit-content;
   padding: 3px 7px;
   border-radius: 999px;
-  background: #e8eee7;
-  color: #3f6f5a !important;
+  background: var(--accent-light);
+  color: var(--accent-hover) !important;
   font-weight: 600;
 }
 
 .lesson-detail {
   min-width: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
+/* 三个 Edulab 渲染器（化学反应/立体几何/解析几何）统一为
+   "面板在左（380px）、画布在右（自适应）" 的 DOM 顺序和网格布局，
+   此前化学反应的 DOM 顺序和网格方向与另外两个相反，切换课程时画面会左右跳动。 */
 .edulab-view {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 380px;
-  min-height: 0;
-}
-
-.edulab-solid-view,
-.edulab-analytic-view {
   grid-template-columns: 380px minmax(0, 1fr);
+  min-height: 0;
 }
 
 .edulab-canvas-host {
   min-width: 0;
   min-height: 0;
   position: relative;
-  background: #f4f7f6;
+  background: var(--bg-canvas);
 }
 
 .edulab-canvas-host canvas {
@@ -556,24 +524,30 @@ body {
   height: 100%;
 }
 
-.edulab-side-panel {
-  background: #ffffff;
-  border-left: 1px solid var(--border);
-  padding: 24px;
-  overflow-y: auto;
+/* 解析几何 rangeBar 的 label 可能含 LaTeX 语法，KaTeX 无法渲染 canvas 内的像素文字，
+   改用叠加在画布上的 DOM 层显示，位置由 JS 按画布实际像素坐标同步。 */
+.edulab-canvas-range-label {
+  position: absolute;
+  font-size: 12px;
+  color: var(--text-primary);
+  pointer-events: none;
+  display: none;
 }
 
-.edulab-solid-view .edulab-side-panel,
-.edulab-analytic-view .edulab-side-panel {
+.edulab-side-panel {
+  background: var(--bg-panel);
   border-left: none;
   border-right: 1px solid var(--border);
+  padding: 24px;
+  min-width: 0;
+  overflow-y: auto;
 }
 
 .edulab-kicker {
   font-size: 11px;
   letter-spacing: 0.08em;
   font-weight: 700;
-  color: #2f8f64;
+  color: var(--accent);
   margin-bottom: 8px;
 }
 
@@ -603,11 +577,28 @@ body {
   align-items: center;
   min-height: 26px;
   border-radius: 999px;
-  background: #eef4f2;
-  color: #315f53;
+  background: var(--accent-light);
+  color: var(--accent-hover);
   padding: 4px 9px;
   font-size: 12px;
   font-weight: 600;
+}
+
+.edulab-chip-highlight {
+  background: var(--accent);
+  color: #fff;
+}
+
+.edulab-constant-note {
+  width: 100%;
+  margin-top: -6px;
+  margin-bottom: 16px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--bg-hover);
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .edulab-slider-label {
@@ -632,7 +623,7 @@ body {
 
 .edulab-step {
   border: 1px solid var(--border);
-  background: #fbfbf7;
+  background: var(--bg-canvas);
   border-radius: 8px;
   color: var(--text-primary);
   padding: 12px;
@@ -648,7 +639,7 @@ button.edulab-step {
 .edulab-step.active,
 button.edulab-step:hover {
   border-color: var(--accent);
-  background: #f7ebe5;
+  background: var(--accent-light);
 }
 
 .edulab-step strong {
@@ -668,6 +659,156 @@ button.edulab-step:hover {
 
 .edulab-energy strong {
   color: var(--accent);
+}
+
+/* === 横屏平板 / 展开折叠屏紧凑布局 === */
+@media (min-width: 820px) and (max-width: 1099px) and (min-height: 560px) {
+  .app-header {
+    padding: 0 16px;
+  }
+
+  .app-title {
+    font-size: 18px;
+  }
+
+  .mode-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .detail-panel {
+    top: 78px;
+    right: 14px;
+    bottom: 14px;
+    width: 320px;
+    border-radius: 12px;
+  }
+
+  .detail-header {
+    padding: 18px 18px 12px;
+  }
+
+  .detail-symbol {
+    font-size: 40px;
+  }
+
+  .detail-name {
+    font-size: 18px;
+  }
+
+  .atom-viewer-container {
+    flex-basis: 220px;
+    margin: 0 12px;
+  }
+
+  .detail-shells,
+  .detail-props,
+  .compound-bond-legend,
+  .compound-detail-desc,
+  .compound-stats-row {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .detail-props {
+    gap: 12px 14px;
+  }
+
+  .legend {
+    bottom: 14px;
+    gap: 6px 12px;
+    padding: 10px 16px;
+  }
+
+  .legend-label {
+    font-size: 11px;
+  }
+
+  .lesson-workbench {
+    grid-template-columns: 240px minmax(0, 1fr);
+  }
+
+  .lesson-library {
+    padding: 18px 14px;
+  }
+
+  .lesson-library-header h2 {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+
+  .lesson-list {
+    gap: 8px;
+  }
+
+  .lesson-item {
+    padding: 10px 11px;
+  }
+
+  .lesson-item strong {
+    font-size: 13px;
+  }
+
+  .lesson-item span {
+    font-size: 11px;
+  }
+
+  .edulab-view {
+    grid-template-columns: 220px minmax(360px, 1fr);
+  }
+
+  .edulab-side-panel {
+    padding: 16px;
+  }
+
+  .edulab-side-panel h2 {
+    font-size: 18px;
+  }
+
+  .edulab-subtitle {
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+
+  .edulab-chip-row,
+  .edulab-readouts {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .edulab-chip {
+    min-height: 24px;
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+
+  .edulab-slider-label {
+    margin-bottom: 14px;
+  }
+
+  .edulab-steps {
+    gap: 8px;
+  }
+
+  .edulab-step {
+    padding: 10px;
+    font-size: 12px;
+  }
+}
+
+/* === 过窄视口拦截：直板手机竖屏、平板竖屏、窄分屏 === */
+@media (max-width: 819px), (max-height: 559px) {
+  #canvas-container,
+  .mode-toggle,
+  .lesson-workbench,
+  .detail-panel,
+  .legend {
+    pointer-events: none;
+  }
+
+  .viewport-unsupported {
+    display: flex;
+  }
 }
 
 /* === 滚动条样式 === */

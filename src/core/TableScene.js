@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { SCENE_BG } from '../data/theme.js';
 
 /**
  * 周期表主场景：正交相机 + 静态网格
@@ -7,7 +8,7 @@ export class TableScene {
   constructor(container) {
     this.container = container;
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xf5f4ed);
+    this.scene.background = new THREE.Color(SCENE_BG);
 
     this.setupCamera();
     this.setupRenderer();

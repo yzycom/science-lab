@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { cylinderBetween, makeSceneShell, vectorFromArray } from './threeUtils.js';
+import { renderLatex } from './katexUtils.js';
 
+// 与元素周期表 unknown 分类同色，未知原子兜底配色统一为该值。
 const DEFAULT_COLOR = '#8c8a7c';
 
 export function renderChemReactionLesson(root, payload) {
@@ -11,7 +13,9 @@ export function renderChemReactionLesson(root, payload) {
   sceneHost.className = 'edulab-canvas-host';
   const side = document.createElement('section');
   side.className = 'edulab-side-panel';
-  root.append(sceneHost, side);
+  // 面板在左、画布在右，与立体几何/解析几何保持同一顺序，
+  // 避免三个 Edulab 渲染器左右镜像不一致。
+  root.append(side, sceneHost);
 
   side.innerHTML = `
     <div class="edulab-kicker">CHEMICAL REACTION</div>
@@ -25,7 +29,7 @@ export function renderChemReactionLesson(root, payload) {
     ${renderEnergy(payload.energy)}
   `;
 
-  const shell = makeSceneShell(sceneHost, { camera: [0, 4.5, 11], background: 0xf4f7f6 });
+  const shell = makeSceneShell(sceneHost, { camera: [0, 4.5, 11] });
   const atomState = buildAtoms(shell.scene, payload.atoms || []);
   const bondGroup = new THREE.Group();
   shell.scene.add(bondGroup);
@@ -42,6 +46,10 @@ export function renderChemReactionLesson(root, payload) {
   const slider = side.querySelector('[data-edulab-progress]');
   slider.addEventListener('input', () => draw(Number(slider.value)));
   draw(0);
+
+  // 化学方程式（meta.equation）与步骤说明文本可能包含 LaTeX 语法，
+  // 之前只做了 innerHTML 插入，未做公式渲染，导致页面直接显示 $...$ 源码。
+  renderLatex(side);
 
   return {
     destroy() {
