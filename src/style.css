@@ -661,6 +661,133 @@ button.edulab-step:hover {
   color: var(--accent);
 }
 
+
+/* === 拉格朗日点课程 === */
+.lagrange-timebar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+
+.lagrange-timebar button {
+  border: 1px solid var(--border);
+  background: var(--bg-canvas);
+  color: var(--text-secondary);
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.lagrange-timebar button:hover {
+  border-color: var(--border-strong);
+}
+
+.lagrange-timebar button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.lagrange-clock {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.lagrange-exaggerate {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.lagrange-exaggerate span {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.lagrange-exaggerate b {
+  color: var(--accent);
+}
+
+.lagrange-exaggerate input[type='range'] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.lagrange-readouts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.lagrange-card {
+  display: grid;
+  grid-template-columns: 8px auto 1fr;
+  grid-template-areas:
+    'dot name tag'
+    'dot role role'
+    'dot num num'
+    'dot use use';
+  gap: 2px 8px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.lagrange-dot {
+  grid-area: dot;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  align-self: start;
+  margin-top: 5px;
+}
+
+.lagrange-card b {
+  grid-area: name;
+  font-size: 13px;
+}
+
+.lagrange-card-role {
+  grid-area: role;
+  color: var(--text-secondary);
+}
+
+.lagrange-card-num {
+  grid-area: num;
+  font-variant-numeric: tabular-nums;
+}
+
+.lagrange-card-tag {
+  grid-area: tag;
+  justify-self: end;
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--bg-hover);
+  color: var(--text-muted);
+}
+
+.lagrange-card-tag.stable {
+  background: #e3efe3;
+  color: #3f6f4a;
+}
+
+.lagrange-card-use {
+  grid-area: use;
+  color: var(--text-muted);
+}
+
 /* === 横屏平板 / 展开折叠屏紧凑布局 === */
 @media (min-width: 820px) and (max-width: 1099px) and (min-height: 560px) {
   .app-header {

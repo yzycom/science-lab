@@ -154,6 +154,7 @@ createModeController([...document.querySelectorAll('.mode-btn')], {
   math: {
     enter() {
       showLessons('数学课程', [
+        ...edulabLessonGroups.lagrange,
         ...edulabLessonGroups.solidGeometry,
         ...edulabLessonGroups.analyticGeometry,
       ]);

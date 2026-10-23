@@ -2,6 +2,7 @@ import { LESSON_KINDS } from '../edulab/lessonEnvelope.js';
 import { renderAnalyticGeometryLesson } from '../edulab/renderers/AnalyticGeometryRenderer.js';
 import { renderChemReactionLesson } from '../edulab/renderers/ChemReactionRenderer.js';
 import { renderSolidGeometryLesson } from '../edulab/renderers/SolidGeometryRenderer.js';
+import { renderLagrangeLesson } from '../edulab/renderers/LagrangeRenderer.js';
 
 let activeRenderer = null;
 
@@ -44,6 +45,8 @@ export function renderLessonDetail(lesson) {
     activeRenderer = renderSolidGeometryLesson(detail, lesson.payload);
   } else if (lesson.kind === LESSON_KINDS.analyticGeometry) {
     activeRenderer = renderAnalyticGeometryLesson(detail, lesson.payload);
+  } else if (lesson.kind === LESSON_KINDS.lagrange) {
+    activeRenderer = renderLagrangeLesson(detail, lesson.payload);
   }
 }
 
@@ -60,5 +63,6 @@ function labelKind(kind) {
   if (kind === LESSON_KINDS.chemReaction) return '化学反应';
   if (kind === LESSON_KINDS.solidGeometry) return '立体几何';
   if (kind === LESSON_KINDS.analyticGeometry) return '解析几何';
+  if (kind === LESSON_KINDS.lagrange) return '数学建模';
   return '课程';
 }

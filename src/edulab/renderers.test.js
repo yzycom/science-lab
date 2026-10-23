@@ -2,6 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { renderChemReactionLesson } from './renderers/ChemReactionRenderer.js';
 import { renderSolidGeometryLesson } from './renderers/SolidGeometryRenderer.js';
 import { renderAnalyticGeometryLesson } from './renderers/AnalyticGeometryRenderer.js';
+import { renderLagrangeLesson } from './renderers/LagrangeRenderer.js';
 
 function mount() {
   const el = document.createElement('div');
@@ -71,6 +72,21 @@ describe('Edulab native renderers', () => {
     expect(root.querySelector('canvas')).toBeTruthy();
     expect(root.querySelector('[data-edulab-param]')).toBeTruthy();
     expect(root.textContent).toContain('椭圆数量积');
+    controller.destroy();
+  });
+
+  test('lagrange renderer mounts canvas, clock and five point readouts', () => {
+    const root = mount();
+    const controller = renderLagrangeLesson(root, {
+      lesson: { title: '太阳—地球的五个拉格朗日点', problem: '测试' },
+      steps: [{ title: '等边三角形', content: 'L4/L5' }],
+    });
+
+    expect(root.querySelector('canvas')).toBeTruthy();
+    expect(root.querySelector('[data-lagrange-clock]')).toBeTruthy();
+    expect(root.querySelectorAll('[data-lagrange-mode]')).toHaveLength(3);
+    expect(root.querySelectorAll('.lagrange-card')).toHaveLength(5);
+    expect(root.textContent).toContain('L4');
     controller.destroy();
   });
 });

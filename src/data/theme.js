@@ -34,3 +34,23 @@ export const ANALYTIC_PALETTE = {
   aux: '#a8a596',      // 辅助线段
   locus: '#c85858',    // actinide 红，轨迹曲线
 };
+
+// 拉格朗日点课程的画布配色。太阳/地球沿用学科惯用色，
+// L1–L5 从现有分类色板里取，避免与解析几何课程撞色后无法区分。
+export const LAGRANGE_PALETTE = {
+  canvasBg: '#f5f4ed',   // --bg-canvas
+  insetBg: '#fbfaf4',
+  insetBorder: '#ddd9c9',
+  sun: '#e6a13a',        // 太阳
+  earth: '#2f6fb0',      // 地球，同 ptB 蓝
+  L1: '#d24b45',         // 同 ptA 红
+  L2: '#8264b8',         // 同 given 紫
+  L3: '#a8a596',         // 同 aux 灰
+  L4: '#5ea05e',         // 同 fixed 绿
+  L5: '#2f8f9d',         // 同 line2 青
+  orbit: '#dcdbcf',
+  spoke: '#e8e7dc',
+  link: '#cbbfa8',
+  label: '#3d3929',
+  labelSoft: '#8a8574',
+};

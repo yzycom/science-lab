@@ -3,10 +3,11 @@ import { edulabLessonGroups, edulabLessons } from './index.js';
 
 describe('generated Edulab lesson registry', () => {
   test('loads all first-batch lessons', () => {
-    expect(edulabLessons).toHaveLength(15);
+    expect(edulabLessons).toHaveLength(16);
     expect(edulabLessonGroups.chemReaction).toHaveLength(6);
     expect(edulabLessonGroups.solidGeometry).toHaveLength(3);
     expect(edulabLessonGroups.analyticGeometry).toHaveLength(6);
+    expect(edulabLessonGroups.lagrange).toHaveLength(1);
   });
 
   test('keeps every lesson on the pinned Edulab schema', () => {

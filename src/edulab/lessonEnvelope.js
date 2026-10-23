@@ -4,12 +4,14 @@ export const LESSON_KINDS = Object.freeze({
   chemReaction: 'edulab.chemReaction',
   solidGeometry: 'edulab.solidGeometry',
   analyticGeometry: 'edulab.analyticGeometry',
+  lagrange: 'edulab.lagrange',
 });
 
 export const KIND_TO_GROUP = Object.freeze({
   [LESSON_KINDS.chemReaction]: 'chemReaction',
   [LESSON_KINDS.solidGeometry]: 'solidGeometry',
   [LESSON_KINDS.analyticGeometry]: 'analyticGeometry',
+  [LESSON_KINDS.lagrange]: 'lagrange',
 });
 
 export function validateLessonEnvelope(envelope) {
@@ -44,6 +46,7 @@ export function groupLessonsByKind(lessons) {
     chemReaction: [],
     solidGeometry: [],
     analyticGeometry: [],
+    lagrange: [],
   };
 
   lessons.forEach((lesson) => {

@@ -52,7 +52,7 @@ async function openAllModes(page) {
   await expect(page.locator('[data-edulab-progress]')).toBeVisible();
 
   await page.getByRole('button', { name: '数学课程' }).click();
-  await expect(page.locator('#lessonList .lesson-item')).toHaveCount(9);
+  await expect(page.locator('#lessonList .lesson-item')).toHaveCount(10);
   await expect(page.locator('#lessonDetail canvas')).toBeVisible();
   await expect(page.locator('[data-edulab-step]').first()).toBeVisible();
 

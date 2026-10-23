@@ -1,0 +1,41 @@
+{
+  "id": "astro-lagrange-sun-earth",
+  "kind": "edulab.lagrange",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-orbital-mechanics",
+  "title": "太阳—地球的五个拉格朗日点",
+  "tags": [
+    "math",
+    "astronomy",
+    "orbital-mechanics",
+    "modeling"
+  ],
+  "payload": {
+    "lesson": {
+      "language": "zh-CN",
+      "title": "太阳—地球的五个拉格朗日点",
+      "problem": "<p>拉格朗日点是三体问题里的平衡解：太阳和地球的引力加上公转的离心力，在五个位置正好抵消。</p><p>地球一年绕太阳一圈，这五个点在空间里怎么走？</p>",
+      "answerLabel": "结论",
+      "answer": "$L_4,\\ L_5$ 稳定；$L_1,\\ L_2,\\ L_3$ 不稳定，必须靠轨道维持"
+    },
+    "steps": [
+      {
+        "title": "等边三角形直接给出 L4、L5",
+        "content": "<p>太阳 $S$ 与地球 $E$ 相距 1 AU。以日地连线为一边作正三角形，第三个顶点就是 $L_4$、$L_5$：</p><p>$$|SL_4|=|EL_4|=|SE|=1\\ \\text{AU},\\quad \\angle SEL_4=60^\\circ$$</p><p>这两个点不需要解任何方程，纯几何。它们永远比地球领先或落后 60°，地球转一圈，它们也绕太阳转一圈。</p>"
+      },
+      {
+        "title": "共线三点要解五次方程",
+        "content": "<p>设 $L_1$ 距地球 $\\gamma$（单位 AU）。在随地球公转的坐标系里要求离心项与两个引力项抵消，整理后得到</p><p>$$\\gamma^5-(3-\\mu)\\gamma^4+(3-2\\mu)\\gamma^3-\\mu\\gamma^2+2\\mu\\gamma-\\mu=0$$</p><p>其中 $\\mu=3.0035\\times10^{-6}$ 是地球质量占比。这个方程没有代数解，页面用二分法直接求根：$L_1$ 距地 $0.00997\\ \\text{AU}\\approx149$ 万 km，$L_2$ 距地 $0.01004\\ \\text{AU}\\approx150$ 万 km。</p><p>$L_3$ 例外：它的偏移是 $O(\\mu)$ 而不是 $O(\\mu^{1/3})$，只有约 260 km，图上一个像素都不到，所以画在反日点上，真实偏差写在读数里。</p>"
+      },
+      {
+        "title": "为什么它们跟着地球转",
+        "content": "<p>拉格朗日点是<strong>旋转坐标系</strong>里的平衡点——在那个坐标系里，五个点一动不动。换回惯性系，它们就整体以地球公转角 $\\theta(t)$ 旋转。</p><p>于是：$L_1$、$L_2$ 始终卡在日地连线上，$L_3$ 始终在太阳正背后，$L_4$、$L_5$ 始终领先或落后地球 $60^\\circ$。</p><p>页面上的「实时」就是取当前时刻的地球黄经代入 $\\theta(t)$；切到「1 天/秒」可以把一年的旋转压缩成六分钟看完。</p>"
+      }
+    ],
+    "scene": {
+      "mu": 0.0000030034896,
+      "insetWindowAU": 0.022,
+      "realtimeByDefault": true
+    }
+  }
+}
