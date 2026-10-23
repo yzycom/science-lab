@@ -225,19 +225,7 @@ function drawScene(ctx, w, h, snapshot, state) {
   ctx.fillStyle = LAGRANGE_PALETTE.label;
   ctx.fillText('地球', ex + 10, ey - 10);
 
-  // 从地球指向放大镜的引线，说明左下角那块是哪里放大的
-  const inset = insetRect(w, h);
-  ctx.save();
-  ctx.setLineDash([2, 4]);
-  ctx.strokeStyle = LAGRANGE_PALETTE.link;
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(ex, ey);
-  ctx.lineTo(inset.x0 + inset.size, inset.y0 + 8);
-  ctx.stroke();
-  ctx.restore();
-
-  drawInset(ctx, inset, snapshot);
+  drawInset(ctx, insetRect(w, h), snapshot);
 }
 
 function insetRect(w, h) {
