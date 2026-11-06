@@ -113,6 +113,9 @@ export function createAtomScene(container, element) {
       orbitAnims.forEach(a => a.pause());
       controls.dispose();
       renderer.dispose();
+      // 必须显式交还上下文：否则每次打开元素详情都会留下一份 GL 上下文，
+      // 累计到浏览器上限后主画布会被强制丢失（表现为整页变白）。
+      renderer.forceContextLoss();
       if (renderer.domElement.parentNode) {
         renderer.domElement.parentNode.removeChild(renderer.domElement);
       }

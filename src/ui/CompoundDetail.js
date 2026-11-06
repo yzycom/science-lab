@@ -1,6 +1,17 @@
 import { createMoleculeScene } from '../core/MoleculeScene.js';
+import { cancelDetailSwap, swapDetailContent } from './detailSwap.js';
 
 let currentMoleculeScene = null;
+// 同 ElementDetail：分子场景要等两帧拿到容器尺寸才创建，
+// 期间再点另一个化合物会让旧场景挂进已被清空的容器里，永久占住一个 GL 上下文。
+let moleculeSceneToken = 0;
+
+function disposeMoleculeScene() {
+  if (currentMoleculeScene) {
+    currentMoleculeScene.destroy();
+    currentMoleculeScene = null;
+  }
+}
 
 /**
  * 渲染化合物详情（独立工作台，画布尺寸与结构对齐化学反应渲染器）
@@ -9,28 +20,32 @@ let currentMoleculeScene = null;
 export function renderCompoundDetail(compound) {
   const detail = document.getElementById('compoundDetail');
 
-  // 销毁旧分子场景
-  if (currentMoleculeScene) {
-    currentMoleculeScene.destroy();
-    currentMoleculeScene = null;
-  }
-
   if (!compound) {
-    detail.innerHTML = '';
+    moleculeSceneToken += 1;
+    cancelDetailSwap(detail);
+    disposeMoleculeScene();
+    if (detail) detail.innerHTML = '';
     return;
   }
 
-  detail.innerHTML = '';
-  detail.className = 'edulab-view edulab-compound-view';
+  // 淡出后再销毁旧场景、构建新场景，把 PBR 环境贴图和 shader 编译的耗时
+  // 藏在画面已经隐去的那 140ms 里，避免点击瞬间整块详情区冻住。
+  const token = ++moleculeSceneToken;
 
-  const side = document.createElement('section');
-  side.className = 'edulab-side-panel';
-  const canvasHost = document.createElement('div');
-  canvasHost.className = 'edulab-canvas-host';
-  // 面板在左、画布在右，与化学反应/立体几何/解析几何保持同一顺序。
-  detail.append(side, canvasHost);
+  swapDetailContent(detail, () => {
+    disposeMoleculeScene();
 
-  side.innerHTML = `
+    detail.innerHTML = '';
+    detail.className = 'edulab-view edulab-compound-view';
+
+    const side = document.createElement('section');
+    side.className = 'edulab-side-panel';
+    const canvasHost = document.createElement('div');
+    canvasHost.className = 'edulab-canvas-host';
+    // 面板在左、画布在右，与化学反应/立体几何/解析几何保持同一顺序。
+    detail.append(side, canvasHost);
+
+    side.innerHTML = `
     <div class="edulab-kicker">COMPOUND</div>
     <h2>${compound.formula}　${compound.name}</h2>
     <p class="edulab-subtitle">${compound.nameEn || ''}</p>
@@ -67,19 +82,27 @@ export function renderCompoundDetail(compound) {
     </div>
   `;
 
-  // 延迟两帧确保容器有尺寸
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      currentMoleculeScene = createMoleculeScene(canvasHost, compound);
+    // 延迟两帧确保容器有尺寸；返回 Promise，让淡入等到场景真正建好之后。
+    return new Promise((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (token !== moleculeSceneToken) {
+          resolve();
+          return;
+        }
+        try {
+          currentMoleculeScene = createMoleculeScene(canvasHost, compound);
+        } finally {
+          resolve();
+        }
+      }));
     });
   });
 }
 
 export function clearCompoundDetail() {
-  if (currentMoleculeScene) {
-    currentMoleculeScene.destroy();
-    currentMoleculeScene = null;
-  }
   const detail = document.getElementById('compoundDetail');
+  moleculeSceneToken += 1;
+  cancelDetailSwap(detail);
+  disposeMoleculeScene();
   if (detail) detail.innerHTML = '';
 }

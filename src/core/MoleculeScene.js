@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { createTextSprite } from '../objects/TextSprite.js';
 import { SCENE_BG } from '../data/theme.js';
+import { boundsOfPoints, fitCameraToBounds } from './cameraFit.js';
 
 // CPK 配色，适配浅色背景
 const ATOM_COLORS = {
@@ -116,6 +117,38 @@ export function createMoleculeScene(container, compound) {
     }, 4000);
   });
 
+  // —— 取景：分子大小差别很大（H₂O 到葡萄糖），默认机位会把大的分子切掉 ——
+  const fitRect = container.getBoundingClientRect();
+  if (fitRect.width > 0 && fitRect.height > 0) {
+    camera.aspect = fitRect.width / fitRect.height;
+    camera.updateProjectionMatrix();
+  }
+  let fitState = null;
+  let userAdjusted = false;
+  // 用户手动转过/缩放过之后就不再自动取景，避免和操作打架
+  controls.addEventListener('start', () => { userAdjusted = true; });
+  const applyFit = () => {
+    if (!fitState || userAdjusted) return;
+    fitCameraToBounds(camera, controls, fitState.min, fitState.max, fitState.padding);
+  };
+
+  const moleculeBounds = boundsOfPoints((compound.atoms || []).map((atom) => atom.pos));
+  if (moleculeBounds) {
+    // 分子视图会自动旋转，取景要按外接球算，否则转到对角时会被切掉
+    const center = moleculeBounds.min.map((v, i) => (v + moleculeBounds.max[i]) / 2);
+    const radius = 0.5 * Math.hypot(
+      moleculeBounds.max[0] - moleculeBounds.min[0],
+      moleculeBounds.max[1] - moleculeBounds.min[1],
+      moleculeBounds.max[2] - moleculeBounds.min[2],
+    );
+    fitState = {
+      min: [center[0] - radius, center[1] - radius, center[2] - radius],
+      max: [center[0] + radius, center[1] + radius, center[2] + radius],
+      padding: 1.12,
+    };
+    applyFit();
+  }
+
   // —— 分子根 Group（不再用 anime.js 旋转，由 OrbitControls.autoRotate 控制相机）——
   const moleculeGroup = new THREE.Group();
   scene.add(moleculeGroup);
@@ -199,6 +232,8 @@ export function createMoleculeScene(container, compound) {
       camera.aspect = cw / ch;
       camera.updateProjectionMatrix();
       renderer.setSize(cw, ch, false);
+      // 窗口尺寸变了要重新取景，否则从大窗口缩小后分子会被切掉
+      applyFit();
       startLoop();
     }
   });
@@ -223,6 +258,10 @@ export function createMoleculeScene(container, compound) {
       pmrem.dispose();
       envTexture.dispose();
       renderer.dispose();
+      // dispose() 只释放 program/buffer，GL 上下文仍被 canvas 持有。
+      // 不主动丢失的话，每个分子视图都会永久占用一个上下文，
+      // 触到浏览器 16 个上限后连元素周期表主画布都会被强制回收。
+      renderer.forceContextLoss();
       if (renderer.domElement.parentNode) {
         renderer.domElement.parentNode.removeChild(renderer.domElement);
       }

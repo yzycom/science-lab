@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SCENE_BG } from '../../data/theme.js';
+import { fitCameraToBounds } from '../../core/cameraFit.js';
 
 export function makeSceneShell(container, options = {}) {
   const width = container.clientWidth || 640;
@@ -38,6 +39,14 @@ export function makeSceneShell(container, options = {}) {
   controls.update();
 
   let rafId = null;
+  let fitState = null;
+  let userAdjusted = false;
+  // 用户手动转过/缩放过之后就不再自动取景，避免和操作打架
+  controls.addEventListener('start', () => { userAdjusted = true; });
+  const applyFit = () => {
+    if (!fitState) return;
+    fitCameraToBounds(camera, controls, fitState.min, fitState.max, fitState.padding);
+  };
   const render = () => renderer.render(scene, camera);
   const loop = () => {
     rafId = requestAnimationFrame(loop);
@@ -60,6 +69,8 @@ export function makeSceneShell(container, options = {}) {
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h, false);
+      // 窗口尺寸变了要重新取景，否则从大窗口缩小后内容会被切掉
+      if (!userAdjusted) applyFit();
       render();
     })
     : null;
@@ -75,11 +86,20 @@ export function makeSceneShell(container, options = {}) {
       controls.target.copy(vectorFromArray(next));
       controls.update();
     },
+    /** 记住包围盒，窗口变化时自动重新取景（用户手动操作过就不再干预）。 */
+    fitBounds(min, max, padding = 1.1) {
+      fitState = { min, max, padding };
+      userAdjusted = false;
+      applyFit();
+    },
     destroy() {
       if (rafId) cancelAnimationFrame(rafId);
       resizeObserver?.disconnect();
       controls.dispose();
       renderer.dispose?.();
+      // 同上：不主动丢失上下文，每切一节 3D 课程就漏一个，
+      // 16 个之后最老的上下文（元素周期表）会被浏览器回收。
+      renderer.forceContextLoss?.();
       renderer.domElement?.remove();
     },
   };
@@ -120,6 +140,7 @@ function makeRenderer(container, width, height) {
     };
   }
 }
+
 
 export function vectorFromArray(arr, fallback = [0, 0, 0]) {
   const src = Array.isArray(arr) ? arr : fallback;

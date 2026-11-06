@@ -500,6 +500,15 @@ body {
   overflow: hidden;
 }
 
+/* 详情区切换过渡：淡出 → 在不可见状态下重建场景 → 淡入。
+   这里用 ID 选择器而不是 .lesson-detail，是因为四个渲染器都会执行
+   `root.className = 'edulab-view ...'`，把根节点上的 class 全部抹掉，
+   只有 ID 和内联样式能跨过重建保留下来。 */
+#lessonDetail,
+#compoundDetail {
+  transition: opacity 140ms ease-out;
+}
+
 /* 三个 Edulab 渲染器（化学反应/立体几何/解析几何）统一为
    "面板在左（380px）、画布在右（自适应）" 的 DOM 顺序和网格布局，
    此前化学反应的 DOM 顺序和网格方向与另外两个相反，切换课程时画面会左右跳动。 */

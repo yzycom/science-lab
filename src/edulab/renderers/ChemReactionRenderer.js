@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { cylinderBetween, makeSceneShell, vectorFromArray } from './threeUtils.js';
+import { boundsOfPoints } from '../../core/cameraFit.js';
 import { renderLatex } from './katexUtils.js';
 
 // 与元素周期表 unknown 分类同色，未知原子兜底配色统一为该值。
@@ -38,6 +39,13 @@ export function renderChemReactionLesson(root, payload) {
   const atomState = buildAtoms(shell.scene, payload.atoms || []);
   const bondGroup = new THREE.Group();
   shell.scene.add(bondGroup);
+
+  // 按整场（反应物起点 + 产物终点）的包围盒取景：像葡萄糖有氧氧化这种
+  // 跨度远超默认视锥的课程，只靠默认机位会把反应物整个切到画面外。
+  const bounds = boundsOfPoints(
+    (payload.atoms || []).flatMap((atom) => [atom.start, atom.end || atom.start]),
+  );
+  if (bounds) shell.fitBounds(bounds.min, bounds.max);
 
   function draw(progress) {
     atomState.forEach((state) => {

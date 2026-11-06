@@ -3,6 +3,7 @@ import { renderAnalyticGeometryLesson } from '../edulab/renderers/AnalyticGeomet
 import { renderChemReactionLesson } from '../edulab/renderers/ChemReactionRenderer.js';
 import { renderSolidGeometryLesson } from '../edulab/renderers/SolidGeometryRenderer.js';
 import { renderLagrangeLesson } from '../edulab/renderers/LagrangeRenderer.js';
+import { cancelDetailSwap, swapDetailContent } from './detailSwap.js';
 
 let activeRenderer = null;
 
@@ -34,29 +35,35 @@ export function renderLessonLibrary(lessons, onSelect) {
 
 export function renderLessonDetail(lesson) {
   const detail = document.getElementById('lessonDetail');
-  if (activeRenderer) {
-    activeRenderer.destroy();
-    activeRenderer = null;
-  }
 
-  if (lesson.kind === LESSON_KINDS.chemReaction) {
-    activeRenderer = renderChemReactionLesson(detail, lesson.payload);
-  } else if (lesson.kind === LESSON_KINDS.solidGeometry) {
-    activeRenderer = renderSolidGeometryLesson(detail, lesson.payload);
-  } else if (lesson.kind === LESSON_KINDS.analyticGeometry) {
-    activeRenderer = renderAnalyticGeometryLesson(detail, lesson.payload);
-  } else if (lesson.kind === LESSON_KINDS.lagrange) {
-    activeRenderer = renderLagrangeLesson(detail, lesson.payload);
-  }
+  // 旧场景销毁 + 新场景构建都放在淡出之后执行：这一段的
+  // 主线程长任务发生在画面已经隐去时，用户不会再看到"冻住后突然换掉"。
+  swapDetailContent(detail, () => {
+    if (activeRenderer) {
+      activeRenderer.destroy();
+      activeRenderer = null;
+    }
+
+    if (lesson.kind === LESSON_KINDS.chemReaction) {
+      activeRenderer = renderChemReactionLesson(detail, lesson.payload);
+    } else if (lesson.kind === LESSON_KINDS.solidGeometry) {
+      activeRenderer = renderSolidGeometryLesson(detail, lesson.payload);
+    } else if (lesson.kind === LESSON_KINDS.analyticGeometry) {
+      activeRenderer = renderAnalyticGeometryLesson(detail, lesson.payload);
+    } else if (lesson.kind === LESSON_KINDS.lagrange) {
+      activeRenderer = renderLagrangeLesson(detail, lesson.payload);
+    }
+  });
 }
 
 export function clearLessonDetail() {
+  const detail = document.getElementById('lessonDetail');
+  cancelDetailSwap(detail);
   if (activeRenderer) {
     activeRenderer.destroy();
     activeRenderer = null;
   }
-  const detail = document.getElementById('lessonDetail');
-  detail.innerHTML = '';
+  if (detail) detail.innerHTML = '';
 }
 
 function labelKind(kind) {

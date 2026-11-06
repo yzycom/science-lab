@@ -1,7 +1,8 @@
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
-import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { applyStructureOverrides } from './edulab-structure-overrides.mjs';
 
 const require = createRequire(import.meta.url);
 const EDULAB_ROOT = dirname(require.resolve('@wy51ai/edulab/package.json'));
@@ -79,8 +80,16 @@ if (command !== 'all') {
 }
 
 assertPythonDependency();
-rmSync(OUT_DIR, { recursive: true, force: true });
 mkdirSync(OUT_DIR, { recursive: true });
+
+// 只删除本次会被重新生成的文件。此前是整个目录 rmSync，会把仓库里手工维护、
+// 不经由 edulab 导出的课程（如 astro-lagrange-sun-earth.json）一起删掉。
+const planned = new Set(
+  LESSONS.flatMap((group) => group.keys.map((key) => `${group.idPrefix}-${key.replaceAll('_', '-')}.json`)),
+);
+for (const file of readdirSync(OUT_DIR)) {
+  if (planned.has(file)) rmSync(join(OUT_DIR.pathname, file), { force: true });
+}
 
 const written = [];
 for (const group of LESSONS) {
@@ -96,7 +105,10 @@ for (const group of LESSONS) {
       payload,
     };
     const fileName = `${envelope.id}.json`;
-    writeFileSync(new URL(fileName, OUT_DIR), `${JSON.stringify(envelope, null, 2)}\n`, 'utf8');
+    // 上游生成器在个别分子上给出的几何不成立（见 edulab-structure-overrides.mjs），
+    // 这里统一过一层仓库自有的修正，保证重新导出不会把修正冲掉。
+    const finalEnvelope = applyStructureOverrides(envelope);
+    writeFileSync(new URL(fileName, OUT_DIR), `${JSON.stringify(finalEnvelope, null, 2)}\n`, 'utf8');
     written.push(fileName);
   }
 }

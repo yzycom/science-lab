@@ -4,6 +4,18 @@ import { createAtomScene } from '../core/AtomScene.js';
 import { showPanel, hidePanel } from '../animation/panelTransition.js';
 
 let currentAtomScene = null;
+// 场景是在双 rAF 之后才创建的；这期间用户可能已经关掉面板或换了元素。
+// 用一个递增令牌作废过期的创建请求，否则那个场景会挂在一个已被清空的容器上：
+// 画布留着、渲染循环也停不下来，等于又漏一个 GL 上下文。
+let atomSceneToken = 0;
+
+function disposeAtomScene(atomContainer) {
+  if (currentAtomScene) {
+    currentAtomScene.destroy();
+    currentAtomScene = null;
+  }
+  if (atomContainer) atomContainer.innerHTML = '';
+}
 
 /**
  * 渲染元素详情面板
@@ -14,12 +26,9 @@ export function renderElementDetail(element, onClose) {
   const panel = document.getElementById('elementDetail');
   const atomContainer = document.getElementById('atomCanvas');
 
-  // 销毁旧的原子场景
-  if (currentAtomScene) {
-    currentAtomScene.destroy();
-    currentAtomScene = null;
-    atomContainer.innerHTML = '';
-  }
+  // 作废上一轮尚未执行的延迟创建，并销毁旧的原子场景
+  const token = ++atomSceneToken;
+  disposeAtomScene(atomContainer);
 
   if (!element) {
     if (panel.classList.contains('visible')) {
@@ -75,17 +84,15 @@ export function renderElementDetail(element, onClose) {
   // 原子场景（延迟到面板可见后初始化，保证容器有尺寸）
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
+      if (token !== atomSceneToken) return;
       currentAtomScene = createAtomScene(atomContainer, element);
     });
   });
 
   // 关闭按钮
   panel.querySelector('.detail-close').onclick = () => {
-    if (currentAtomScene) {
-      currentAtomScene.destroy();
-      currentAtomScene = null;
-      atomContainer.innerHTML = '';
-    }
+    atomSceneToken += 1;
+    disposeAtomScene(atomContainer);
     hidePanel(panel);
     if (onClose) onClose();
   };
