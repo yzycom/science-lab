@@ -136,7 +136,12 @@ export function createMoleculeScene(container, compound) {
   if (moleculeBounds) {
     // 分子视图会自动旋转，取景要按外接球算，否则转到对角时会被切掉
     const center = moleculeBounds.min.map((v, i) => (v + moleculeBounds.max[i]) / 2);
-    const radius = 0.5 * Math.hypot(
+    // 包围盒只含球心，半径要加上原子的球半径，否则最外圈的原子会被切掉
+    const atomRadius = (compound.atoms || []).reduce(
+      (m, atom) => Math.max(m, ATOM_RADIUS[atom.el] || 0.35),
+      0.35,
+    );
+    const radius = atomRadius + 0.5 * Math.hypot(
       moleculeBounds.max[0] - moleculeBounds.min[0],
       moleculeBounds.max[1] - moleculeBounds.min[1],
       moleculeBounds.max[2] - moleculeBounds.min[2],

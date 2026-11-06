@@ -42,10 +42,17 @@ export function renderChemReactionLesson(root, payload) {
 
   // 按整场（反应物起点 + 产物终点）的包围盒取景：像葡萄糖有氧氧化这种
   // 跨度远超默认视锥的课程，只靠默认机位会把反应物整个切到画面外。
-  const bounds = boundsOfPoints(
-    (payload.atoms || []).flatMap((atom) => [atom.start, atom.end || atom.start]),
-  );
-  if (bounds) shell.fitBounds(bounds.min, bounds.max);
+  const atoms = payload.atoms || [];
+  const bounds = boundsOfPoints(atoms.flatMap((atom) => [atom.start, atom.end || atom.start]));
+  if (bounds) {
+    // 包围盒只含球心，取景时要把球半径算进去，否则边缘的原子会被切掉半个
+    const maxRadius = atoms.reduce((m, atom) => Math.max(m, atom.radius || 0.4), 0.4);
+    shell.fitBounds(
+      bounds.min.map((v) => v - maxRadius),
+      bounds.max.map((v) => v + maxRadius),
+      1.06,
+    );
+  }
 
   function draw(progress) {
     atomState.forEach((state) => {
