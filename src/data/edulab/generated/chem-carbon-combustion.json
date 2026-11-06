@@ -1,0 +1,213 @@
+{
+  "id": "chem-carbon-combustion",
+  "kind": "edulab.chemReaction",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-chem-reaction",
+  "title": "碳的完全燃烧",
+  "tags": [
+    "chemistry",
+    "reaction"
+  ],
+  "payload": {
+    "meta": {
+      "title": "碳的完全燃烧",
+      "subtitle": "C + O₂ → CO₂（氧气充足，放热 393.5 kJ/mol）",
+      "language": "zh-CN",
+      "category": "junior",
+      "accent": "amber",
+      "engine": "morph",
+      "equation": "\\text{C} + \\text{O}_2 \\;\\xrightarrow{\\text{点燃}}\\; \\text{CO}_2"
+    },
+    "conditions": {
+      "text": "",
+      "exothermic": true,
+      "flame": false
+    },
+    "atoms": [
+      {
+        "id": "C1",
+        "el": "C",
+        "color": "#334155",
+        "radius": 0.5,
+        "start": [
+          -1.315,
+          0,
+          0
+        ],
+        "end": [
+          0,
+          0,
+          0
+        ],
+        "rmol": "C#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "O1",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          0.155,
+          0,
+          0
+        ],
+        "end": [
+          -1.18,
+          0,
+          0
+        ],
+        "rmol": "O2#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "O2",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          1.395,
+          0,
+          0
+        ],
+        "end": [
+          1.18,
+          0,
+          0
+        ],
+        "rmol": "O2#1",
+        "pmol": "CO2#1"
+      }
+    ],
+    "bonds": {
+      "before": [
+        {
+          "a": "O1",
+          "b": "O2",
+          "order": 2
+        }
+      ],
+      "after": [
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 2
+        }
+      ],
+      "broken": [
+        {
+          "a": "O1",
+          "b": "O2",
+          "order": 2
+        }
+      ],
+      "formed": [
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 2
+        }
+      ],
+      "kept": []
+    },
+    "labels": [
+      {
+        "id": "reactant-C#1",
+        "text": "碳 (C)",
+        "color": "slate",
+        "phase": "reactant",
+        "atoms": [
+          "C1"
+        ]
+      },
+      {
+        "id": "reactant-O2#1",
+        "text": "氧气 (O₂)",
+        "color": "red",
+        "phase": "reactant",
+        "atoms": [
+          "O1",
+          "O2"
+        ]
+      },
+      {
+        "id": "product-CO2#1",
+        "text": "二氧化碳 (CO₂)",
+        "color": "slate",
+        "phase": "product",
+        "atoms": [
+          "C1",
+          "O1",
+          "O2"
+        ]
+      }
+    ],
+    "elementCounts": {
+      "C": 1,
+      "O": 2
+    },
+    "legend": [
+      {
+        "el": "C",
+        "color": "#334155",
+        "name": "碳"
+      },
+      {
+        "el": "O",
+        "color": "#ef4444",
+        "name": "氧"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. 反应物混合",
+        "html": "碳单质与氧气分子在点燃条件下接触。C=O 键的生成能远大于 O=O 键与碳的升华能，因此反应一旦启动就持续放热。"
+      },
+      {
+        "title": "2. 断键与成键",
+        "html": "O=O 双键断开，碳原子与两个氧原子分别形成两根 C=O 双键，碳由 0 价被氧化到 +4 价。"
+      },
+      {
+        "title": "3. 生成二氧化碳",
+        "html": "产物是线形 CO₂ 分子（O=C=O，键角 180°）。反应前后 C 1 个、O 2 个，原子守恒。"
+      }
+    ],
+    "fragments": [],
+    "energy": {
+      "activation": 0.55,
+      "deltaH": -1,
+      "reactantLabel": "C+O₂",
+      "productLabel": "CO₂"
+    },
+    "electrons": [],
+    "ui": {
+      "reactants": "反应物",
+      "products": "产物",
+      "progress": "反应进度",
+      "play": "自动演示",
+      "pause": "暂停演示",
+      "reset": "复位",
+      "prev": "上一步",
+      "next": "下一步",
+      "hint": "拖动滑块观察化学键的断裂、原子重组与守恒，或点击上方步骤跳转。",
+      "drag": "拖拽旋转 · 滚轮缩放 · 右键平移",
+      "legend": "原子图例",
+      "conservation": "原子守恒",
+      "energy": "能量·反应进程",
+      "broken": "断裂的键",
+      "formed": "新生成的键",
+      "labels": "标签",
+      "labelsHint": "显示 / 隐藏分子标签"
+    }
+  }
+}

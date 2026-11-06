@@ -1,0 +1,547 @@
+{
+  "id": "chem-blast-furnace",
+  "kind": "edulab.chemReaction",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-chem-reaction",
+  "title": "高炉炼铁",
+  "tags": [
+    "chemistry",
+    "reaction"
+  ],
+  "payload": {
+    "meta": {
+      "title": "高炉炼铁",
+      "subtitle": "Fe₂O₃ + 3CO → 2Fe + 3CO₂（高温，CO 作还原剂）",
+      "language": "zh-CN",
+      "category": "junior",
+      "accent": "amber",
+      "engine": "morph",
+      "equation": "\\text{Fe}_2\\text{O}_3 + 3\\,\\text{CO} \\;\\xrightarrow{\\text{高温}}\\; 2\\,\\text{Fe} + 3\\,\\text{CO}_2"
+    },
+    "conditions": {
+      "text": "",
+      "exothermic": true,
+      "flame": false
+    },
+    "atoms": [
+      {
+        "id": "C1",
+        "el": "C",
+        "color": "#334155",
+        "radius": 0.5,
+        "start": [
+          -2.015,
+          -0.81,
+          0
+        ],
+        "end": [
+          0,
+          -3.075,
+          0
+        ],
+        "rmol": "CO#1",
+        "pmol": "CO2#3"
+      },
+      {
+        "id": "C2",
+        "el": "C",
+        "color": "#334155",
+        "radius": 0.5,
+        "start": [
+          0.775,
+          -0.81,
+          0
+        ],
+        "end": [
+          0,
+          1.025,
+          0
+        ],
+        "rmol": "CO#2",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "C3",
+        "el": "C",
+        "color": "#334155",
+        "radius": 0.5,
+        "start": [
+          -0.62,
+          -2.86,
+          0
+        ],
+        "end": [
+          0,
+          -1.025,
+          0
+        ],
+        "rmol": "CO#3",
+        "pmol": "CO2#2"
+      },
+      {
+        "id": "Fe1",
+        "el": "Fe",
+        "color": "#b45309",
+        "radius": 0.56,
+        "start": [
+          -1.25,
+          2.05,
+          0
+        ],
+        "end": [
+          -0.835,
+          3.075,
+          0
+        ],
+        "rmol": "Fe2O3#1",
+        "pmol": "Fe#1"
+      },
+      {
+        "id": "Fe2",
+        "el": "Fe",
+        "color": "#b45309",
+        "radius": 0.56,
+        "start": [
+          1.25,
+          2.05,
+          0
+        ],
+        "end": [
+          0.835,
+          3.075,
+          0
+        ],
+        "rmol": "Fe2O3#1",
+        "pmol": "Fe#2"
+      },
+      {
+        "id": "O1",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          0,
+          3.05,
+          0
+        ],
+        "end": [
+          1.18,
+          -3.075,
+          0
+        ],
+        "rmol": "Fe2O3#1",
+        "pmol": "CO2#3"
+      },
+      {
+        "id": "O2",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          0,
+          2.05,
+          0.95
+        ],
+        "end": [
+          1.18,
+          1.025,
+          0
+        ],
+        "rmol": "Fe2O3#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "O3",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          0,
+          1.05,
+          0
+        ],
+        "end": [
+          -1.18,
+          1.025,
+          0
+        ],
+        "rmol": "Fe2O3#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "O4",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          -0.775,
+          -0.81,
+          0
+        ],
+        "end": [
+          -1.18,
+          -1.025,
+          0
+        ],
+        "rmol": "CO#1",
+        "pmol": "CO2#2"
+      },
+      {
+        "id": "O5",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          2.015,
+          -0.81,
+          0
+        ],
+        "end": [
+          1.18,
+          -1.025,
+          0
+        ],
+        "rmol": "CO#2",
+        "pmol": "CO2#2"
+      },
+      {
+        "id": "O6",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          0.62,
+          -2.86,
+          0
+        ],
+        "end": [
+          -1.18,
+          -3.075,
+          0
+        ],
+        "rmol": "CO#3",
+        "pmol": "CO2#3"
+      }
+    ],
+    "bonds": {
+      "before": [
+        {
+          "a": "Fe1",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "Fe1",
+          "b": "O3",
+          "order": 1
+        },
+        {
+          "a": "Fe1",
+          "b": "O2",
+          "order": 1
+        },
+        {
+          "a": "Fe2",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "Fe2",
+          "b": "O3",
+          "order": 1
+        },
+        {
+          "a": "Fe2",
+          "b": "O2",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O4",
+          "order": 3
+        },
+        {
+          "a": "C2",
+          "b": "O5",
+          "order": 3
+        },
+        {
+          "a": "C3",
+          "b": "O6",
+          "order": 3
+        }
+      ],
+      "after": [
+        {
+          "a": "C2",
+          "b": "O3",
+          "order": 2
+        },
+        {
+          "a": "C2",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "C3",
+          "b": "O4",
+          "order": 2
+        },
+        {
+          "a": "C3",
+          "b": "O5",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O6",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        }
+      ],
+      "broken": [
+        {
+          "a": "Fe1",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "Fe1",
+          "b": "O3",
+          "order": 1
+        },
+        {
+          "a": "Fe1",
+          "b": "O2",
+          "order": 1
+        },
+        {
+          "a": "Fe2",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "Fe2",
+          "b": "O3",
+          "order": 1
+        },
+        {
+          "a": "Fe2",
+          "b": "O2",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O4",
+          "order": 3
+        },
+        {
+          "a": "C2",
+          "b": "O5",
+          "order": 3
+        },
+        {
+          "a": "C3",
+          "b": "O6",
+          "order": 3
+        }
+      ],
+      "formed": [
+        {
+          "a": "C2",
+          "b": "O3",
+          "order": 2
+        },
+        {
+          "a": "C2",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "C3",
+          "b": "O4",
+          "order": 2
+        },
+        {
+          "a": "C3",
+          "b": "O5",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O6",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        }
+      ],
+      "kept": []
+    },
+    "labels": [
+      {
+        "id": "reactant-Fe2O3#1",
+        "text": "氧化铁 (Fe₂O₃)",
+        "color": "amber",
+        "phase": "reactant",
+        "atoms": [
+          "Fe1",
+          "Fe2",
+          "O1",
+          "O3",
+          "O2"
+        ]
+      },
+      {
+        "id": "reactant-CO#1",
+        "text": "一氧化碳 (CO)",
+        "color": "slate",
+        "phase": "reactant",
+        "atoms": [
+          "C1",
+          "O4"
+        ]
+      },
+      {
+        "id": "reactant-CO#2",
+        "text": "一氧化碳 (CO)",
+        "color": "slate",
+        "phase": "reactant",
+        "atoms": [
+          "C2",
+          "O5"
+        ]
+      },
+      {
+        "id": "reactant-CO#3",
+        "text": "一氧化碳 (CO)",
+        "color": "slate",
+        "phase": "reactant",
+        "atoms": [
+          "C3",
+          "O6"
+        ]
+      },
+      {
+        "id": "product-Fe#1",
+        "text": "铁 (Fe)",
+        "color": "amber",
+        "phase": "product",
+        "atoms": [
+          "Fe1"
+        ]
+      },
+      {
+        "id": "product-Fe#2",
+        "text": "铁 (Fe)",
+        "color": "amber",
+        "phase": "product",
+        "atoms": [
+          "Fe2"
+        ]
+      },
+      {
+        "id": "product-CO2#1",
+        "text": "二氧化碳 (CO₂)",
+        "color": "slate",
+        "phase": "product",
+        "atoms": [
+          "O3",
+          "O2",
+          "C2"
+        ]
+      },
+      {
+        "id": "product-CO2#2",
+        "text": "二氧化碳 (CO₂)",
+        "color": "slate",
+        "phase": "product",
+        "atoms": [
+          "O4",
+          "O5",
+          "C3"
+        ]
+      },
+      {
+        "id": "product-CO2#3",
+        "text": "二氧化碳 (CO₂)",
+        "color": "slate",
+        "phase": "product",
+        "atoms": [
+          "O1",
+          "C1",
+          "O6"
+        ]
+      }
+    ],
+    "elementCounts": {
+      "C": 3,
+      "Fe": 2,
+      "O": 6
+    },
+    "legend": [
+      {
+        "el": "C",
+        "color": "#334155",
+        "name": "碳"
+      },
+      {
+        "el": "Fe",
+        "color": "#b45309",
+        "name": "铁"
+      },
+      {
+        "el": "O",
+        "color": "#ef4444",
+        "name": "氧"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. 反应物混合",
+        "html": "氧化铁与一氧化碳在高温下接触。CO 是还原剂，夺走氧化铁中的氧。"
+      },
+      {
+        "title": "2. 氧原子转移",
+        "html": "Fe–O 键断裂，氧原子转移给 CO 形成 C=O 双键；铁离子得到电子变成单质铁。"
+      },
+      {
+        "title": "3. 生成铁与二氧化碳",
+        "html": "得到 2 个 Fe 与 3 个 CO₂。反应前后 Fe 2、C 3、O 6，原子守恒。"
+      }
+    ],
+    "fragments": [],
+    "energy": {
+      "activation": 0.8,
+      "deltaH": -0.25,
+      "reactantLabel": "Fe₂O₃+3CO",
+      "productLabel": "2Fe+3CO₂"
+    },
+    "electrons": [],
+    "ui": {
+      "reactants": "反应物",
+      "products": "产物",
+      "progress": "反应进度",
+      "play": "自动演示",
+      "pause": "暂停演示",
+      "reset": "复位",
+      "prev": "上一步",
+      "next": "下一步",
+      "hint": "拖动滑块观察化学键的断裂、原子重组与守恒，或点击上方步骤跳转。",
+      "drag": "拖拽旋转 · 滚轮缩放 · 右键平移",
+      "legend": "原子图例",
+      "conservation": "原子守恒",
+      "energy": "能量·反应进程",
+      "broken": "断裂的键",
+      "formed": "新生成的键",
+      "labels": "标签",
+      "labelsHint": "显示 / 隐藏分子标签"
+    }
+  }
+}

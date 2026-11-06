@@ -1,0 +1,465 @@
+{
+  "id": "chem-lab-co2",
+  "kind": "edulab.chemReaction",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-chem-reaction",
+  "title": "实验室制取二氧化碳",
+  "tags": [
+    "chemistry",
+    "reaction"
+  ],
+  "payload": {
+    "meta": {
+      "title": "实验室制取二氧化碳",
+      "subtitle": "CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑（固液不加热型）",
+      "language": "zh-CN",
+      "category": "junior",
+      "accent": "amber",
+      "engine": "morph",
+      "equation": "\\text{CaCO}_3 + 2\\,\\text{HCl} \\;\\longrightarrow\\; \\text{CaCl}_2 + \\text{H}_2\\text{O} + \\text{CO}_2\\uparrow"
+    },
+    "conditions": {
+      "text": "",
+      "exothermic": true,
+      "flame": false
+    },
+    "atoms": [
+      {
+        "id": "C1",
+        "el": "C",
+        "color": "#334155",
+        "radius": 0.5,
+        "start": [
+          0.385,
+          1.025,
+          0
+        ],
+        "end": [
+          1.455,
+          -1.25,
+          0
+        ],
+        "rmol": "CaCO3#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "Ca1",
+        "el": "Ca",
+        "color": "#fb923c",
+        "radius": 0.6,
+        "start": [
+          -1.565,
+          2.045,
+          0
+        ],
+        "end": [
+          0,
+          0.65,
+          0
+        ],
+        "rmol": "CaCO3#1",
+        "pmol": "CaCl2#1"
+      },
+      {
+        "id": "Cl1",
+        "el": "Cl",
+        "color": "#22c55e",
+        "radius": 0.52,
+        "start": [
+          -0.795,
+          -1.895,
+          0
+        ],
+        "end": [
+          -1.45,
+          1.4,
+          0
+        ],
+        "rmol": "HCl#1",
+        "pmol": "CaCl2#1"
+      },
+      {
+        "id": "Cl2",
+        "el": "Cl",
+        "color": "#22c55e",
+        "radius": 0.52,
+        "start": [
+          2.115,
+          -1.895,
+          0
+        ],
+        "end": [
+          1.45,
+          1.4,
+          0
+        ],
+        "rmol": "HCl#2",
+        "pmol": "CaCl2#1"
+      },
+      {
+        "id": "H1",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -2.115,
+          -1.895,
+          0
+        ],
+        "end": [
+          -2.715,
+          -1.54,
+          0
+        ],
+        "rmol": "HCl#1",
+        "pmol": "H2O#1"
+      },
+      {
+        "id": "H2",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          0.795,
+          -1.895,
+          0
+        ],
+        "end": [
+          -1.195,
+          -1.54,
+          0
+        ],
+        "rmol": "HCl#2",
+        "pmol": "H2O#1"
+      },
+      {
+        "id": "O1",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          -0.205,
+          2.045,
+          0
+        ],
+        "end": [
+          2.635,
+          -1.25,
+          0
+        ],
+        "rmol": "CaCO3#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "O2",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          1.565,
+          1.025,
+          0
+        ],
+        "end": [
+          0.275,
+          -1.25,
+          0
+        ],
+        "rmol": "CaCO3#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "O3",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          -0.205,
+          0.005,
+          0
+        ],
+        "end": [
+          -1.955,
+          -0.96,
+          0
+        ],
+        "rmol": "CaCO3#1",
+        "pmol": "H2O#1"
+      }
+    ],
+    "bonds": {
+      "before": [
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O3",
+          "order": 1
+        },
+        {
+          "a": "Ca1",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "H1",
+          "b": "Cl1",
+          "order": 1
+        },
+        {
+          "a": "H2",
+          "b": "Cl2",
+          "order": 1
+        }
+      ],
+      "after": [
+        {
+          "a": "Ca1",
+          "b": "Cl1",
+          "order": 1
+        },
+        {
+          "a": "Ca1",
+          "b": "Cl2",
+          "order": 1
+        },
+        {
+          "a": "O3",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "O3",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        }
+      ],
+      "broken": [
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O3",
+          "order": 1
+        },
+        {
+          "a": "Ca1",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "H1",
+          "b": "Cl1",
+          "order": 1
+        },
+        {
+          "a": "H2",
+          "b": "Cl2",
+          "order": 1
+        }
+      ],
+      "formed": [
+        {
+          "a": "Ca1",
+          "b": "Cl1",
+          "order": 1
+        },
+        {
+          "a": "Ca1",
+          "b": "Cl2",
+          "order": 1
+        },
+        {
+          "a": "O3",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "O3",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        }
+      ],
+      "kept": []
+    },
+    "labels": [
+      {
+        "id": "reactant-CaCO3#1",
+        "text": "碳酸钙 (CaCO₃)",
+        "color": "orange",
+        "phase": "reactant",
+        "atoms": [
+          "C1",
+          "O2",
+          "O1",
+          "O3",
+          "Ca1"
+        ]
+      },
+      {
+        "id": "reactant-HCl#1",
+        "text": "氯化氢 (HCl)",
+        "color": "emerald",
+        "phase": "reactant",
+        "atoms": [
+          "H1",
+          "Cl1"
+        ]
+      },
+      {
+        "id": "reactant-HCl#2",
+        "text": "氯化氢 (HCl)",
+        "color": "emerald",
+        "phase": "reactant",
+        "atoms": [
+          "H2",
+          "Cl2"
+        ]
+      },
+      {
+        "id": "product-CaCl2#1",
+        "text": "氯化钙 (CaCl₂)",
+        "color": "orange",
+        "phase": "product",
+        "atoms": [
+          "Ca1",
+          "Cl1",
+          "Cl2"
+        ]
+      },
+      {
+        "id": "product-H2O#1",
+        "text": "水 (H₂O)",
+        "color": "cyan",
+        "phase": "product",
+        "atoms": [
+          "O3",
+          "H1",
+          "H2"
+        ]
+      },
+      {
+        "id": "product-CO2#1",
+        "text": "二氧化碳 (CO₂)",
+        "color": "slate",
+        "phase": "product",
+        "atoms": [
+          "C1",
+          "O2",
+          "O1"
+        ]
+      }
+    ],
+    "elementCounts": {
+      "C": 1,
+      "Ca": 1,
+      "Cl": 2,
+      "H": 2,
+      "O": 3
+    },
+    "legend": [
+      {
+        "el": "C",
+        "color": "#334155",
+        "name": "碳"
+      },
+      {
+        "el": "Ca",
+        "color": "#fb923c",
+        "name": "钙"
+      },
+      {
+        "el": "Cl",
+        "color": "#22c55e",
+        "name": "氯"
+      },
+      {
+        "el": "H",
+        "color": "#f1f5f9",
+        "name": "氢"
+      },
+      {
+        "el": "O",
+        "color": "#ef4444",
+        "name": "氧"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. 反应物接触",
+        "html": "大理石（碳酸钙）与稀盐酸接触，固体表面产生气泡。"
+      },
+      {
+        "title": "2. 碳酸根被破坏",
+        "html": "H⁺ 与 CO₃²⁻ 反应，C–O 键断裂，生成不稳定的 H₂CO₃，随即分解为 H₂O 与 CO₂。"
+      },
+      {
+        "title": "3. 生成氯化钙、水和二氧化碳",
+        "html": "得到 CaCl₂、H₂O 与 CO₂。反应前后 Ca 1、C 1、O 3、H 2、Cl 2，原子守恒。"
+      }
+    ],
+    "fragments": [],
+    "energy": {
+      "activation": 0.35,
+      "deltaH": -0.3,
+      "reactantLabel": "CaCO₃+2HCl",
+      "productLabel": "CaCl₂+H₂O+CO₂"
+    },
+    "electrons": [],
+    "ui": {
+      "reactants": "反应物",
+      "products": "产物",
+      "progress": "反应进度",
+      "play": "自动演示",
+      "pause": "暂停演示",
+      "reset": "复位",
+      "prev": "上一步",
+      "next": "下一步",
+      "hint": "拖动滑块观察化学键的断裂、原子重组与守恒，或点击上方步骤跳转。",
+      "drag": "拖拽旋转 · 滚轮缩放 · 右键平移",
+      "legend": "原子图例",
+      "conservation": "原子守恒",
+      "energy": "能量·反应进程",
+      "broken": "断裂的键",
+      "formed": "新生成的键",
+      "labels": "标签",
+      "labelsHint": "显示 / 隐藏分子标签"
+    }
+  }
+}

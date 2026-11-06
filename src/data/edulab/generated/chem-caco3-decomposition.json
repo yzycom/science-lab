@@ -1,0 +1,299 @@
+{
+  "id": "chem-caco3-decomposition",
+  "kind": "edulab.chemReaction",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-chem-reaction",
+  "title": "碳酸钙的高温分解",
+  "tags": [
+    "chemistry",
+    "reaction"
+  ],
+  "payload": {
+    "meta": {
+      "title": "碳酸钙的高温分解",
+      "subtitle": "CaCO₃ → CaO + CO₂↑（高温煅烧，吸热 178 kJ/mol）",
+      "language": "zh-CN",
+      "category": "junior",
+      "accent": "amber",
+      "engine": "morph",
+      "equation": "\\text{CaCO}_3 \\;\\xrightarrow{\\text{高温}}\\; \\text{CaO} + \\text{CO}_2\\uparrow"
+    },
+    "conditions": {
+      "text": "",
+      "exothermic": false,
+      "flame": false
+    },
+    "atoms": [
+      {
+        "id": "C1",
+        "el": "C",
+        "color": "#334155",
+        "radius": 0.5,
+        "start": [
+          0.385,
+          0,
+          0
+        ],
+        "end": [
+          0,
+          -1.025,
+          0
+        ],
+        "rmol": "CaCO3#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "Ca1",
+        "el": "Ca",
+        "color": "#fb923c",
+        "radius": 0.6,
+        "start": [
+          -1.565,
+          1.02,
+          0
+        ],
+        "end": [
+          -1,
+          1.025,
+          0
+        ],
+        "rmol": "CaCO3#1",
+        "pmol": "CaO#1"
+      },
+      {
+        "id": "O1",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          -0.205,
+          1.02,
+          0
+        ],
+        "end": [
+          1.18,
+          -1.025,
+          0
+        ],
+        "rmol": "CaCO3#1",
+        "pmol": "CO2#1"
+      },
+      {
+        "id": "O2",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          1.565,
+          0,
+          0
+        ],
+        "end": [
+          1,
+          1.025,
+          0
+        ],
+        "rmol": "CaCO3#1",
+        "pmol": "CaO#1"
+      },
+      {
+        "id": "O3",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          -0.205,
+          -1.02,
+          0
+        ],
+        "end": [
+          -1.18,
+          -1.025,
+          0
+        ],
+        "rmol": "CaCO3#1",
+        "pmol": "CO2#1"
+      }
+    ],
+    "bonds": {
+      "before": [
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O3",
+          "order": 1
+        },
+        {
+          "a": "Ca1",
+          "b": "O1",
+          "order": 1
+        }
+      ],
+      "after": [
+        {
+          "a": "Ca1",
+          "b": "O2",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O3",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        }
+      ],
+      "broken": [
+        {
+          "a": "C1",
+          "b": "O2",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O3",
+          "order": 1
+        },
+        {
+          "a": "Ca1",
+          "b": "O1",
+          "order": 1
+        }
+      ],
+      "formed": [
+        {
+          "a": "Ca1",
+          "b": "O2",
+          "order": 1
+        },
+        {
+          "a": "C1",
+          "b": "O3",
+          "order": 2
+        },
+        {
+          "a": "C1",
+          "b": "O1",
+          "order": 2
+        }
+      ],
+      "kept": []
+    },
+    "labels": [
+      {
+        "id": "reactant-CaCO3#1",
+        "text": "碳酸钙 (CaCO₃)",
+        "color": "orange",
+        "phase": "reactant",
+        "atoms": [
+          "C1",
+          "O2",
+          "O1",
+          "O3",
+          "Ca1"
+        ]
+      },
+      {
+        "id": "product-CaO#1",
+        "text": "氧化钙 (CaO)",
+        "color": "orange",
+        "phase": "product",
+        "atoms": [
+          "O2",
+          "Ca1"
+        ]
+      },
+      {
+        "id": "product-CO2#1",
+        "text": "二氧化碳 (CO₂)",
+        "color": "slate",
+        "phase": "product",
+        "atoms": [
+          "C1",
+          "O1",
+          "O3"
+        ]
+      }
+    ],
+    "elementCounts": {
+      "C": 1,
+      "Ca": 1,
+      "O": 3
+    },
+    "legend": [
+      {
+        "el": "C",
+        "color": "#334155",
+        "name": "碳"
+      },
+      {
+        "el": "Ca",
+        "color": "#fb923c",
+        "name": "钙"
+      },
+      {
+        "el": "O",
+        "color": "#ef4444",
+        "name": "氧"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. 高温加热",
+        "html": "碳酸钙在 900 ℃ 以上分解。这是吸热反应，需要持续供热。"
+      },
+      {
+        "title": "2. C–O 键断裂",
+        "html": "碳酸根中的一根 C–O 键断裂，CO₂ 逸出，剩下的氧留给钙。"
+      },
+      {
+        "title": "3. 生成氧化钙与二氧化碳",
+        "html": "得到 CaO（生石灰）与 CO₂。反应前后 Ca 1、C 1、O 3，原子守恒。"
+      }
+    ],
+    "fragments": [],
+    "energy": {
+      "activation": 0.9,
+      "deltaH": 0.75,
+      "reactantLabel": "CaCO₃",
+      "productLabel": "CaO+CO₂"
+    },
+    "electrons": [],
+    "ui": {
+      "reactants": "反应物",
+      "products": "产物",
+      "progress": "反应进度",
+      "play": "自动演示",
+      "pause": "暂停演示",
+      "reset": "复位",
+      "prev": "上一步",
+      "next": "下一步",
+      "hint": "拖动滑块观察化学键的断裂、原子重组与守恒，或点击上方步骤跳转。",
+      "drag": "拖拽旋转 · 滚轮缩放 · 右键平移",
+      "legend": "原子图例",
+      "conservation": "原子守恒",
+      "energy": "能量·反应进程",
+      "broken": "断裂的键",
+      "formed": "新生成的键",
+      "labels": "标签",
+      "labelsHint": "显示 / 隐藏分子标签"
+    }
+  }
+}

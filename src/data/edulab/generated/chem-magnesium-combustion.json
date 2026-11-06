@@ -1,0 +1,249 @@
+{
+  "id": "chem-magnesium-combustion",
+  "kind": "edulab.chemReaction",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-chem-reaction",
+  "title": "镁条的燃烧",
+  "tags": [
+    "chemistry",
+    "reaction"
+  ],
+  "payload": {
+    "meta": {
+      "title": "镁条的燃烧",
+      "subtitle": "2Mg + O₂ → 2MgO（耀眼白光，放热 1204 kJ/mol）",
+      "language": "zh-CN",
+      "category": "junior",
+      "accent": "amber",
+      "engine": "morph",
+      "equation": "2\\,\\text{Mg} + \\text{O}_2 \\;\\xrightarrow{\\text{点燃}}\\; 2\\,\\text{MgO}"
+    },
+    "conditions": {
+      "text": "",
+      "exothermic": true,
+      "flame": false
+    },
+    "atoms": [
+      {
+        "id": "Mg1",
+        "el": "Mg",
+        "color": "#facc15",
+        "radius": 0.55,
+        "start": [
+          -2.14,
+          0,
+          0
+        ],
+        "end": [
+          -2.625,
+          0,
+          0
+        ],
+        "rmol": "Mg#1",
+        "pmol": "MgO#1"
+      },
+      {
+        "id": "Mg2",
+        "el": "Mg",
+        "color": "#facc15",
+        "radius": 0.55,
+        "start": [
+          -0.49,
+          0,
+          0
+        ],
+        "end": [
+          0.825,
+          0,
+          0
+        ],
+        "rmol": "Mg#2",
+        "pmol": "MgO#2"
+      },
+      {
+        "id": "O1",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          1.03,
+          0,
+          0
+        ],
+        "end": [
+          -0.825,
+          0,
+          0
+        ],
+        "rmol": "O2#1",
+        "pmol": "MgO#1"
+      },
+      {
+        "id": "O2",
+        "el": "O",
+        "color": "#ef4444",
+        "radius": 0.42,
+        "start": [
+          2.27,
+          0,
+          0
+        ],
+        "end": [
+          2.625,
+          0,
+          0
+        ],
+        "rmol": "O2#1",
+        "pmol": "MgO#2"
+      }
+    ],
+    "bonds": {
+      "before": [
+        {
+          "a": "O1",
+          "b": "O2",
+          "order": 2
+        }
+      ],
+      "after": [
+        {
+          "a": "Mg1",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "Mg2",
+          "b": "O2",
+          "order": 1
+        }
+      ],
+      "broken": [
+        {
+          "a": "O1",
+          "b": "O2",
+          "order": 2
+        }
+      ],
+      "formed": [
+        {
+          "a": "Mg1",
+          "b": "O1",
+          "order": 1
+        },
+        {
+          "a": "Mg2",
+          "b": "O2",
+          "order": 1
+        }
+      ],
+      "kept": []
+    },
+    "labels": [
+      {
+        "id": "reactant-Mg#1",
+        "text": "镁 (Mg)",
+        "color": "emerald",
+        "phase": "reactant",
+        "atoms": [
+          "Mg1"
+        ]
+      },
+      {
+        "id": "reactant-Mg#2",
+        "text": "镁 (Mg)",
+        "color": "emerald",
+        "phase": "reactant",
+        "atoms": [
+          "Mg2"
+        ]
+      },
+      {
+        "id": "reactant-O2#1",
+        "text": "氧气 (O₂)",
+        "color": "red",
+        "phase": "reactant",
+        "atoms": [
+          "O1",
+          "O2"
+        ]
+      },
+      {
+        "id": "product-MgO#1",
+        "text": "氧化镁 (MgO)",
+        "color": "emerald",
+        "phase": "product",
+        "atoms": [
+          "Mg1",
+          "O1"
+        ]
+      },
+      {
+        "id": "product-MgO#2",
+        "text": "氧化镁 (MgO)",
+        "color": "emerald",
+        "phase": "product",
+        "atoms": [
+          "Mg2",
+          "O2"
+        ]
+      }
+    ],
+    "elementCounts": {
+      "Mg": 2,
+      "O": 2
+    },
+    "legend": [
+      {
+        "el": "Mg",
+        "color": "#facc15",
+        "name": "镁"
+      },
+      {
+        "el": "O",
+        "color": "#ef4444",
+        "name": "氧"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. 反应物混合",
+        "html": "两根镁条与氧气接触。镁是活泼金属，表面虽有氧化膜，点燃后仍能剧烈反应。"
+      },
+      {
+        "title": "2. 失电子，断键",
+        "html": "O=O 双键断开，每个镁原子失去 2 个电子被氧化为 +2 价，氧被还原为 −2 价。"
+      },
+      {
+        "title": "3. 生成氧化镁",
+        "html": "得到 2 个 MgO（离子化合物，此处按式量单元简化表示）。反应前后 Mg 2、O 2，原子守恒。"
+      }
+    ],
+    "fragments": [],
+    "energy": {
+      "activation": 0.65,
+      "deltaH": -1,
+      "reactantLabel": "2Mg+O₂",
+      "productLabel": "2MgO"
+    },
+    "electrons": [],
+    "ui": {
+      "reactants": "反应物",
+      "products": "产物",
+      "progress": "反应进度",
+      "play": "自动演示",
+      "pause": "暂停演示",
+      "reset": "复位",
+      "prev": "上一步",
+      "next": "下一步",
+      "hint": "拖动滑块观察化学键的断裂、原子重组与守恒，或点击上方步骤跳转。",
+      "drag": "拖拽旋转 · 滚轮缩放 · 右键平移",
+      "legend": "原子图例",
+      "conservation": "原子守恒",
+      "energy": "能量·反应进程",
+      "broken": "断裂的键",
+      "formed": "新生成的键",
+      "labels": "标签",
+      "labelsHint": "显示 / 隐藏分子标签"
+    }
+  }
+}

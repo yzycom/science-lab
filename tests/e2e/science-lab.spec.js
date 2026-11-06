@@ -47,7 +47,7 @@ async function openAllModes(page) {
 
   await page.getByRole('button', { name: '化学反应' }).click();
   await expect(page.locator('#lessonWorkbench')).toBeVisible();
-  await expect(page.locator('#lessonList .lesson-item')).toHaveCount(6);
+  await expect(page.locator('#lessonList .lesson-item')).toHaveCount(16);
   await expect(page.locator('#lessonDetail canvas')).toBeVisible();
   await expect(page.locator('[data-edulab-progress]')).toBeVisible();
 

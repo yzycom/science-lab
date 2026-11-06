@@ -1,0 +1,407 @@
+{
+  "id": "chem-ammonia-synthesis",
+  "kind": "edulab.chemReaction",
+  "schema": "edulab@0.1.8",
+  "sourceSkill": "edu-chem-reaction",
+  "title": "工业合成氨",
+  "tags": [
+    "chemistry",
+    "reaction"
+  ],
+  "payload": {
+    "meta": {
+      "title": "工业合成氨",
+      "subtitle": "N₂ + 3H₂ ⇌ 2NH₃（高温高压、铁触媒，放热 92.4 kJ/mol）",
+      "language": "zh-CN",
+      "category": "junior",
+      "accent": "amber",
+      "engine": "morph",
+      "equation": "\\text{N}_2 + 3\\,\\text{H}_2 \\;\\underset{\\text{高温高压}}{\\overset{\\text{催化剂}}{\\rightleftharpoons}}\\; 2\\,\\text{NH}_3"
+    },
+    "conditions": {
+      "text": "",
+      "exothermic": true,
+      "flame": false
+    },
+    "atoms": [
+      {
+        "id": "H1",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -0.04,
+          1.025,
+          0
+        ],
+        "end": [
+          -0.735,
+          -0.25,
+          -0.81
+        ],
+        "rmol": "H2#1",
+        "pmol": "NH3#1"
+      },
+      {
+        "id": "H2",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          0.76,
+          1.025,
+          0
+        ],
+        "end": [
+          0.735,
+          -0.25,
+          0
+        ],
+        "rmol": "H2#1",
+        "pmol": "NH3#2"
+      },
+      {
+        "id": "H3",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          1.91,
+          1.025,
+          0
+        ],
+        "end": [
+          2.135,
+          -0.25,
+          0.81
+        ],
+        "rmol": "H2#2",
+        "pmol": "NH3#2"
+      },
+      {
+        "id": "H4",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          2.71,
+          1.025,
+          0
+        ],
+        "end": [
+          2.135,
+          -0.25,
+          -0.81
+        ],
+        "rmol": "H2#2",
+        "pmol": "NH3#2"
+      },
+      {
+        "id": "H5",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          -0.4,
+          -1.025,
+          0
+        ],
+        "end": [
+          -2.135,
+          -0.25,
+          0
+        ],
+        "rmol": "H2#3",
+        "pmol": "NH3#1"
+      },
+      {
+        "id": "H6",
+        "el": "H",
+        "color": "#f1f5f9",
+        "radius": 0.25,
+        "start": [
+          0.4,
+          -1.025,
+          0
+        ],
+        "end": [
+          -0.735,
+          -0.25,
+          0.81
+        ],
+        "rmol": "H2#3",
+        "pmol": "NH3#1"
+      },
+      {
+        "id": "N1",
+        "el": "N",
+        "color": "#3b82f6",
+        "radius": 0.46,
+        "start": [
+          -2.55,
+          1.025,
+          0
+        ],
+        "end": [
+          1.665,
+          0.25,
+          0
+        ],
+        "rmol": "N2#1",
+        "pmol": "NH3#2"
+      },
+      {
+        "id": "N2",
+        "el": "N",
+        "color": "#3b82f6",
+        "radius": 0.46,
+        "start": [
+          -1.35,
+          1.025,
+          0
+        ],
+        "end": [
+          -1.205,
+          0.25,
+          0
+        ],
+        "rmol": "N2#1",
+        "pmol": "NH3#1"
+      }
+    ],
+    "bonds": {
+      "before": [
+        {
+          "a": "N1",
+          "b": "N2",
+          "order": 3
+        },
+        {
+          "a": "H1",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "H3",
+          "b": "H4",
+          "order": 1
+        },
+        {
+          "a": "H5",
+          "b": "H6",
+          "order": 1
+        }
+      ],
+      "after": [
+        {
+          "a": "N2",
+          "b": "H5",
+          "order": 1
+        },
+        {
+          "a": "N2",
+          "b": "H6",
+          "order": 1
+        },
+        {
+          "a": "N2",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "N1",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "N1",
+          "b": "H3",
+          "order": 1
+        },
+        {
+          "a": "N1",
+          "b": "H4",
+          "order": 1
+        }
+      ],
+      "broken": [
+        {
+          "a": "N1",
+          "b": "N2",
+          "order": 3
+        },
+        {
+          "a": "H1",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "H3",
+          "b": "H4",
+          "order": 1
+        },
+        {
+          "a": "H5",
+          "b": "H6",
+          "order": 1
+        }
+      ],
+      "formed": [
+        {
+          "a": "N2",
+          "b": "H5",
+          "order": 1
+        },
+        {
+          "a": "N2",
+          "b": "H6",
+          "order": 1
+        },
+        {
+          "a": "N2",
+          "b": "H1",
+          "order": 1
+        },
+        {
+          "a": "N1",
+          "b": "H2",
+          "order": 1
+        },
+        {
+          "a": "N1",
+          "b": "H3",
+          "order": 1
+        },
+        {
+          "a": "N1",
+          "b": "H4",
+          "order": 1
+        }
+      ],
+      "kept": []
+    },
+    "labels": [
+      {
+        "id": "reactant-N2#1",
+        "text": "氮气 (N₂)",
+        "color": "blue",
+        "phase": "reactant",
+        "atoms": [
+          "N1",
+          "N2"
+        ]
+      },
+      {
+        "id": "reactant-H2#1",
+        "text": "氢气 (H₂)",
+        "color": "sky",
+        "phase": "reactant",
+        "atoms": [
+          "H1",
+          "H2"
+        ]
+      },
+      {
+        "id": "reactant-H2#2",
+        "text": "氢气 (H₂)",
+        "color": "sky",
+        "phase": "reactant",
+        "atoms": [
+          "H3",
+          "H4"
+        ]
+      },
+      {
+        "id": "reactant-H2#3",
+        "text": "氢气 (H₂)",
+        "color": "sky",
+        "phase": "reactant",
+        "atoms": [
+          "H5",
+          "H6"
+        ]
+      },
+      {
+        "id": "product-NH3#1",
+        "text": "氨 (NH₃)",
+        "color": "blue",
+        "phase": "product",
+        "atoms": [
+          "N2",
+          "H1",
+          "H5",
+          "H6"
+        ]
+      },
+      {
+        "id": "product-NH3#2",
+        "text": "氨 (NH₃)",
+        "color": "blue",
+        "phase": "product",
+        "atoms": [
+          "N1",
+          "H2",
+          "H3",
+          "H4"
+        ]
+      }
+    ],
+    "elementCounts": {
+      "H": 6,
+      "N": 2
+    },
+    "legend": [
+      {
+        "el": "H",
+        "color": "#f1f5f9",
+        "name": "氢"
+      },
+      {
+        "el": "N",
+        "color": "#3b82f6",
+        "name": "氮"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. 反应物混合",
+        "html": "氮气与氢气按 1:3 混合。N≡N 三键键能高达 946 kJ/mol，常温下几乎不反应。"
+      },
+      {
+        "title": "2. 三键断裂",
+        "html": "在铁触媒、高温高压下 N≡N 与 H–H 断裂，氮原子逐个与氢原子结合。"
+      },
+      {
+        "title": "3. 生成氨",
+        "html": "每个氮原子结合 3 个氢，得到 2 个三角锥形 NH₃。反应前后 N 2、H 6，原子守恒；正反应放热，工业上要同时考虑速率与平衡。"
+      }
+    ],
+    "fragments": [],
+    "energy": {
+      "activation": 0.75,
+      "deltaH": -0.35,
+      "reactantLabel": "N₂+3H₂",
+      "productLabel": "2NH₃"
+    },
+    "electrons": [],
+    "ui": {
+      "reactants": "反应物",
+      "products": "产物",
+      "progress": "反应进度",
+      "play": "自动演示",
+      "pause": "暂停演示",
+      "reset": "复位",
+      "prev": "上一步",
+      "next": "下一步",
+      "hint": "拖动滑块观察化学键的断裂、原子重组与守恒，或点击上方步骤跳转。",
+      "drag": "拖拽旋转 · 滚轮缩放 · 右键平移",
+      "legend": "原子图例",
+      "conservation": "原子守恒",
+      "energy": "能量·反应进程",
+      "broken": "断裂的键",
+      "formed": "新生成的键",
+      "labels": "标签",
+      "labelsHint": "显示 / 隐藏分子标签"
+    }
+  }
+}

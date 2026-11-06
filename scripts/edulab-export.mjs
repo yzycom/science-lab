@@ -3,6 +3,7 @@ import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { applyStructureOverrides } from './edulab-structure-overrides.mjs';
+import { buildExtraChemLessons } from './edulab-extra-lessons.mjs';
 
 const require = createRequire(import.meta.url);
 const EDULAB_ROOT = dirname(require.resolve('@wy51ai/edulab/package.json'));
@@ -84,9 +85,10 @@ mkdirSync(OUT_DIR, { recursive: true });
 
 // 只删除本次会被重新生成的文件。此前是整个目录 rmSync，会把仓库里手工维护、
 // 不经由 edulab 导出的课程（如 astro-lagrange-sun-earth.json）一起删掉。
-const planned = new Set(
-  LESSONS.flatMap((group) => group.keys.map((key) => `${group.idPrefix}-${key.replaceAll('_', '-')}.json`)),
-);
+const planned = new Set([
+  ...LESSONS.flatMap((group) => group.keys.map((key) => `${group.idPrefix}-${key.replaceAll('_', '-')}.json`)),
+  ...buildExtraChemLessons().map((envelope) => `${envelope.id}.json`),
+]);
 for (const file of readdirSync(OUT_DIR)) {
   if (planned.has(file)) rmSync(join(OUT_DIR.pathname, file), { force: true });
 }
@@ -111,6 +113,13 @@ for (const group of LESSONS) {
     writeFileSync(new URL(fileName, OUT_DIR), `${JSON.stringify(finalEnvelope, null, 2)}\n`, 'utf8');
     written.push(fileName);
   }
+}
+
+// 仓库自建的补充课程（上游没有对应 builder），与上游产物走同一套写出逻辑
+for (const envelope of buildExtraChemLessons()) {
+  const fileName = `${envelope.id}.json`;
+  writeFileSync(new URL(fileName, OUT_DIR), `${JSON.stringify(envelope, null, 2)}\n`, 'utf8');
+  written.push(fileName);
 }
 
 console.log(`Exported ${written.length} Edulab lessons to ${OUT_DIR.pathname}`);
