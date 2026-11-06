@@ -23,6 +23,7 @@
       "exothermic": true,
       "flame": false
     },
+    "context": "煤、木炭燃烧供暖与发电的基础。燃烧是否充分直接决定 CO 生成量，也就直接关系到煤气中毒风险。",
     "atoms": [
       {
         "id": "C1",

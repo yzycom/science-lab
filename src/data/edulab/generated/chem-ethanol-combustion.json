@@ -23,6 +23,7 @@
       "exothermic": true,
       "flame": false
     },
+    "context": "乙醇汽油（E10/E85）、酒精灯和火锅燃料都靠它放热。原料作物生长时固定 CO₂，所以它常被算作「碳中性」燃料。",
     "atoms": [
       {
         "id": "C1",

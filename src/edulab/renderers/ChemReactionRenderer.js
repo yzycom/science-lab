@@ -24,6 +24,7 @@ export function renderChemReactionLesson(root, payload) {
     <h2>${payload.meta?.title || '化学反应'}</h2>
     <p class="edulab-subtitle">${payload.meta?.subtitle || payload.meta?.equation || ''}</p>
     <div class="edulab-chip-row">${renderElementCounts(payload.elementCounts)}</div>
+    ${renderRealWorld(payload.context)}
     <label class="edulab-slider-label">反应进度
       <input data-edulab-progress type="range" min="0" max="1" step="0.01" value="0">
     </label>
@@ -169,6 +170,16 @@ function drawBonds(group, atomState, bonds = {}, progress) {
 
 function withPhase(bonds, opacity, color) {
   return bonds.map((bond) => ({ bond, opacity, color }));
+}
+
+function renderRealWorld(text) {
+  if (!text) return '';
+  return `
+    <div class="edulab-realworld">
+      <span class="edulab-realworld-kicker">现实意义</span>
+      <p>${text}</p>
+    </div>
+  `;
 }
 
 function renderElementCounts(counts = {}) {

@@ -5,6 +5,8 @@
 // 坐标约定：单位约等于键长 1.5，原子在 t=0 摆在反应物位置、t=1 走到产物位置，
 // 元素映射用「同元素最近邻」自动配对，保证原子守恒且迁移路径最短。
 
+import { REAL_WORLD } from './edulab-real-world.mjs';
+
 const ELEMENTS = {
   H: { color: '#f1f5f9', radius: 0.25, name: '氢' },
   C: { color: '#334155', radius: 0.5, name: '碳' },
@@ -538,6 +540,8 @@ function buildLesson(reaction) {
         equation: reaction.equation,
       },
       conditions: { text: reaction.conditions || '', exothermic: reaction.deltaH < 0, flame: false },
+      // 现实意义：渲染在标题下方的高亮块
+      context: REAL_WORLD[reaction.id] || '',
       atoms,
       bonds: { before, after, broken: before, formed: after, kept: [] },
       labels,

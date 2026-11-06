@@ -573,6 +573,30 @@ body {
   margin-bottom: 18px;
 }
 
+/* 现实意义：每节课在标题下方给一段"这反应在现实里用在哪" */
+.edulab-realworld {
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent-light);
+}
+
+.edulab-realworld-kicker {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent-hover);
+  margin-bottom: 4px;
+}
+
+.edulab-realworld p {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
 .edulab-chip-row,
 .edulab-readouts {
   display: flex;

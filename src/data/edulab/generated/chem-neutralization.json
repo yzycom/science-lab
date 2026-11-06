@@ -23,6 +23,7 @@
       "exothermic": true,
       "flame": false
     },
+    "context": "胃药中和胃酸、撒石灰改良酸性土壤、污水处理调 pH，都是这个反应。化工生产中把 pH 控制在目标区间，也靠它实现。",
     "atoms": [
       {
         "id": "Cl1",

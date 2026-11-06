@@ -23,6 +23,7 @@
       "exothermic": true,
       "flame": false
     },
+    "context": "汽车三元催化、家用煤炉的二次补氧，都是让 CO 在这里继续烧成 CO₂。煤气火焰的蓝色就来自这个反应。",
     "atoms": [
       {
         "id": "C1",

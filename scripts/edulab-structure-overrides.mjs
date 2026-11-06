@@ -7,6 +7,8 @@
 //
 // 由 scripts/edulab-export.mjs 在导出后调用，保证 `npm run edulab:export` 不会把修正冲掉。
 
+import { REAL_WORLD } from './edulab-real-world.mjs';
+
 const DEG = Math.PI / 180;
 
 const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
@@ -250,8 +252,14 @@ export function applyGlucoseCombustionOverride(payload) {
 }
 
 export function applyStructureOverrides(envelope) {
+  let next = envelope;
   if (envelope?.id === 'chem-glucose-combustion') {
-    return { ...envelope, payload: applyGlucoseCombustionOverride(envelope.payload) };
+    next = { ...envelope, payload: applyGlucoseCombustionOverride(envelope.payload) };
   }
-  return envelope;
+  // 现实意义文案：上游生成的课也在这里补，保证 16 节都有
+  const context = REAL_WORLD[next?.id];
+  if (context && next.payload && !next.payload.context) {
+    next = { ...next, payload: { ...next.payload, context } };
+  }
+  return next;
 }
