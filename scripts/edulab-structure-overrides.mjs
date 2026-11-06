@@ -163,7 +163,14 @@ const H2O_GRID = [
   [-6.6, -1.5], [-4.4, -1.5], [-2.2, -1.5],
 ];
 const CO2_HALF = 1.16;
-const H2O_H_OFFSETS = [[0.7591, -0.0123, 0], [-0.7591, 0.5877, 0]];
+// 水分子：O–H 0.96、键角 104.5°，两根键必须等长。
+// 旧布局里第二根 H 的 y 分量取了负值，导致一根键 0.76、一根 0.96，看着一长一短。
+const H2O_OH = 0.96;
+const H2O_HALF_ANGLE = (104.5 / 2) * DEG;
+const H2O_H_OFFSETS = [
+  [H2O_OH * Math.sin(H2O_HALF_ANGLE), H2O_OH * Math.cos(H2O_HALF_ANGLE), 0],
+  [-H2O_OH * Math.sin(H2O_HALF_ANGLE), H2O_OH * Math.cos(H2O_HALF_ANGLE), 0],
+];
 
 /**
  * 把 `chem-glucose-combustion` 的反应物端换成 β-D-吡喃糖环状结构，
